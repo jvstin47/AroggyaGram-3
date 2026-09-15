@@ -11,8 +11,42 @@
     --accent: #E68A00;
     --danger: #D62828;
     --card: #FFFFFF;
+    --card-hover: #F9F8F3;
     --border: #E8E6DF;
     --muted: #64748B;
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: #0B1413;
+    --foreground: #EBF2F0;
+    --primary: #10B981;
+    --primary-hover: #059669;
+    --primary-light: #132E27;
+    --secondary: #34D399;
+    --accent: #F59E0B;
+    --danger: #EF4444;
+    --card: #14211F;
+    --card-hover: #192A28;
+    --border: #223733;
+    --muted: #94A3B8;
+    color-scheme: dark;
+  }
+
+  /* Prevent random/accidental text selection across mobile app views */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Explicitly allow text selection and editing in forms and inputs */
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
   }
 
   body {
@@ -24,14 +58,22 @@
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
-  /* High contrast mode */
+  /* High contrast mode for extreme sunlight */
   .high-contrast {
     --background: #FFFFFF;
     --foreground: #000000;
     --border: #000000;
     --muted: #111827;
+  }
+
+  .dark.high-contrast {
+    --background: #000000;
+    --foreground: #FFFFFF;
+    --border: #FFFFFF;
+    --muted: #E2E8F0;
   }
 
   /* Font scaling for accessibility */

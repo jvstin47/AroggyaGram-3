@@ -4,9 +4,9 @@ const INITIAL_CAREGIVERS: CaregiverRelationship[] = [
   {
     id: 'cg-1',
     patient_id: 'dev-patient-1',
-    name: 'Manoj Kumar (Son)',
-    phone: '+91 94471 98765',
-    relationship: 'Son',
+    name: 'Primary Caregiver',
+    phone: '9539141210',
+    relationship: 'Family Caregiver',
     notification_permissions: ['sos', 'high_risk', 'request_status', 'medication_alerts'],
     is_active: true,
     created_at: new Date().toISOString()
@@ -14,7 +14,7 @@ const INITIAL_CAREGIVERS: CaregiverRelationship[] = [
   {
     id: 'cg-2',
     patient_id: 'dev-patient-1',
-    name: 'Suma Varghese (ASHA Health Worker)',
+    name: 'Community Health Worker (ASHA)',
     phone: '+91 98460 12345',
     relationship: 'ASHA Worker',
     notification_permissions: ['sos', 'high_risk'],
@@ -35,8 +35,13 @@ export class CaregiverService {
     return INITIAL_CAREGIVERS;
   }
 
-  public static async getCaregivers(_patientId: string): Promise<CaregiverRelationship[]> {
+  public static async getCaregivers(_patientId?: string): Promise<CaregiverRelationship[]> {
     return this.getStored();
+  }
+
+  public static getPrimaryCaregiver(): CaregiverRelationship {
+    const list = this.getStored();
+    return list[0] || INITIAL_CAREGIVERS[0];
   }
 
   public static async addCaregiver(
