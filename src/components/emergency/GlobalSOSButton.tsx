@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AlertOctagon, PhoneCall, X, MapPin, Send, Loader2, UserCheck, ShieldAlert } from 'lucide-react';
 import { EmergencyService, type LocationResult } from '@/services/emergency/emergency.service';
 import { CaregiverService } from '@/services/caregivers/caregiver.service';
 import { useAuth } from '@/contexts/AuthContext';
 
 export const GlobalSOSButton: React.FC = () => {
+  const routeLocation = useLocation();
   const { user, profile } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
@@ -15,6 +17,11 @@ export const GlobalSOSButton: React.FC = () => {
   useEffect(() => {
     setCaregiver(CaregiverService.getPrimaryCaregiver());
   }, [isOpen]);
+
+  // Do not block chat inputs on Ask Aroggya screen
+  if (routeLocation.pathname === '/ask-aroggya') {
+    return null;
+  }
 
   const handleTriggerSOS = async () => {
     setIsOpen(true);
