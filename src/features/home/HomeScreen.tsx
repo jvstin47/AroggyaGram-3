@@ -18,7 +18,7 @@ export const HomeScreen: React.FC = () => {
   const pendingMeds = medications.filter((m) => !m.taken);
 
   return (
-    <div className="pb-32 px-4 pt-6 max-w-lg mx-auto space-y-6">
+    <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6">
       {/* Top Header & Role Switcher */}
       <div className="flex items-center justify-between border-b border-stone-200 pb-4">
         <div>
