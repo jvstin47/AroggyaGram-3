@@ -7,6 +7,7 @@ import {
 import { SituationEngine, type ExtractedSituation } from '@/services/ai/situationEngine';
 import { ResponseOrchestrator } from '@/services/orchestration/orchestrator.service';
 import { useAuth } from '@/contexts/AuthContext';
+import { SpeechService } from '@/services/speech/speech.service';
 
 interface CareCaseIntakeModalProps {
   isOpen: boolean;
@@ -73,37 +74,29 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
     }
   };
 
-  const handleSpeechToggle = () => {
-    const SpeechRec = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-    if (!SpeechRec) {
-      alert('Speech recognition is not supported in this browser. Please type your situation.');
-      return;
-    }
-
+  const handleSpeechToggle = async () => {
     if (isListening) {
+      await SpeechService.stopListening();
       setIsListening(false);
       return;
     }
 
-    try {
-      const recognition = new SpeechRec();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = profile?.language === 'ml' ? 'ml-IN' : profile?.language === 'hi' ? 'hi-IN' : 'en-IN';
-
-      recognition.onstart = () => setIsListening(true);
-      recognition.onend = () => setIsListening(false);
-      recognition.onerror = () => setIsListening(false);
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
+    setIsListening(true);
+    await SpeechService.startListening({
+      language: profile?.language || 'en',
+      onResult: (transcript) => {
         const newStory = inputStory ? `${inputStory} ${transcript}` : transcript;
         setInputStory(newStory);
         handleAnalyze(newStory);
-      };
-      recognition.start();
-    } catch {
-      setIsListening(false);
-    }
+      },
+      onError: (err) => {
+        console.warn('Voice error:', err);
+        setIsListening(false);
+      },
+      onEnd: () => {
+        setIsListening(false);
+      }
+    });
   };
 
   const handleSubmitCareCase = () => {

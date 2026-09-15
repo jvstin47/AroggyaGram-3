@@ -26,10 +26,10 @@ export const HomeScreen: React.FC = () => {
   };
 
   return (
-    <div className="pb-36 px-4 pt-3 max-w-lg mx-auto space-y-4 text-stone-900 dark:text-stone-100 transition-colors">
+    <div className="pb-36 px-4 pt-4 max-w-lg mx-auto space-y-5 text-stone-900 dark:text-stone-100 transition-colors">
       
       {/* Quick Greeting */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pt-1">
         <div className="space-y-0.5">
           <span className="text-[10px] font-bold uppercase tracking-widest text-[#2E7A5B] dark:text-emerald-400">
             {t.home_subtitle}
@@ -41,10 +41,10 @@ export const HomeScreen: React.FC = () => {
       </div>
 
       {/* SIGNATURE PRIMARY ACTION: "TELL US WHAT IS HAPPENING" */}
-      <div className="bg-gradient-to-br from-[#005448] to-[#0A433A] dark:from-[#093830] dark:to-[#04241F] text-white p-4 rounded-3xl shadow-lg shadow-[#005448]/20 space-y-3 border border-white/10">
-        <div className="space-y-1">
+      <div className="bg-gradient-to-br from-[#005448] to-[#0A433A] dark:from-[#093830] dark:to-[#04241F] text-white p-5 rounded-3xl shadow-lg shadow-[#005448]/20 space-y-3.5 border border-white/10">
+        <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <span className="bg-white/20 text-emerald-100 text-[10px] font-black uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
+            <span className="bg-white/20 text-emerald-100 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
               <Sparkles className="w-3 h-3 text-emerald-300" />
               {t.home_intake_badge}
             </span>

@@ -14,12 +14,27 @@ export const ProfileScreen: React.FC = () => {
   const [fullName, setFullName] = useState(profile?.full_name || user?.fullName || '');
   const [phoneNumber, setPhoneNumber] = useState(profile?.phone || '9539141210');
   const [saved, setSaved] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setPhoneNumber(digitsOnly);
+    if (phoneError && digitsOnly.length === 10) {
+      setPhoneError('');
+    }
+  };
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanPhone = phoneNumber.trim();
+    if (cleanPhone.length !== 10) {
+      setPhoneError('Phone number must be exactly 10 digits.');
+      return;
+    }
+
     if (user?.role) {
       signInDev(user.role, fullName);
-      localStorage.setItem('aroggya_phone', phoneNumber);
+      localStorage.setItem('aroggya_phone', cleanPhone);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     }
@@ -63,52 +78,70 @@ export const ProfileScreen: React.FC = () => {
           </div>
         </div>
 
-        <div className="space-y-1">
-          <label className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
-            {t.profile_emergency_mobile}
-          </label>
+        <div className="space-y-1.5 pt-1">
+          <div className="flex items-center justify-between">
+            <label className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
+              {t.profile_emergency_mobile}
+            </label>
+            <span className={`text-[10px] font-semibold ${phoneNumber.length === 10 ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-400'}`}>
+              {phoneNumber.length}/10 digits
+            </span>
+          </div>
           <div className="relative">
             <Phone className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
             <input
               type="tel"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="e.g. 9539141210"
-              className="w-full pl-9 pr-3 py-2 text-xs font-bold rounded-xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-stone-800 dark:text-stone-200 focus:outline-none focus:border-[#005448]"
+              onChange={handlePhoneChange}
+              maxLength={10}
+              placeholder="10-digit mobile number"
+              className={`w-full pl-9 pr-3 py-2 text-xs font-bold rounded-xl bg-stone-50 dark:bg-stone-800/80 border text-stone-800 dark:text-stone-200 focus:outline-none transition-colors ${
+                phoneError
+                  ? 'border-red-500 focus:border-red-600'
+                  : 'border-stone-200 dark:border-stone-700 focus:border-[#005448]'
+              }`}
             />
           </div>
+          {phoneError && (
+            <p className="text-[11px] text-red-500 font-medium">{phoneError}</p>
+          )}
         </div>
 
         <button
           type="submit"
-          className="w-full py-2.5 bg-[#005448] hover:bg-[#004239] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+          className="w-full py-3 bg-[#005448] hover:bg-[#004239] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer active:scale-98"
         >
           {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
           <span>{saved ? t.profile_saved : t.profile_save}</span>
         </button>
       </form>
 
-      {/* Appearance & Dark Mode */}
-      <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4 transition-colors">
-        <div className="flex items-center gap-2 text-stone-900 dark:text-white font-bold text-sm">
-          {darkMode ? <Moon className="w-5 h-5 text-indigo-400" /> : <Sun className="w-5 h-5 text-amber-500" />}
-          <span>{t.profile_appearance}</span>
-        </div>
-
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-100 dark:border-stone-700">
-          <div>
-            <h4 className="text-xs font-bold text-stone-900 dark:text-white">{t.profile_dark_theme}</h4>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">{t.profile_dark_desc}</p>
+      {/* Appearance & Dark Mode (Clean, Single Card without Redundant Nested Box) */}
+      <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm transition-colors">
+        <div className="flex items-center justify-between">
+          <div className="flex items-start gap-3.5">
+            <div className="p-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800/80 shrink-0 mt-0.5">
+              {darkMode ? <Moon className="w-5 h-5 text-indigo-400" /> : <Sun className="w-5 h-5 text-amber-500" />}
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-stone-900 dark:text-white leading-tight">
+                {t.profile_dark_theme}
+              </h3>
+              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 max-w-[240px] leading-relaxed">
+                {t.profile_dark_desc}
+              </p>
+            </div>
           </div>
           <button
             type="button"
             onClick={toggleDarkMode}
-            className={`w-12 h-6 rounded-full p-0.5 transition-colors ${
-              darkMode ? 'bg-[#10B981]' : 'bg-stone-300'
+            aria-label="Toggle dark mode"
+            className={`w-12 h-6 rounded-full p-0.5 transition-colors shrink-0 cursor-pointer ${
+              darkMode ? 'bg-[#10B981]' : 'bg-stone-300 dark:bg-stone-700'
             }`}
           >
             <div
-              className={`w-5 h-5 rounded-full bg-white transition-transform ${
+              className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
                 darkMode ? 'translate-x-6' : 'translate-x-0'
               }`}
             />

@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor-community/speech-recognition": "^6.0.1",
     "@capacitor/app": "^6.0.3",
     "@google/genai": "^2.22.0",
     "@supabase/supabase-js": "^2.116.0",

@@ -1,7 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, Mic, MicOff, Send, AlertTriangle, ShieldAlert, ArrowLeft, Loader2, CheckCircle2, PhoneCall } from 'lucide-react';
+import {
+  Bot,
+  Mic,
+  MicOff,
+  Send,
+  AlertTriangle,
+  ShieldAlert,
+  ArrowLeft,
+  Loader2,
+  CheckCircle2,
+  PhoneCall,
+  Info,
+  ChevronDown,
+  ChevronUp
+} from 'lucide-react';
 import { AIService } from '@/services/ai/ai.service';
+import { SpeechService } from '@/services/speech/speech.service';
 import type { HealthAnalysisResult, RiskLevel } from '@/types/ai.types';
 import { useAuth } from '@/contexts/AuthContext';
 import { getTranslation } from '@/i18n/translations';
@@ -18,9 +33,13 @@ export const AskAroggyaScreen: React.FC = () => {
   const navigate = useNavigate();
   const { profile } = useAuth();
   const t = getTranslation(profile?.language);
+
   const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(true);
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
@@ -29,61 +48,61 @@ export const AskAroggyaScreen: React.FC = () => {
       timestamp: 'Just now'
     }
   ]);
-  const [speechSupported, setSpeechSupported] = useState(true);
 
-  const handleVoiceToggle = () => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setSpeechSupported(false);
-      return;
-    }
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Auto-scroll to bottom whenever messages change or loading state toggles
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, loading]);
+
+  useEffect(() => {
+    SpeechService.isAvailable().then(setSpeechSupported);
+  }, []);
+
+  const handleVoiceToggle = async () => {
     if (isListening) {
+      await SpeechService.stopListening();
       setIsListening(false);
       return;
     }
 
-    try {
-      const recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = profile?.language === 'ml' ? 'ml-IN' : profile?.language === 'hi' ? 'hi-IN' : 'en-IN';
-
-      recognition.onstart = () => setIsListening(true);
-      recognition.onend = () => setIsListening(false);
-      recognition.onerror = () => setIsListening(false);
-      recognition.onresult = (e: any) => {
-        const transcript = e.results?.[0]?.[0]?.transcript;
-        if (transcript) {
-          setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
-        }
-      };
-
-      recognition.start();
-    } catch {
-      setIsListening(false);
-    }
+    setIsListening(true);
+    await SpeechService.startListening({
+      language: profile?.language || 'en',
+      onResult: (transcript) => {
+        setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
+        textareaRef.current?.focus();
+      },
+      onError: (err) => {
+        console.warn('Voice recognition error:', err);
+        setIsListening(false);
+      },
+      onEnd: () => {
+        setIsListening(false);
+      }
+    });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || loading) return;
+  const handleSendMessage = async (textToSend?: string) => {
+    const query = (textToSend !== undefined ? textToSend : input).trim();
+    if (!query || loading) return;
 
-    const userText = input.trim();
     setInput('');
     setLoading(true);
 
     const userMsg: ChatMessage = {
       id: `usr-${Date.now()}`,
       sender: 'user',
-      text: userText,
+      text: query,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
     setMessages((prev) => [...prev, userMsg]);
 
     try {
-      const analysis = await AIService.analyzeHealthConcern(userText, profile?.language || 'en');
+      const analysis = await AIService.analyzeHealthConcern(query, profile?.language || 'en');
       const botMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
         sender: 'bot',
@@ -106,106 +125,84 @@ export const AskAroggyaScreen: React.FC = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   const getRiskBadge = (level: RiskLevel) => {
     switch (level) {
       case 'CRITICAL':
-        return <span className="bg-red-600 text-white font-black px-3 py-1 rounded-full text-xs animate-pulse">CRITICAL RISK</span>;
+        return <span className="bg-red-600 text-white font-black px-2.5 py-0.5 rounded-full text-[11px] animate-pulse">CRITICAL RISK</span>;
       case 'HIGH':
-        return <span className="bg-orange-600 text-white font-black px-3 py-1 rounded-full text-xs">HIGH RISK</span>;
+        return <span className="bg-orange-600 text-white font-black px-2.5 py-0.5 rounded-full text-[11px]">HIGH RISK</span>;
       case 'MODERATE':
-        return <span className="bg-amber-500 text-white font-black px-3 py-1 rounded-full text-xs">MODERATE</span>;
+        return <span className="bg-amber-500 text-white font-black px-2.5 py-0.5 rounded-full text-[11px]">MODERATE</span>;
       case 'LOW':
       default:
-        return <span className="bg-emerald-600 text-white font-black px-3 py-1 rounded-full text-xs">LOW RISK</span>;
+        return <span className="bg-emerald-600 text-white font-black px-2.5 py-0.5 rounded-full text-[11px]">LOW RISK</span>;
     }
   };
 
   return (
-    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => navigate('/home')}
-          className="p-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition-colors cursor-pointer"
-          aria-label="Back to home"
-        >
-          <ArrowLeft className="w-6 h-6" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.ask_title}</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.ask_subtitle}</p>
-        </div>
-      </div>
+    <div className="flex flex-col h-[100dvh] max-w-lg mx-auto bg-[#FBFAF6] dark:bg-[#0B1413] text-stone-900 dark:text-stone-100 transition-colors">
+      
+      {/* Pinned Top Bar */}
+      <header className="shrink-0 px-4 pt-[calc(0.75rem+env(safe-area-inset-top,0px))] pb-3 border-b border-stone-200 dark:border-stone-800 bg-white/95 dark:bg-[#121E1C]/95 backdrop-blur-md z-20">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => navigate('/home')}
+              className="p-2 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition-colors cursor-pointer"
+              aria-label="Back to home"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <Bot className="w-4 h-4 text-[#005448] dark:text-emerald-400" />
+                <h1 className="text-lg font-black text-[#121E1C] dark:text-white tracking-tight leading-none">
+                  {t.ask_title}
+                </h1>
+              </div>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 font-medium mt-0.5">
+                {t.ask_subtitle}
+              </p>
+            </div>
+          </div>
 
-      {/* Safety Disclaimer Banner */}
-      <div className="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 text-xs text-[#005448] dark:text-emerald-300 flex items-start gap-2.5">
-        <Bot className="w-5 h-5 text-[#005448] dark:text-emerald-400 shrink-0 mt-0.5" />
-        <p className="leading-relaxed">
-          <strong>Important Clinical Notice:</strong> {t.ask_disclaimer}
-        </p>
-      </div>
-
-      {/* Input Form with Voice Button */}
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <div className="relative">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={t.ask_placeholder}
-            rows={4}
-            className="w-full rounded-2xl border-2 border-stone-200 dark:border-[#223733] bg-white dark:bg-[#0E1A18] p-4 pr-14 text-base focus:border-[#005448] dark:focus:border-emerald-500 focus:outline-none transition-all resize-none shadow-sm text-stone-800 dark:text-white"
-          />
-
-          {/* Voice Mic inside textarea */}
+          {/* Toggle Clinical Disclaimer */}
           <button
             type="button"
-            onClick={handleVoiceToggle}
-            aria-label={isListening ? 'Stop voice recording' : 'Start speech recognition'}
-            className={`absolute right-3.5 bottom-4 p-3 rounded-xl transition-all cursor-pointer ${
-              isListening
-                ? 'bg-red-500 text-white animate-pulse shadow-md'
-                : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
-            }`}
+            onClick={() => setShowDisclaimer((prev) => !prev)}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-[#005448] dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 cursor-pointer"
           >
-            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+            <Info className="w-3.5 h-3.5" />
+            <span>Notice</span>
+            {showDisclaimer ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
           </button>
         </div>
 
-        {!speechSupported && (
-          <p className="text-xs text-stone-500 dark:text-stone-400">
-            {t.ask_voice_unavailable}
-          </p>
+        {/* Collapsible Clinical Notice Banner */}
+        {showDisclaimer && (
+          <div className="mt-2.5 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/60 text-[11px] text-[#005448] dark:text-emerald-300 leading-relaxed animate-in fade-in slide-in-from-top-1">
+            <strong>Important Clinical Notice:</strong> {t.ask_disclaimer}
+          </div>
         )}
+      </header>
 
-        <button
-          type="submit"
-          disabled={loading || !input.trim()}
-          className="w-full py-4 bg-[#005448] dark:bg-emerald-600 hover:bg-[#004239] dark:hover:bg-emerald-700 disabled:opacity-50 text-white rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-md transition-all active:scale-98 cursor-pointer"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>{t.ask_analyzing}</span>
-            </>
-          ) : (
-            <>
-              <Send className="w-5 h-5" />
-              <span>{t.ask_analyze_btn}</span>
-            </>
-          )}
-        </button>
-      </form>
-
-      {/* Conversation Thread */}
-      <div className="space-y-4">
+      {/* Scrollable Conversation Feed */}
+      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} space-y-1.5`}
           >
             <div
-              className={`max-w-[85%] p-4 rounded-3xl text-sm leading-relaxed ${
+              className={`max-w-[88%] p-3.5 rounded-2xl text-sm leading-relaxed ${
                 msg.sender === 'user'
                   ? 'bg-[#005448] dark:bg-emerald-700 text-white rounded-br-xs shadow-sm font-medium'
                   : 'bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] text-stone-900 dark:text-stone-100 rounded-bl-xs shadow-xs'
@@ -214,10 +211,10 @@ export const AskAroggyaScreen: React.FC = () => {
               {msg.text}
             </div>
 
-            {/* If bot message has structured clinical analysis result */}
+            {/* Structured Clinical Diagnosis & Risk Analysis Card */}
             {msg.result && (
               <div
-                className={`w-full rounded-3xl p-5 border-2 space-y-4 shadow-lg transition-all ${
+                className={`w-full max-w-[95%] rounded-2xl p-4 border-2 space-y-3.5 shadow-md transition-all ${
                   msg.result.risk_level === 'CRITICAL'
                     ? 'bg-red-50 dark:bg-red-950/50 border-red-500 dark:border-red-700'
                     : msg.result.risk_level === 'HIGH'
@@ -226,58 +223,60 @@ export const AskAroggyaScreen: React.FC = () => {
                 }`}
               >
                 {/* Header risk bar */}
-                <div className="flex items-center justify-between border-b border-stone-200/60 dark:border-[#1E302C] pb-3">
+                <div className="flex items-center justify-between border-b border-stone-200/60 dark:border-[#1E302C] pb-2.5">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
                       {t.ask_possible_condition}
                     </span>
-                    <h3 className="text-xl font-black text-stone-900 dark:text-white">{msg.result.possible_condition}</h3>
+                    <h3 className="text-base font-black text-stone-900 dark:text-white leading-tight">
+                      {msg.result.possible_condition}
+                    </h3>
                   </div>
                   <div>{getRiskBadge(msg.result.risk_level)}</div>
                 </div>
 
-                {/* CRITICAL / HIGH RISK EMERGENCY WARNING */}
+                {/* Emergency Warning */}
                 {(msg.result.risk_level === 'CRITICAL' || msg.result.risk_level === 'HIGH') && (
-                  <div className="bg-red-600 text-white p-4 rounded-2xl space-y-2">
-                    <div className="flex items-center gap-2 font-black text-base">
-                      <ShieldAlert className="w-6 h-6 shrink-0" />
+                  <div className="bg-red-600 text-white p-3.5 rounded-xl space-y-2">
+                    <div className="flex items-center gap-1.5 font-black text-sm">
+                      <ShieldAlert className="w-5 h-5 shrink-0" />
                       <span>{t.ask_urgent_intervention}</span>
                     </div>
-                    <p className="text-sm text-red-100 font-medium">
+                    <p className="text-xs text-red-100 font-medium leading-relaxed">
                       {msg.result.emergency_warning || 'Do not delay. Please trigger SOS or call 108 emergency ambulance.'}
                     </p>
-                    <div className="flex gap-2 pt-2">
+                    <div className="flex gap-2 pt-1">
                       <button
                         type="button"
                         onClick={() => {
                           const sosBtn = document.querySelector('button[aria-label*="Emergency SOS"]') as HTMLButtonElement;
                           if (sosBtn) sosBtn.click();
                         }}
-                        className="flex-1 bg-white text-red-600 font-black py-2.5 rounded-xl text-center text-sm shadow-md cursor-pointer"
+                        className="flex-1 bg-white text-red-600 font-black py-2 rounded-lg text-center text-xs shadow-sm cursor-pointer"
                       >
                         {t.ask_activate_sos}
                       </button>
                       <a
                         href="tel:108"
-                        className="flex-1 bg-red-800 text-white font-black py-2.5 rounded-xl text-center text-sm flex items-center justify-center gap-1.5"
+                        className="flex-1 bg-red-800 text-white font-black py-2 rounded-lg text-center text-xs flex items-center justify-center gap-1"
                       >
-                        <PhoneCall className="w-4 h-4" />
+                        <PhoneCall className="w-3.5 h-3.5" />
                         <span>{t.ask_call_108}</span>
                       </a>
                     </div>
                   </div>
                 )}
 
-                {/* Immediate Steps */}
+                {/* Immediate Actions */}
                 {msg.result.immediate_actions?.length > 0 && (
-                  <div className="space-y-2 bg-stone-50 dark:bg-[#0E1A18] p-4 rounded-2xl border border-stone-100 dark:border-[#1E302C]">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
+                  <div className="space-y-1.5 bg-stone-50 dark:bg-[#0E1A18] p-3 rounded-xl border border-stone-100 dark:border-[#1E302C]">
+                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
                       {t.ask_immediate_actions}
                     </h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1">
                       {msg.result.immediate_actions.map((act, i) => (
-                        <li key={i} className="text-xs text-stone-700 dark:text-stone-300 flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#2E7A5B] dark:text-emerald-400 shrink-0 mt-0.5" />
+                        <li key={i} className="text-xs text-stone-700 dark:text-stone-300 flex items-start gap-1.5">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7A5B] dark:text-emerald-400 shrink-0 mt-0.5" />
                           <span>{act}</span>
                         </li>
                       ))}
@@ -285,28 +284,97 @@ export const AskAroggyaScreen: React.FC = () => {
                   </div>
                 )}
 
-                {/* Warning signs */}
+                {/* Warning signs / red flags */}
                 {msg.result.warning_signs?.length > 0 && (
-                  <div className="space-y-1 text-xs text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/50 p-3 rounded-xl border border-amber-200 dark:border-amber-800">
-                    <span className="font-bold flex items-center gap-1">
-                      <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <div className="space-y-1 text-xs text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/50 p-2.5 rounded-xl border border-amber-200 dark:border-amber-800">
+                    <span className="font-bold flex items-center gap-1 text-[11px]">
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                       {t.ask_red_flags}
                     </span>
-                    <p>{msg.result.warning_signs.join(' · ')}</p>
+                    <p className="text-[11px]">{msg.result.warning_signs.join(' · ')}</p>
                   </div>
                 )}
 
                 {/* Recommendation */}
-                <div className="pt-2 text-xs text-stone-500 dark:text-stone-400 border-t border-stone-100 dark:border-[#1E302C] italic">
-                  {msg.result.recommendation}
-                </div>
+                {msg.result.recommendation && (
+                  <div className="pt-1.5 text-xs text-stone-500 dark:text-stone-400 border-t border-stone-100 dark:border-[#1E302C] italic">
+                    {msg.result.recommendation}
+                  </div>
+                )}
               </div>
             )}
 
-            <span className="text-[10px] text-stone-400 dark:text-stone-500 px-2 font-medium">{msg.timestamp}</span>
+            <span className="text-[10px] text-stone-400 dark:text-stone-500 px-2 font-medium">
+              {msg.timestamp}
+            </span>
           </div>
         ))}
-      </div>
+
+        {/* Typing / Analyzing Loader Bubble */}
+        {loading && (
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#005448] dark:text-emerald-400 bg-white dark:bg-[#14211F] border border-stone-200 dark:border-stone-800 rounded-2xl p-3.5 w-fit shadow-xs animate-pulse">
+            <Loader2 className="w-4 h-4 animate-spin text-[#005448] dark:text-emerald-400" />
+            <span>{t.ask_analyzing}</span>
+          </div>
+        )}
+
+        {/* Scroll anchor */}
+        <div ref={messagesEndRef} />
+      </main>
+
+      {/* Pinned Bottom Input Bar */}
+      <footer className="shrink-0 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] bg-white dark:bg-[#121E1C] border-t border-stone-200 dark:border-stone-800 shadow-xl z-20">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
+          }}
+          className="flex items-end gap-2"
+        >
+          {/* Native Speech Mic Button */}
+          <button
+            type="button"
+            onClick={handleVoiceToggle}
+            aria-label={isListening ? 'Stop voice recording' : 'Start speech recognition'}
+            className={`p-3 rounded-2xl transition-all cursor-pointer shrink-0 ${
+              isListening
+                ? 'bg-red-500 text-white animate-pulse shadow-lg scale-105'
+                : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
+            }`}
+          >
+            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+          </button>
+
+          {/* Text Input */}
+          <div className="flex-1 relative">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={isListening ? 'Listening...' : t.ask_placeholder}
+              rows={1}
+              className="w-full max-h-28 rounded-2xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-[#0B1413] px-3.5 py-2.5 text-sm focus:border-[#005448] dark:focus:border-emerald-500 focus:outline-none transition-all resize-none text-stone-800 dark:text-white leading-relaxed"
+            />
+          </div>
+
+          {/* Send Button */}
+          <button
+            type="submit"
+            disabled={loading || !input.trim()}
+            aria-label="Send message"
+            className="p-3 rounded-2xl bg-[#005448] dark:bg-emerald-600 hover:bg-[#004239] dark:hover:bg-emerald-700 disabled:opacity-40 text-white transition-all active:scale-95 cursor-pointer shrink-0 shadow-sm"
+          >
+            <Send className="w-5 h-5" />
+          </button>
+        </form>
+
+        {!speechSupported && (
+          <p className="text-[10px] text-stone-400 text-center mt-1">
+            {t.ask_voice_unavailable}
+          </p>
+        )}
+      </footer>
     </div>
   );
 };

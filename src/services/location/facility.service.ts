@@ -150,14 +150,32 @@ function calculateHaversineDistance(
   return Math.round(R * c * 10) / 10;
 }
 
+import { supabase, isSupabaseConfigured } from '@/services/supabase/client';
+
 export class FacilityService {
   public static async getNearbyFacilities(
     lat: number = AMAL_JYOTHI_COORDINATES.latitude,
     lng: number = AMAL_JYOTHI_COORDINATES.longitude,
     typeFilter?: string
   ): Promise<HealthcareFacility[]> {
-    // Dynamically calculate distance from current user coordinates (defaults to Amal Jyothi College)
-    const facilitiesWithDistances = KOTTAYAM_FACILITIES.map((f) => ({
+    let rawList: HealthcareFacility[] = KOTTAYAM_FACILITIES;
+
+    if (isSupabaseConfigured) {
+      try {
+        const { data, error } = await supabase
+          .from('facilities')
+          .select('*');
+
+        if (!error && data && data.length > 0) {
+          rawList = data as HealthcareFacility[];
+        }
+      } catch (err) {
+        console.warn('Supabase facilities fetch fallback to local seed:', err);
+      }
+    }
+
+    // Dynamically calculate distance from current user coordinates
+    const facilitiesWithDistances = rawList.map((f) => ({
       ...f,
       distance_km: calculateHaversineDistance(lat, lng, f.latitude, f.longitude)
     }));

@@ -11,18 +11,33 @@ export const LoginScreen: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<UserRole>('patient');
   const [phoneNumber, setPhoneNumber] = useState(() => localStorage.getItem('aroggya_phone') || '');
   const [fullName, setFullName] = useState(() => localStorage.getItem('aroggya_name') || '');
+  const [phoneError, setPhoneError] = useState('');
 
   const handleRoleChange = (role: UserRole) => {
     setSelectedRole(role);
   };
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setPhoneNumber(digitsOnly);
+    if (phoneError && digitsOnly.length === 10) {
+      setPhoneError('');
+    }
+  };
+
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanPhone = phoneNumber.trim();
+
+    if (cleanPhone.length !== 10) {
+      setPhoneError('Mobile number must be exactly 10 digits long.');
+      return;
+    }
+
     const finalName = fullName.trim() || (selectedRole === 'patient' ? 'Citizen' : 'Volunteer');
-    const finalPhone = phoneNumber.trim() || '9539141210';
     
     signInDev(selectedRole, finalName);
-    localStorage.setItem('aroggya_phone', finalPhone);
+    localStorage.setItem('aroggya_phone', cleanPhone);
 
     if (selectedRole === 'volunteer') {
       navigate('/volunteer/dashboard');
@@ -111,20 +126,35 @@ export const LoginScreen: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-              Registered Mobile Number
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block">
+                Registered Mobile Number
+              </label>
+              <span className={`text-[11px] font-semibold ${phoneNumber.length === 10 ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-400'}`}>
+                {phoneNumber.length}/10 digits
+              </span>
+            </div>
             <div className="relative">
               <Phone className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
               <input
                 type="tel"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="e.g. 9539141210"
-                className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 pl-10 text-sm font-semibold bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-white focus:border-[#005448] focus:outline-none"
+                onChange={handlePhoneChange}
+                placeholder="10-digit mobile number"
+                maxLength={10}
+                className={`w-full border rounded-xl p-3 pl-10 text-sm font-semibold bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                  phoneError
+                    ? 'border-red-500 focus:border-red-600'
+                    : 'border-stone-300 dark:border-stone-700 focus:border-[#005448]'
+                }`}
                 required
               />
             </div>
+            {phoneError && (
+              <p className="text-xs text-red-500 font-medium mt-1.5 flex items-center gap-1">
+                {phoneError}
+              </p>
+            )}
           </div>
 
           <button
