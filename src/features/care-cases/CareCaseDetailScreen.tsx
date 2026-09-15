@@ -66,7 +66,7 @@ export const CareCaseDetailScreen: React.FC = () => {
       const matchedVolunteer: AssignedVolunteer = {
         id: 'vol-rahul',
         fullName: 'Rahul Nair',
-        phone: '+91 94471 22334',
+        phone: '+91 9XXX XX XXXX',
         rating: 4.9,
         tasksCompleted: 48,
         skills: ['vehicle_owner', 'first_aid_certified', 'malayalam_fluent'],

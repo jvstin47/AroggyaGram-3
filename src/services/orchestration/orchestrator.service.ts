@@ -427,7 +427,7 @@ export class ResponseOrchestrator {
         trackingNumber: 'ARG-2026-8812',
         requesterId: 'patient-lakshmi',
         requesterName: 'Lakshmi Amma',
-        requesterPhone: '+91 98470 12345',
+        requesterPhone: '+91 9XXX XX XXXX',
         address: 'House #42, River Road, Kanjirappally, Kottayam',
         latitude: 9.5560,
         longitude: 76.7870,
@@ -439,7 +439,7 @@ export class ResponseOrchestrator {
           primaryLanguage: 'ml',
           mobilityLevel: 'uses_cane_or_walker',
           emergencyContactName: 'Geetha (Daughter in Kochi)',
-          emergencyContactPhone: '+91 98471 99882',
+          emergencyContactPhone: '+91 9XXX XX XXXX',
           vulnerabilityScore: 78,
           notes: 'Geriatric resident living independently. Daughter resides 80km away in Ernakulam.'
         },
@@ -501,7 +501,7 @@ export class ResponseOrchestrator {
               status: 'completed',
               completedAt: '2026-09-15T07:18:00Z',
               actorName: 'Rahul Nair',
-              actorPhone: '+91 94471 22334'
+              actorPhone: '+91 9XXX XX XXXX'
             },
             {
               id: 's-3',
@@ -513,7 +513,7 @@ export class ResponseOrchestrator {
               status: 'in_progress',
               startedAt: '2026-09-15T07:35:00Z',
               actorName: 'Rahul Nair',
-              actorPhone: '+91 94471 22334'
+              actorPhone: '+91 9XXX XX XXXX'
             },
             {
               id: 's-4',
@@ -529,7 +529,7 @@ export class ResponseOrchestrator {
         assignedVolunteer: {
           id: 'vol-rahul',
           fullName: 'Rahul Nair',
-          phone: '+91 94471 22334',
+          phone: '+91 9XXX XX XXXX',
           rating: 4.9,
           tasksCompleted: 48,
           skills: ['vehicle_owner', 'first_aid_certified', 'malayalam_fluent'],

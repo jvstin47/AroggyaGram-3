@@ -13,7 +13,7 @@ export const FacilityDiscoveryScreen: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      const data = await FacilityService.getNearbyFacilities(9.5550, 76.7885, filter);
+      const data = await FacilityService.getNearbyFacilities(undefined, undefined, filter);
       setFacilities(data);
       setLoading(false);
     };

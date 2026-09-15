@@ -149,11 +149,11 @@ export const NewRequestWizard: React.FC = () => {
 
       {/* STEP 1: Voice-First Description */}
       {step === 1 && (
-        <div className="space-y-5">
-          <div className="bg-[#FAF9F4] dark:bg-[#13201E] p-5 rounded-3xl border border-[#E8E6DF] dark:border-stone-800 space-y-2">
-            <h2 className="text-xl font-black text-[#121E1C] dark:text-white">Tell us what you need in your own words</h2>
-            <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-              Tap the microphone to speak, or type naturally. AroggyaGram AI will interpret the task, urgency, and category for you.
+        <div className="space-y-3.5">
+          <div className="bg-[#FAF9F4] dark:bg-[#13201E] p-3.5 rounded-2xl border border-[#E8E6DF] dark:border-stone-800 space-y-1">
+            <h2 className="text-base font-black text-[#121E1C] dark:text-white">Tell us what you need in your own words</h2>
+            <p className="text-xs text-stone-600 dark:text-stone-400">
+              Speak or type. AI interprets the urgency & category automatically.
             </p>
           </div>
 
@@ -161,39 +161,39 @@ export const NewRequestWizard: React.FC = () => {
             <textarea
               value={naturalText}
               onChange={(e) => setNaturalText(e.target.value)}
-              placeholder="e.g. 'I need someone to pick up my blood pressure medication from Jan Aushadhi pharmacy this afternoon'..."
-              rows={5}
-              className="w-full rounded-3xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-[#14211F] p-5 pr-16 text-base focus:border-[#005448] focus:outline-none transition-all resize-none shadow-sm text-stone-800 dark:text-stone-100 leading-relaxed"
+              placeholder="e.g. 'Need blood pressure medicines picked up from Jan Aushadhi pharmacy'..."
+              rows={3}
+              className="w-full rounded-2xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-[#14211F] p-3.5 pr-14 text-sm focus:border-[#005448] focus:outline-none transition-all resize-none shadow-xs text-stone-800 dark:text-stone-100 leading-normal"
             />
 
             <button
               type="button"
               onClick={handleVoiceToggle}
               aria-label={isListening ? 'Stop voice recording' : 'Start speech recognition'}
-              className={`absolute right-4 bottom-5 p-3.5 rounded-2xl transition-all shadow-md ${
+              className={`absolute right-3 bottom-3 p-2.5 rounded-xl transition-all shadow-md ${
                 isListening
                   ? 'bg-red-500 text-white animate-pulse'
                   : 'bg-[#005448] text-white hover:bg-[#004239]'
               }`}
             >
-              {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
+              {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
             </button>
           </div>
 
-          {/* Preset Quick Chips */}
-          <div className="space-y-1.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">Quick Examples:</span>
-            <div className="flex flex-wrap gap-2">
+          {/* Preset Quick Chips - Sleek Single Row */}
+          <div className="space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">Quick Examples:</span>
+            <div className="flex gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
               {[
                 'Pick up prescription medicines from pharmacy',
-                'Need vehicle ride to clinic tomorrow morning',
-                'Need essential groceries and milk delivered'
+                'Need ride to clinic tomorrow morning',
+                'Need essential groceries delivered'
               ].map((chip, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setNaturalText(chip)}
-                  className="text-xs bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-medium px-3 py-1.5 rounded-xl transition-colors text-left"
+                  className="text-xs bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-medium px-2.5 py-1 rounded-xl transition-colors whitespace-nowrap"
                 >
                   "{chip}"
                 </button>
@@ -205,11 +205,11 @@ export const NewRequestWizard: React.FC = () => {
             type="button"
             disabled={!naturalText.trim() || isClassifying}
             onClick={handleProcessWithAI}
-            className="w-full py-4 bg-[#005448] hover:bg-[#004239] disabled:opacity-50 text-white rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
+            className="w-full py-3.5 bg-[#005448] hover:bg-[#004239] disabled:opacity-50 text-white rounded-2xl font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all active:scale-98 cursor-pointer"
           >
             {isClassifying ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
                 <span>AI Understanding Intent...</span>
               </>
             ) : (

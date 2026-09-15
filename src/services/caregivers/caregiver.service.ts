@@ -15,7 +15,7 @@ const INITIAL_CAREGIVERS: CaregiverRelationship[] = [
     id: 'cg-2',
     patient_id: 'dev-patient-1',
     name: 'Community Health Worker (ASHA)',
-    phone: '+91 98460 12345',
+    phone: '+91 9XXX XX XXXX',
     relationship: 'ASHA Worker',
     notification_permissions: ['sos', 'high_risk'],
     is_active: true,

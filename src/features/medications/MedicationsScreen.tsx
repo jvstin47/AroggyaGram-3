@@ -55,12 +55,18 @@ export const MedicationsScreen: React.FC = () => {
     setIsSubmitting(false);
   };
 
-  const handleDelete = async (e: React.MouseEvent, id: string) => {
+  const [medicineToDelete, setMedicineToDelete] = useState<{ id: string; name: string } | null>(null);
+
+  const confirmDelete = async () => {
+    if (!medicineToDelete) return;
+    await MedicationService.deleteMedication(medicineToDelete.id);
+    setMedicineToDelete(null);
+    window.location.reload();
+  };
+
+  const handleDelete = (e: React.MouseEvent, id: string, name: string) => {
     e.stopPropagation();
-    if (window.confirm('Remove this medication from your daily schedule?')) {
-      await MedicationService.deleteMedication(id);
-      window.location.reload(); // fast refresh
-    }
+    setMedicineToDelete({ id, name });
   };
 
   return (
@@ -174,7 +180,7 @@ export const MedicationsScreen: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={(e) => handleDelete(e, med.id)}
+                onClick={(e) => handleDelete(e, med.id, med.name)}
                 title="Remove prescription"
                 className="p-1.5 text-stone-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
               >
@@ -371,6 +377,43 @@ export const MedicationsScreen: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* In-App Delete Confirmation Modal */}
+      {medicineToDelete && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
+          <div className="bg-white dark:bg-[#14211F] text-stone-900 dark:text-stone-100 rounded-3xl p-6 w-full max-w-sm space-y-4 shadow-2xl border border-stone-200 dark:border-stone-800">
+            <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto">
+              <Trash2 className="w-6 h-6" />
+            </div>
+
+            <div className="text-center space-y-1">
+              <h3 className="text-lg font-black text-stone-900 dark:text-white">
+                Remove Medication?
+              </h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                Are you sure you want to remove <strong className="text-stone-900 dark:text-stone-100">{medicineToDelete.name}</strong> from your daily dosage schedule?
+              </p>
+            </div>
+
+            <div className="flex gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setMedicineToDelete(null)}
+                className="flex-1 py-3 border border-stone-200 dark:border-stone-700 rounded-xl font-bold text-xs text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              >
+                Keep It
+              </button>
+              <button
+                type="button"
+                onClick={confirmDelete}
+                className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         </div>
       )}

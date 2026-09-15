@@ -18,11 +18,13 @@ import {
   Sparkles,
   Moon,
   Sun,
-  Key
+  Key,
+  MessageSquare
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
 import { AIKeyService } from '@/services/ai/aiKey.service';
+import { getTranslation } from '@/i18n/translations';
 
 interface DrawerMenuProps {
   isOpen: boolean;
@@ -33,6 +35,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
   const { darkMode, toggleDarkMode } = useAccessibility();
+  const t = getTranslation(profile?.language);
 
   if (!isOpen) return null;
 
@@ -94,7 +97,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <HeartHandshake className="w-5 h-5 text-[#005448] dark:text-emerald-400" />
-              <span>Home Hub</span>
+              <span>{t.nav_home}</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
@@ -116,7 +119,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <Bot className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <span>Ask Aroggya (AI Chat)</span>
+              <span>{t.nav_consult} (AI)</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
@@ -131,7 +134,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <Pill className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              <span>Medication Schedule</span>
+              <span>{t.nav_meds}</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
@@ -142,7 +145,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <Hospital className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <span>Clinics & Facilities</span>
+              <span>{t.nav_clinics}</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
@@ -153,7 +156,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <Newspaper className="w-5 h-5 text-[#E68A00]" />
-              <span>Community Health News</span>
+              <span>{t.nav_news}</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
@@ -164,7 +167,18 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <Info className="w-5 h-5 text-stone-600 dark:text-stone-400" />
-              <span>About AroggyaGram</span>
+              <span>{t.nav_about}</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-stone-400" />
+          </button>
+
+          <button
+            onClick={() => handleNavigate('/feedback')}
+            className="w-full flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 font-semibold text-sm transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <MessageSquare className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <span>{t.nav_feedback}</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
@@ -228,7 +242,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <User className="w-5 h-5 text-stone-700 dark:text-stone-400" />
-              <span>Profile & Settings</span>
+              <span>{t.nav_profile}</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>

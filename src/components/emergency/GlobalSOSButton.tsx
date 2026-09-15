@@ -31,7 +31,7 @@ export const GlobalSOSButton: React.FC = () => {
     await EmergencyService.recordEmergencyEvent(
       user?.id || 'citizen-user',
       loc,
-      [`${currentCaregiver.name}: ${currentCaregiver.phone}`, 'Community Health Worker (ASHA): +91 98460 12345']
+      [`${currentCaregiver.name}: ${currentCaregiver.phone}`, 'Community Health Worker (ASHA): +91 9XXX XX XXXX']
     );
     setSosSent(true);
   };

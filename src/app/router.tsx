@@ -15,8 +15,8 @@ import { AboutScreen } from '@/features/about/AboutScreen';
 import { CareCaseListScreen } from '@/features/care-cases/CareCaseListScreen';
 import { CareCaseDetailScreen } from '@/features/care-cases/CareCaseDetailScreen';
 import { ResponseSimulator } from '@/features/simulator/ResponseSimulator';
-
 import { ApiKeySettingsScreen } from '@/features/settings/ApiKeySettingsScreen';
+import { FeedbackScreen } from '@/features/feedback/FeedbackScreen';
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +86,10 @@ export const router = createBrowserRouter([
       {
         path: 'settings/api-key',
         element: <ApiKeySettingsScreen />
+      },
+      {
+        path: 'feedback',
+        element: <FeedbackScreen />
       },
       {
         path: '*',

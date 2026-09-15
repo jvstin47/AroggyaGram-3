@@ -124,18 +124,16 @@ export const ProfileScreen: React.FC = () => {
           Translations and AI health consultations adapt automatically to your native tongue.
         </p>
 
-        <div className="grid grid-cols-2 gap-2 pt-1">
+        <div className="grid grid-cols-3 gap-2 pt-1">
           {[
             { code: 'en', label: 'English' },
-            { code: 'ml', label: 'മലയാളം (Malayalam)' },
-            { code: 'hi', label: 'हिन्दी (Hindi)' },
-            { code: 'ta', label: 'தமிழ் (Tamil)' },
-            { code: 'bn', label: 'বাংলা (Bengali)' }
+            { code: 'ml', label: 'മലയാളം' },
+            { code: 'hi', label: 'हिन्दी' }
           ].map((lang) => (
             <button
               key={lang.code}
               onClick={() => updateLanguage(lang.code as any)}
-              className={`p-3 rounded-2xl text-xs font-bold border-2 transition-all text-left ${
+              className={`p-3 rounded-2xl text-xs font-bold border-2 transition-all text-center ${
                 profile?.language === lang.code
                   ? 'border-[#005448] bg-emerald-50 dark:bg-emerald-950/50 text-[#005448] dark:text-emerald-300'
                   : 'border-stone-200 dark:border-stone-800 text-stone-700 dark:text-stone-300 hover:border-stone-300 dark:hover:border-stone-700'

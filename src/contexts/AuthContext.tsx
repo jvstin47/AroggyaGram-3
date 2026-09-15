@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               id: devUser.id,
               role: savedRole,
               full_name: devUser.fullName,
-              phone: '+91 94471 23456',
+              phone: '+91 9XXX XX XXXX',
               language: (localStorage.getItem('aroggya_lang') as any) || 'en',
               avatar_url: null,
               created_at: new Date().toISOString(),
@@ -108,12 +108,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       id: devUser.id,
       role,
       full_name: fullName,
-      phone: '+91 94471 23456',
+      phone: '+91 9XXX XX XXXX',
       language: (localStorage.getItem('aroggya_lang') as any) || 'en',
       avatar_url: null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     });
+  };
+
+  const updateLanguage = (lang: 'en' | 'ml' | 'hi' | 'ta' | 'bn') => {
+    localStorage.setItem('aroggya_lang', lang);
+    if (profile) {
+      setProfile({ ...profile, language: lang });
+    } else {
+      setProfile({
+        id: 'patient-dev-1',
+        role: 'patient',
+        full_name: 'Resident Citizen',
+        phone: '+91 9XXX XX XXXX',
+        language: lang,
+        avatar_url: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+    }
   };
 
   const signOut = async () => {
@@ -124,13 +142,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('aroggya_name');
     setUser(null);
     setProfile(null);
-  };
-
-  const updateLanguage = (lang: 'en' | 'ml' | 'hi' | 'ta' | 'bn') => {
-    localStorage.setItem('aroggya_lang', lang);
-    if (profile) {
-      setProfile({ ...profile, language: lang });
-    }
   };
 
   return (

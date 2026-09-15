@@ -62,7 +62,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
     try {
       const result = await SituationEngine.analyzeSituation(text, {
         name: profile?.full_name || 'Resident in Need',
-        phone: profile?.phone || '+91 98470 12345',
+        phone: profile?.phone || '+91 9XXX XX XXXX',
         language: profile?.language || 'en'
       });
       setExtracted(result);
@@ -114,7 +114,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
       {
         id: user?.id || 'dev-requester-1',
         name: extracted.personContext.fullName || profile?.full_name || 'Requester',
-        phone: profile?.phone || '+91 98470 12345'
+        phone: profile?.phone || '+91 9XXX XX XXXX'
       },
       {
         address: activeAddress,

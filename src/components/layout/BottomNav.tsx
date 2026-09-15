@@ -2,11 +2,13 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { HeartPulse, HelpingHand, Pill, ShieldCheck, MapPin, Compass } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
 
 export const BottomNav: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
+  const t = getTranslation(profile?.language);
 
   const isVolunteer = user?.role === 'volunteer';
 
@@ -25,7 +27,7 @@ export const BottomNav: React.FC = () => {
               }`}
             >
               <HeartPulse className={`w-5 h-5 ${location.pathname === '/home' ? 'text-[#005448] dark:text-emerald-400 stroke-[2.5]' : ''}`} />
-              <span className="text-[11px] font-bold mt-0.5">Home</span>
+              <span className="text-[11px] font-bold mt-0.5">{t.nav_home}</span>
             </button>
 
             <button
@@ -37,7 +39,7 @@ export const BottomNav: React.FC = () => {
               }`}
             >
               <HeartPulse className={`w-5 h-5 text-emerald-600 dark:text-emerald-400 ${location.pathname === '/ask-aroggya' ? 'stroke-[2.5]' : ''}`} />
-              <span className="text-[11px] font-bold mt-0.5">Consult</span>
+              <span className="text-[11px] font-bold mt-0.5">{t.nav_consult}</span>
             </button>
 
             <button
@@ -49,7 +51,7 @@ export const BottomNav: React.FC = () => {
               }`}
             >
               <HelpingHand className={`w-5 h-5 text-[#E68A00] dark:text-amber-400 ${location.pathname === '/requests/new' ? 'stroke-[2.5]' : ''}`} />
-              <span className="text-[11px] font-bold mt-0.5">Get Help</span>
+              <span className="text-[11px] font-bold mt-0.5">{t.nav_sos}</span>
             </button>
 
             <button
@@ -61,7 +63,7 @@ export const BottomNav: React.FC = () => {
               }`}
             >
               <Pill className={`w-5 h-5 text-purple-600 dark:text-purple-400 ${location.pathname === '/medications' ? 'stroke-[2.5]' : ''}`} />
-              <span className="text-[11px] font-bold mt-0.5">Meds</span>
+              <span className="text-[11px] font-bold mt-0.5">{t.nav_meds}</span>
             </button>
 
             <button
@@ -73,7 +75,7 @@ export const BottomNav: React.FC = () => {
               }`}
             >
               <MapPin className={`w-5 h-5 text-blue-600 dark:text-blue-400 ${location.pathname === '/facilities' ? 'stroke-[2.5]' : ''}`} />
-              <span className="text-[11px] font-bold mt-0.5">Clinics</span>
+              <span className="text-[11px] font-bold mt-0.5">{t.nav_clinics}</span>
             </button>
           </>
         ) : (
