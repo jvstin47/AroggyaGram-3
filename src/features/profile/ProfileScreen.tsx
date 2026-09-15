@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Globe, Eye, User, Phone, ShieldCheck, Moon, Sun, Save, Check } from 'lucide-react';
+import { ArrowLeft, Globe, Eye, User, Phone, Moon, Sun, Save, Check } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { getTranslation } from '@/i18n/translations';
 
 export const ProfileScreen: React.FC = () => {
   const navigate = useNavigate();
   const { user, profile, updateLanguage, signInDev } = useAuth();
+  const t = getTranslation(profile?.language);
   const { fontSize, setFontSize, highContrast, setHighContrast, darkMode, toggleDarkMode } = useAccessibility();
 
   const [fullName, setFullName] = useState(profile?.full_name || user?.fullName || '');
@@ -36,8 +38,8 @@ export const ProfileScreen: React.FC = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Profile & Preferences</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Personal identity, dark mode & language</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.profile_title}</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.profile_subtitle}</p>
         </div>
       </div>
 
@@ -49,13 +51,13 @@ export const ProfileScreen: React.FC = () => {
           </div>
           <div className="flex-1">
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#2E7A5B] dark:text-emerald-400">
-              Active Role: {user?.role ? user.role.toUpperCase() : 'PATIENT'}
+              {t.profile_active_role}: {user?.role ? user.role.toUpperCase() : 'PATIENT'}
             </span>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="Your Full Name"
+              placeholder={t.profile_name_placeholder}
               className="w-full text-base font-black text-stone-900 dark:text-white bg-transparent border-b border-stone-200 dark:border-stone-700 focus:outline-none focus:border-[#005448] pb-0.5 mt-0.5"
             />
           </div>
@@ -63,7 +65,7 @@ export const ProfileScreen: React.FC = () => {
 
         <div className="space-y-1">
           <label className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
-            Registered Emergency Mobile
+            {t.profile_emergency_mobile}
           </label>
           <div className="relative">
             <Phone className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
@@ -82,7 +84,7 @@ export const ProfileScreen: React.FC = () => {
           className="w-full py-2.5 bg-[#005448] hover:bg-[#004239] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
         >
           {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-          <span>{saved ? 'Changes Saved' : 'Save Profile Changes'}</span>
+          <span>{saved ? t.profile_saved : t.profile_save}</span>
         </button>
       </form>
 
@@ -90,13 +92,13 @@ export const ProfileScreen: React.FC = () => {
       <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4 transition-colors">
         <div className="flex items-center gap-2 text-stone-900 dark:text-white font-bold text-sm">
           {darkMode ? <Moon className="w-5 h-5 text-indigo-400" /> : <Sun className="w-5 h-5 text-amber-500" />}
-          <span>Appearance & Dark Theme</span>
+          <span>{t.profile_appearance}</span>
         </div>
 
         <div className="flex items-center justify-between p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-100 dark:border-stone-700">
           <div>
-            <h4 className="text-xs font-bold text-stone-900 dark:text-white">Dark Theme</h4>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">Deep, eye-friendly contrast for nighttime and rural field conditions</p>
+            <h4 className="text-xs font-bold text-stone-900 dark:text-white">{t.profile_dark_theme}</h4>
+            <p className="text-[11px] text-stone-500 dark:text-stone-400">{t.profile_dark_desc}</p>
           </div>
           <button
             type="button"
@@ -118,10 +120,10 @@ export const ProfileScreen: React.FC = () => {
       <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3 transition-colors">
         <div className="flex items-center gap-2 text-stone-900 dark:text-white font-bold text-sm">
           <Globe className="w-5 h-5 text-[#005448] dark:text-emerald-400" />
-          <span>Select Preferred Language</span>
+          <span>{t.profile_select_language}</span>
         </div>
         <p className="text-xs text-stone-500 dark:text-stone-400">
-          Translations and AI health consultations adapt automatically to your native tongue.
+          {t.profile_language_desc}
         </p>
 
         <div className="grid grid-cols-3 gap-2 pt-1">
@@ -149,12 +151,12 @@ export const ProfileScreen: React.FC = () => {
       <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4 transition-colors">
         <div className="flex items-center gap-2 text-stone-900 dark:text-white font-bold text-sm">
           <Eye className="w-5 h-5 text-[#005448] dark:text-emerald-400" />
-          <span>Text Scaling</span>
+          <span>{t.profile_text_scaling}</span>
         </div>
 
         <div className="space-y-1.5">
           <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block">
-            Text Size (Elderly Friendly)
+            {t.profile_text_size}
           </label>
           <div className="grid grid-cols-3 gap-2">
             {(['normal', 'large', 'xlarge'] as const).map((s) => (
@@ -167,7 +169,7 @@ export const ProfileScreen: React.FC = () => {
                     : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700'
                 }`}
               >
-                {s === 'normal' ? 'Normal' : s === 'large' ? 'Large (115%)' : 'X-Large (130%)'}
+                {s === 'normal' ? t.profile_size_normal : s === 'large' ? t.profile_size_large : t.profile_size_xlarge}
               </button>
             ))}
           </div>
@@ -176,8 +178,8 @@ export const ProfileScreen: React.FC = () => {
         {/* High contrast toggle */}
         <div className="flex items-center justify-between pt-2 border-t border-stone-100 dark:border-stone-800">
           <div>
-            <h4 className="text-xs font-bold text-stone-900 dark:text-white">High Contrast Mode</h4>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">Extreme sunlight outdoor readability</p>
+            <h4 className="text-xs font-bold text-stone-900 dark:text-white">{t.profile_high_contrast}</h4>
+            <p className="text-[11px] text-stone-500 dark:text-stone-400">{t.profile_high_contrast_desc}</p>
           </div>
           <input
             type="checkbox"

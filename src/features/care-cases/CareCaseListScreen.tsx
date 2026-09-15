@@ -7,9 +7,13 @@ import {
 import { ResponseOrchestrator } from '@/services/orchestration/orchestrator.service';
 import type { CareCase, CareCaseStatus } from '@/types/careCase.types';
 import { CareCaseIntakeModal } from './CareCaseIntakeModal';
+import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
 
 export const CareCaseListScreen: React.FC = () => {
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const t = getTranslation(profile?.language);
   const [cases, setCases] = useState<CareCase[]>([]);
   const [filter, setFilter] = useState<'all' | 'active' | 'critical' | 'resolved'>('all');
   const [isIntakeOpen, setIsIntakeOpen] = useState(false);
@@ -54,10 +58,10 @@ export const CareCaseListScreen: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <span className="text-xs font-bold uppercase tracking-wider text-[#2E7A5B] dark:text-emerald-400">
-            Coordinated Action
+            {t.cases_coordinated}
           </span>
           <h2 className="text-2xl font-black text-stone-900 dark:text-white tracking-tight">
-            Care Network Cases
+            {t.cases_title}
           </h2>
         </div>
         
@@ -67,7 +71,7 @@ export const CareCaseListScreen: React.FC = () => {
           className="bg-[#005448] dark:bg-emerald-600 hover:bg-[#004037] dark:hover:bg-emerald-700 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
         >
           <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
-          New Case
+          {t.cases_new}
         </button>
       </div>
 
@@ -141,7 +145,7 @@ export const CareCaseListScreen: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-1 text-[#005448] dark:text-emerald-400 font-bold text-[11px]">
-                Mission Control
+                {t.cases_mission_control}
                 <ChevronRight className="w-4 h-4" />
               </div>
             </div>
@@ -151,8 +155,8 @@ export const CareCaseListScreen: React.FC = () => {
         {filtered.length === 0 && (
           <div className="p-8 text-center bg-white dark:bg-[#14211F] rounded-2xl border border-dashed border-stone-300 dark:border-stone-700 space-y-2">
             <HeartPulse className="w-8 h-8 text-stone-400 dark:text-stone-500 mx-auto" />
-            <p className="text-xs font-bold text-stone-700 dark:text-stone-300">No cases found matching filter</p>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">Try switching tabs or creating a new Care Case.</p>
+            <p className="text-xs font-bold text-stone-700 dark:text-stone-300">{t.cases_no_cases}</p>
+            <p className="text-[11px] text-stone-500 dark:text-stone-400">{t.cases_no_cases_hint}</p>
           </div>
         )}
       </div>

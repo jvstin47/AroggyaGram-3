@@ -4,6 +4,7 @@ import { Bot, Mic, MicOff, Send, AlertTriangle, ShieldAlert, ArrowLeft, Loader2,
 import { AIService } from '@/services/ai/ai.service';
 import type { HealthAnalysisResult, RiskLevel } from '@/types/ai.types';
 import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
 
 interface ChatMessage {
   id: string;
@@ -16,6 +17,7 @@ interface ChatMessage {
 export const AskAroggyaScreen: React.FC = () => {
   const navigate = useNavigate();
   const { profile } = useAuth();
+  const t = getTranslation(profile?.language);
   const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ export const AskAroggyaScreen: React.FC = () => {
     {
       id: 'welcome',
       sender: 'bot',
-      text: 'Namaskaram! I am AroggyaGram AI. You can describe your symptoms, ask about your medications, or speak to me in Malayalam, Hindi, or English. How can I help you right now?',
+      text: t.ask_welcome,
       timestamp: 'Just now'
     }
   ]);
@@ -95,7 +97,7 @@ export const AskAroggyaScreen: React.FC = () => {
       const errorMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
         sender: 'bot',
-        text: 'I could not connect to cloud triage services. If this is an emergency, please use the SOS button immediately.',
+        text: t.ask_error,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -131,8 +133,8 @@ export const AskAroggyaScreen: React.FC = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Ask Aroggya</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Safe clinical preliminary health assessment</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.ask_title}</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.ask_subtitle}</p>
         </div>
       </div>
 
@@ -140,7 +142,7 @@ export const AskAroggyaScreen: React.FC = () => {
       <div className="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 text-xs text-[#005448] dark:text-emerald-300 flex items-start gap-2.5">
         <Bot className="w-5 h-5 text-[#005448] dark:text-emerald-400 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          <strong>Important Clinical Notice:</strong> AroggyaGram AI provides initial risk classification and home guidance only. It does not replace clinical diagnosis by a registered medical officer or prescribe prescription dosages.
+          <strong>Important Clinical Notice:</strong> {t.ask_disclaimer}
         </p>
       </div>
 
@@ -150,7 +152,7 @@ export const AskAroggyaScreen: React.FC = () => {
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Describe your symptoms in your own words (e.g. 'Having severe dizziness and chest discomfort for the last 2 hours')..."
+            placeholder={t.ask_placeholder}
             rows={4}
             className="w-full rounded-2xl border-2 border-stone-200 dark:border-[#223733] bg-white dark:bg-[#0E1A18] p-4 pr-14 text-base focus:border-[#005448] dark:focus:border-emerald-500 focus:outline-none transition-all resize-none shadow-sm text-stone-800 dark:text-white"
           />
@@ -172,7 +174,7 @@ export const AskAroggyaScreen: React.FC = () => {
 
         {!speechSupported && (
           <p className="text-xs text-stone-500 dark:text-stone-400">
-            Voice speech recognition is unavailable in this web context. Please type your message.
+            {t.ask_voice_unavailable}
           </p>
         )}
 
@@ -184,12 +186,12 @@ export const AskAroggyaScreen: React.FC = () => {
           {loading ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Analyzing Symptoms...</span>
+              <span>{t.ask_analyzing}</span>
             </>
           ) : (
             <>
               <Send className="w-5 h-5" />
-              <span>Analyze Health Concern</span>
+              <span>{t.ask_analyze_btn}</span>
             </>
           )}
         </button>
@@ -227,7 +229,7 @@ export const AskAroggyaScreen: React.FC = () => {
                 <div className="flex items-center justify-between border-b border-stone-200/60 dark:border-[#1E302C] pb-3">
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
-                      Possible Condition
+                      {t.ask_possible_condition}
                     </span>
                     <h3 className="text-xl font-black text-stone-900 dark:text-white">{msg.result.possible_condition}</h3>
                   </div>
@@ -239,7 +241,7 @@ export const AskAroggyaScreen: React.FC = () => {
                   <div className="bg-red-600 text-white p-4 rounded-2xl space-y-2">
                     <div className="flex items-center gap-2 font-black text-base">
                       <ShieldAlert className="w-6 h-6 shrink-0" />
-                      <span>Urgent Medical Intervention Required</span>
+                      <span>{t.ask_urgent_intervention}</span>
                     </div>
                     <p className="text-sm text-red-100 font-medium">
                       {msg.result.emergency_warning || 'Do not delay. Please trigger SOS or call 108 emergency ambulance.'}
@@ -253,14 +255,14 @@ export const AskAroggyaScreen: React.FC = () => {
                         }}
                         className="flex-1 bg-white text-red-600 font-black py-2.5 rounded-xl text-center text-sm shadow-md cursor-pointer"
                       >
-                        Activate SOS Now
+                        {t.ask_activate_sos}
                       </button>
                       <a
                         href="tel:108"
                         className="flex-1 bg-red-800 text-white font-black py-2.5 rounded-xl text-center text-sm flex items-center justify-center gap-1.5"
                       >
                         <PhoneCall className="w-4 h-4" />
-                        <span>Call 108</span>
+                        <span>{t.ask_call_108}</span>
                       </a>
                     </div>
                   </div>
@@ -270,7 +272,7 @@ export const AskAroggyaScreen: React.FC = () => {
                 {msg.result.immediate_actions?.length > 0 && (
                   <div className="space-y-2 bg-stone-50 dark:bg-[#0E1A18] p-4 rounded-2xl border border-stone-100 dark:border-[#1E302C]">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
-                      Immediate Actions to Take
+                      {t.ask_immediate_actions}
                     </h4>
                     <ul className="space-y-1.5">
                       {msg.result.immediate_actions.map((act, i) => (
@@ -288,7 +290,7 @@ export const AskAroggyaScreen: React.FC = () => {
                   <div className="space-y-1 text-xs text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/50 p-3 rounded-xl border border-amber-200 dark:border-amber-800">
                     <span className="font-bold flex items-center gap-1">
                       <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                      Red Flag Symptoms:
+                      {t.ask_red_flags}
                     </span>
                     <p>{msg.result.warning_signs.join(' · ')}</p>
                   </div>

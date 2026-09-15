@@ -56,8 +56,13 @@ const HEALTH_NEWS: NewsItem[] = [
   }
 ];
 
+import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
+
 export const NewsScreen: React.FC = () => {
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const t = getTranslation(profile?.language);
 
   return (
     <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
@@ -72,21 +77,21 @@ export const NewsScreen: React.FC = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Community Health News</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Government advisories & rural health bulletins</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.news_title}</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.news_subtitle}</p>
         </div>
       </div>
 
       {/* Featured Bulletin Card */}
       <div className="bg-gradient-to-br from-[#E68A00] to-[#C66900] text-white p-5 rounded-3xl shadow-lg shadow-amber-600/20 space-y-2">
         <span className="text-[10px] font-black uppercase tracking-widest bg-white/20 px-2.5 py-0.5 rounded-full">
-          Verified Bulletin
+          {t.news_verified_bulletin}
         </span>
         <h2 className="text-lg font-black leading-snug">
-          24/7 Telemedicine & ASHA Helpline Active across Rural Districts
+          {t.news_bulletin_title}
         </h2>
         <p className="text-xs text-amber-100 font-medium leading-relaxed">
-          Dial 1056 for state mental health and medical counseling services anytime without toll charges.
+          {t.news_bulletin_desc}
         </p>
       </div>
 
@@ -130,7 +135,7 @@ export const NewsScreen: React.FC = () => {
                 <span className="font-semibold text-stone-700 dark:text-stone-300 truncate max-w-[70%]">
                   {item.authority}
                 </span>
-                <span className="text-[#005448] dark:text-emerald-400 font-bold">Read More →</span>
+                <span className="text-[#005448] dark:text-emerald-400 font-bold">{t.news_read_more}</span>
               </div>
             </div>
           </article>

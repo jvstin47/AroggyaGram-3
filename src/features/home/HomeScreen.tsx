@@ -69,36 +69,6 @@ export const HomeScreen: React.FC = () => {
           <span>{t.home_intake_btn}</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
-
-        {/* Compact Scenario Chips - Horizontal Scroll */}
-        <div className="space-y-1 pt-1 border-t border-white/10">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-200">
-            {t.home_quick_scenarios}
-          </span>
-          <div className="flex gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
-            <button
-              type="button"
-              onClick={() => handleOpenIntakeWithPrompt('Missed morning insulin and blood pressure pills. Need pharmacy delivery from local store.')}
-              className="bg-white/15 hover:bg-white/25 text-white text-[11px] font-medium px-2.5 py-1 rounded-xl transition-colors cursor-pointer whitespace-nowrap"
-            >
-              {t.home_scenario_meds}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleOpenIntakeWithPrompt('Need wheelchair-accessible vehicle for clinic visit to Community Health Centre tomorrow.')}
-              className="bg-white/15 hover:bg-white/25 text-white text-[11px] font-medium px-2.5 py-1 rounded-xl transition-colors cursor-pointer whitespace-nowrap"
-            >
-              {t.home_scenario_transport}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleOpenIntakeWithPrompt('Elderly resident had a dizzy spell and fell down. Conscious but unable to stand unassisted.')}
-              className="bg-white/15 hover:bg-white/25 text-white text-[11px] font-medium px-2.5 py-1 rounded-xl transition-colors cursor-pointer whitespace-nowrap"
-            >
-              {t.home_scenario_fall}
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* SECONDARY PILLARS */}
@@ -153,10 +123,10 @@ export const HomeScreen: React.FC = () => {
             <span className="text-[11px] font-bold uppercase tracking-wider">{t.home_meds_title}</span>
           </div>
           <div className="text-xl font-black text-stone-900 dark:text-white">
-            {pendingMeds.length} <span className="text-xs font-semibold text-stone-500 dark:text-stone-400">pending</span>
+            {pendingMeds.length} <span className="text-xs font-semibold text-stone-500 dark:text-stone-400">{t.home_pending}</span>
           </div>
           <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5 truncate">
-            {pendingMeds[0] ? `Next: ${pendingMeds[0].name}` : 'All taken today!'}
+            {pendingMeds[0] ? `${t.home_next}: ${pendingMeds[0].name}` : t.home_all_taken}
           </p>
         </div>
 
@@ -169,10 +139,10 @@ export const HomeScreen: React.FC = () => {
             <span className="text-[11px] font-bold uppercase tracking-wider">{t.home_clinics_title}</span>
           </div>
           <div className="text-xl font-black text-stone-900 dark:text-white">
-            CHCs & PHCs
+            {t.home_chc_phc}
           </div>
           <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5 truncate">
-            Find doctors & pharmacies
+            {t.home_find_doctors}
           </p>
         </div>
       </div>

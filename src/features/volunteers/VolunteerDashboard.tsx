@@ -15,6 +15,7 @@ import { useRequestsQuery } from '@/hooks/useRequestsQuery';
 import { useAuth } from '@/contexts/AuthContext';
 import { MatchingService } from '@/services/matching/matching.service';
 import type { VolunteerProfile } from '@/types/database.types';
+import { getTranslation } from '@/i18n/translations';
 
 // Real Leaflet Map integration
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -44,7 +45,8 @@ const MOCK_VOLUNTEER_PROFILE: VolunteerProfile = {
 
 export const VolunteerDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const { user, signInDev } = useAuth();
+  const { user, profile, signInDev } = useAuth();
+  const t = getTranslation(profile?.language);
   const { requests, updateStatus } = useRequestsQuery();
 
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
@@ -75,7 +77,7 @@ export const VolunteerDashboard: React.FC = () => {
       <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-4">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-[#2E7A5B] dark:text-emerald-400">
-            Volunteer Network
+            {t.volunteer_network}
           </span>
           <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">
             Hi, Rahul Nair 🙌
@@ -89,7 +91,7 @@ export const VolunteerDashboard: React.FC = () => {
           }}
           className="text-xs bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-bold px-3 py-1.5 rounded-full border border-stone-300 dark:border-stone-700"
         >
-          Switch to Citizen
+          {t.volunteer_switch_citizen}
         </button>
       </div>
 
@@ -101,11 +103,11 @@ export const VolunteerDashboard: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-black text-stone-900 dark:text-white">Community Verified</span>
+              <span className="text-sm font-black text-stone-900 dark:text-white">{t.volunteer_verified}</span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
             <p className="text-xs text-stone-500">
-              Kanjirappally Ward #4 · {MOCK_VOLUNTEER_PROFILE.completed_tasks} tasks completed
+              Kanjirappally Ward #4 · {MOCK_VOLUNTEER_PROFILE.completed_tasks} {t.volunteer_tasks_completed}
             </p>
           </div>
         </div>
@@ -119,7 +121,7 @@ export const VolunteerDashboard: React.FC = () => {
       <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-4 rounded-2xl text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2.5">
         <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <div>
-          <strong>Community Volunteer Reminder:</strong> You are assisting as a trusted neighbor. You are not a certified doctor. Only provide the specified delivery or accompaniment assistance.
+          <strong>{t.volunteer_reminder}</strong> {t.volunteer_reminder_text}
         </div>
       </div>
 
@@ -132,7 +134,7 @@ export const VolunteerDashboard: React.FC = () => {
               activeTab === 'available' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : ''
             }`}
           >
-            Nearby ({availableRequests.length})
+            {t.volunteer_nearby} ({availableRequests.length})
           </button>
           <button
             onClick={() => setActiveTab('active')}
@@ -140,7 +142,7 @@ export const VolunteerDashboard: React.FC = () => {
               activeTab === 'active' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : ''
             }`}
           >
-            My Active ({activeRequests.length})
+            {t.volunteer_my_active} ({activeRequests.length})
           </button>
           <button
             onClick={() => setActiveTab('history')}
@@ -148,7 +150,7 @@ export const VolunteerDashboard: React.FC = () => {
               activeTab === 'history' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : ''
             }`}
           >
-            Done ({completedRequests.length})
+            {t.volunteer_done} ({completedRequests.length})
           </button>
         </div>
 
@@ -206,7 +208,7 @@ export const VolunteerDashboard: React.FC = () => {
 
                     {/* Match explanation */}
                     <div className="bg-[#FAF9F4] dark:bg-stone-800/60 p-2.5 rounded-xl border border-[#E8E6DF] dark:border-stone-700 text-[11px] text-stone-600 dark:text-stone-400">
-                      <strong>Matching Score ({match.totalScore}/100):</strong> {match.explanation}
+                      <strong>{t.volunteer_matching_score} ({match.totalScore}/100):</strong> {match.explanation}
                     </div>
 
                     <div className="flex items-center justify-between pt-1 text-xs text-stone-500 font-medium">
@@ -216,7 +218,7 @@ export const VolunteerDashboard: React.FC = () => {
                         onClick={() => handleAccept(req.id)}
                         className="py-2 px-4 bg-[#005448] hover:bg-[#004239] text-white rounded-xl font-bold transition-all active:scale-95 shadow-md"
                       >
-                        Accept Task
+                        {t.volunteer_accept}
                       </button>
                     </div>
                   </div>
@@ -226,8 +228,8 @@ export const VolunteerDashboard: React.FC = () => {
               {availableRequests.length === 0 && (
                 <div className="text-center py-12 bg-white dark:bg-[#14211F] rounded-3xl border border-stone-200 dark:border-stone-800">
                   <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-2" />
-                  <p className="text-lg font-bold text-stone-800 dark:text-stone-200">All caught up!</p>
-                  <p className="text-xs text-stone-500">No open requests in your area right now.</p>
+                  <p className="text-lg font-bold text-stone-800 dark:text-stone-200">{t.volunteer_all_caught_up}</p>
+                  <p className="text-xs text-stone-500">{t.volunteer_no_open}</p>
                 </div>
               )}
             </div>
@@ -253,7 +255,7 @@ export const VolunteerDashboard: React.FC = () => {
                           onClick={() => handleAccept(req.id)}
                           className="mt-1 bg-[#005448] text-white text-[10px] font-bold py-1 px-2 rounded-lg"
                         >
-                          Accept
+                          {t.volunteer_accept}
                         </button>
                       </div>
                     </Popup>
@@ -276,7 +278,7 @@ export const VolunteerDashboard: React.FC = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">
-                    Active Mission
+                    {t.volunteer_active_mission}
                   </span>
                   <h3 className="text-lg font-black text-stone-900 dark:text-white mt-1">{req.title}</h3>
                 </div>
@@ -292,14 +294,14 @@ export const VolunteerDashboard: React.FC = () => {
                   rel="noreferrer"
                   className="flex-1 py-2.5 bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 rounded-xl font-bold text-xs text-center shadow-xs"
                 >
-                  Navigate on Maps
+                  {t.volunteer_navigate}
                 </a>
                 <button
                   type="button"
                   onClick={() => handleComplete(req.id)}
                   className="flex-1 py-2.5 bg-[#2E7A5B] hover:bg-[#256349] text-white rounded-xl font-bold text-xs shadow-md"
                 >
-                  Mark Completed
+                  {t.volunteer_mark_completed}
                 </button>
               </div>
             </div>
@@ -307,8 +309,8 @@ export const VolunteerDashboard: React.FC = () => {
 
           {activeRequests.length === 0 && (
             <div className="text-center py-10 bg-white dark:bg-[#14211F] rounded-3xl border border-stone-200 dark:border-stone-800">
-              <p className="text-sm font-bold text-stone-700 dark:text-stone-300">No active tasks in progress</p>
-              <p className="text-xs text-stone-500 mt-1">Accept a nearby request to help a neighbor.</p>
+              <p className="text-sm font-bold text-stone-700 dark:text-stone-300">{t.volunteer_no_active}</p>
+              <p className="text-xs text-stone-500 mt-1">{t.volunteer_no_active_hint}</p>
             </div>
           )}
         </div>
@@ -328,7 +330,7 @@ export const VolunteerDashboard: React.FC = () => {
           ))}
           {completedRequests.length === 0 && (
             <div className="text-center py-8 text-xs text-stone-500">
-              No completed tasks yet.
+              {t.volunteer_no_completed}
             </div>
           )}
         </div>

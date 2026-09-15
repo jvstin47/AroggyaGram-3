@@ -7,10 +7,12 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useMedicationsQuery } from '@/hooks/useMedicationsQuery';
 import { MedicationService } from '@/services/medications/medication.service';
+import { getTranslation } from '@/i18n/translations';
 
 export const MedicationsScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
+  const t = getTranslation(profile?.language);
   const { medications, addMedication, toggleTaken } = useMedicationsQuery(user?.id || 'citizen-user');
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -83,8 +85,8 @@ export const MedicationsScreen: React.FC = () => {
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div>
-            <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Medications</h1>
-            <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Daily adherence & dosage schedule</p>
+            <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.meds_title}</h1>
+            <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.meds_subtitle}</p>
           </div>
         </div>
 
@@ -94,7 +96,7 @@ export const MedicationsScreen: React.FC = () => {
           className="bg-[#005448] dark:bg-emerald-600 text-white p-2.5 rounded-2xl shadow-md hover:bg-[#004239] dark:hover:bg-emerald-700 transition-all flex items-center gap-1.5 text-xs font-bold px-3.5"
         >
           <Plus className="w-4 h-4" />
-          <span>Add Med</span>
+          <span>{t.meds_add}</span>
         </button>
       </div>
 
@@ -103,12 +105,12 @@ export const MedicationsScreen: React.FC = () => {
         <div className="flex justify-between items-end">
           <div>
             <span className="text-xs font-bold text-emerald-200 uppercase tracking-widest">
-              Today's Schedule
+              {t.meds_today_schedule}
             </span>
-            <h2 className="text-3xl font-black tracking-tight">{adherencePercent}% Completed</h2>
+            <h2 className="text-3xl font-black tracking-tight">{adherencePercent}% {t.meds_completed}</h2>
           </div>
           <span className="text-sm font-bold text-emerald-100">
-            {takenCount} of {medications.length} taken
+            {takenCount} {t.meds_taken_of} {medications.length}
           </span>
         </div>
 
@@ -128,10 +130,10 @@ export const MedicationsScreen: React.FC = () => {
         </div>
         <div>
           <span className="text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
-            AI Adherence Guidance
+            {t.meds_ai_guidance}
           </span>
           <p className="text-xs text-stone-700 dark:text-stone-300 mt-0.5 leading-relaxed font-medium">
-            Consistent timing of blood pressure and diabetes medicine protects against sudden dizziness. If you ever feel lightheaded, verify your dose with your caregiver.
+            {t.meds_ai_guidance_text}
           </p>
         </div>
       </div>
@@ -140,9 +142,9 @@ export const MedicationsScreen: React.FC = () => {
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
           <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
-            Scheduled Prescriptions ({medications.length})
+            {t.meds_scheduled} ({medications.length})
           </h3>
-          <span className="text-[11px] text-stone-400">Tap to mark taken</span>
+          <span className="text-[11px] text-stone-400">{t.meds_tap_to_mark}</span>
         </div>
 
         {medications.map((med) => (
@@ -199,8 +201,8 @@ export const MedicationsScreen: React.FC = () => {
         {medications.length === 0 && (
           <div className="p-8 text-center bg-white dark:bg-[#14211F] rounded-2xl border border-dashed border-stone-300 dark:border-stone-800 space-y-2">
             <Pill className="w-8 h-8 text-stone-400 mx-auto" />
-            <p className="text-xs font-bold text-stone-700 dark:text-stone-300">No medications configured</p>
-            <p className="text-[11px] text-stone-500">Tap "Add Med" above to set up your schedule.</p>
+            <p className="text-xs font-bold text-stone-700 dark:text-stone-300">{t.meds_no_meds}</p>
+            <p className="text-[11px] text-stone-500">{t.meds_no_meds_hint}</p>
           </div>
         )}
       </div>
@@ -210,7 +212,7 @@ export const MedicationsScreen: React.FC = () => {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-white dark:bg-[#14211F] text-stone-900 dark:text-stone-100 rounded-3xl p-5 w-full max-w-md max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl border border-stone-200 dark:border-stone-800">
             <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-800 pb-3">
-              <h3 className="text-lg font-black text-stone-900 dark:text-white">Add Scheduled Medication</h3>
+              <h3 className="text-lg font-black text-stone-900 dark:text-white">{t.meds_add_title}</h3>
               <button
                 type="button"
                 onClick={() => setShowAddModal(false)}
@@ -224,13 +226,13 @@ export const MedicationsScreen: React.FC = () => {
               {/* Medicine Name */}
               <div>
                 <label className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-                  Medicine Name & Strength
+                  {t.meds_name_label}
                 </label>
                 <input
                   type="text"
                   value={medName}
                   onChange={(e) => setMedName(e.target.value)}
-                  placeholder="e.g. Amlodipine, Metformin, Paracetamol"
+                  placeholder={t.meds_name_placeholder}
                   className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs font-bold bg-stone-50 dark:bg-stone-800/80 focus:border-[#005448] focus:outline-none"
                   required
                 />
@@ -239,23 +241,33 @@ export const MedicationsScreen: React.FC = () => {
               {/* Form Selector */}
               <div>
                 <label className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-                  Medicine Form
+                  {t.meds_form_label}
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
-                  {(['Tablet', 'Capsule', 'Syrup', 'Drops', 'Inhaler', 'Injection'] as const).map((form) => (
-                    <button
-                      key={form}
-                      type="button"
-                      onClick={() => setMedForm(form)}
-                      className={`p-2 rounded-xl text-xs font-bold border transition-colors ${
-                        medForm === form
-                          ? 'bg-[#005448] text-white border-[#005448]'
-                          : 'bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700'
-                      }`}
-                    >
-                      {form}
-                    </button>
-                  ))}
+                  {(['Tablet', 'Capsule', 'Syrup', 'Drops', 'Inhaler', 'Injection'] as const).map((form) => {
+                    const formLabel =
+                      form === 'Tablet' ? t.meds_form_tablet :
+                      form === 'Capsule' ? t.meds_form_capsule :
+                      form === 'Syrup' ? t.meds_form_syrup :
+                      form === 'Drops' ? t.meds_form_drops :
+                      form === 'Inhaler' ? t.meds_form_inhaler :
+                      t.meds_form_injection;
+
+                    return (
+                      <button
+                        key={form}
+                        type="button"
+                        onClick={() => setMedForm(form)}
+                        className={`p-2 rounded-xl text-xs font-bold border transition-colors ${
+                          medForm === form
+                            ? 'bg-[#005448] text-white border-[#005448]'
+                            : 'bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700'
+                        }`}
+                      >
+                        {formLabel}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -263,7 +275,7 @@ export const MedicationsScreen: React.FC = () => {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-                    Dose Quantity
+                    {t.meds_quantity_label}
                   </label>
                   <div className="flex items-center gap-2">
                     {[0.5, 1, 2, 3].map((q) => (
@@ -285,13 +297,13 @@ export const MedicationsScreen: React.FC = () => {
 
                 <div>
                   <label className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-                    Strength / Unit
+                    {t.meds_strength_label}
                   </label>
                   <input
                     type="text"
                     value={strength}
                     onChange={(e) => setStrength(e.target.value)}
-                    placeholder="e.g. 500mg, 5ml"
+                    placeholder={t.meds_strength_placeholder}
                     className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-2.5 text-xs font-bold bg-stone-50 dark:bg-stone-800/80 focus:border-[#005448] focus:outline-none"
                   />
                 </div>
@@ -300,31 +312,39 @@ export const MedicationsScreen: React.FC = () => {
               {/* Food Relation */}
               <div>
                 <label className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-                  Consumption Timing
+                  {t.meds_timing_label}
                 </label>
                 <div className="grid grid-cols-2 gap-1.5">
-                  {(['After Food', 'Before Food', 'With Meal', 'Bedtime'] as const).map((food) => (
-                    <button
-                      key={food}
-                      type="button"
-                      onClick={() => setFoodTiming(food)}
-                      className={`p-2 rounded-xl text-xs font-bold border flex items-center justify-center gap-1 transition-colors ${
-                        foodTiming === food
-                          ? 'bg-[#005448] text-white border-[#005448]'
-                          : 'bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700'
-                      }`}
-                    >
-                      <Utensils className="w-3 h-3" />
-                      {food}
-                    </button>
-                  ))}
+                  {(['After Food', 'Before Food', 'With Meal', 'Bedtime'] as const).map((food) => {
+                    const foodLabel =
+                      food === 'After Food' ? t.meds_timing_after :
+                      food === 'Before Food' ? t.meds_timing_before :
+                      food === 'With Meal' ? t.meds_timing_with :
+                      t.meds_timing_bedtime;
+
+                    return (
+                      <button
+                        key={food}
+                        type="button"
+                        onClick={() => setFoodTiming(food)}
+                        className={`p-2 rounded-xl text-xs font-bold border flex items-center justify-center gap-1 transition-colors ${
+                          foodTiming === food
+                            ? 'bg-[#005448] text-white border-[#005448]'
+                            : 'bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700'
+                        }`}
+                      >
+                        <Utensils className="w-3 h-3" />
+                        {foodLabel}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Consumption Time: Native Time Input + Quick Chips */}
               <div className="space-y-1.5">
                 <label className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block">
-                  Schedule Time (Native Time Clock)
+                  {t.meds_schedule_time}
                 </label>
                 
                 <input
@@ -338,10 +358,10 @@ export const MedicationsScreen: React.FC = () => {
                 {/* Fast time chips */}
                 <div className="flex gap-1.5 pt-1">
                   {[
-                    { label: 'Morning', time: '08:30' },
-                    { label: 'Afternoon', time: '13:00' },
-                    { label: 'Evening', time: '18:30' },
-                    { label: 'Night', time: '21:30' }
+                    { label: t.meds_time_morning, time: '08:30' },
+                    { label: t.meds_time_afternoon, time: '13:00' },
+                    { label: t.meds_time_evening, time: '18:30' },
+                    { label: t.meds_time_night, time: '21:30' }
                   ].map((chip) => (
                     <button
                       key={chip.time}
@@ -366,14 +386,14 @@ export const MedicationsScreen: React.FC = () => {
                   onClick={() => setShowAddModal(false)}
                   className="flex-1 py-3 border border-stone-200 dark:border-stone-700 rounded-xl font-bold text-xs text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
                 >
-                  Cancel
+                  {t.btn_cancel}
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="flex-1 py-3 bg-[#005448] hover:bg-[#004239] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
                 >
-                  Save Schedule
+                  {t.meds_save_schedule}
                 </button>
               </div>
             </form>
@@ -391,10 +411,10 @@ export const MedicationsScreen: React.FC = () => {
 
             <div className="text-center space-y-1">
               <h3 className="text-lg font-black text-stone-900 dark:text-white">
-                Remove Medication?
+                {t.meds_remove_title}
               </h3>
               <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-                Are you sure you want to remove <strong className="text-stone-900 dark:text-stone-100">{medicineToDelete.name}</strong> from your daily dosage schedule?
+                {t.meds_remove_confirm} <strong className="text-stone-900 dark:text-stone-100">{medicineToDelete.name}</strong> {t.meds_remove_from_schedule}
               </p>
             </div>
 
@@ -404,14 +424,14 @@ export const MedicationsScreen: React.FC = () => {
                 onClick={() => setMedicineToDelete(null)}
                 className="flex-1 py-3 border border-stone-200 dark:border-stone-700 rounded-xl font-bold text-xs text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
               >
-                Keep It
+                {t.btn_keep}
               </button>
               <button
                 type="button"
                 onClick={confirmDelete}
                 className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
               >
-                Remove
+                {t.btn_remove}
               </button>
             </div>
           </div>

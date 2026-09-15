@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, MessageSquare, Star, Send, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Star, Send, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
 
 export const FeedbackScreen: React.FC = () => {
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const t = getTranslation(profile?.language);
+
   const [rating, setRating] = useState<number>(5);
   const [category, setCategory] = useState<string>('General Experience');
   const [comments, setComments] = useState<string>('');
@@ -27,6 +32,24 @@ export const FeedbackScreen: React.FC = () => {
     setSubmitted(true);
   };
 
+  const getRatingText = (stars: number) => {
+    switch (stars) {
+      case 5: return t.feedback_rating_5;
+      case 4: return t.feedback_rating_4;
+      case 3: return t.feedback_rating_3;
+      default: return t.feedback_rating_low;
+    }
+  };
+
+  const categories = [
+    { id: 'General Experience', label: t.feedback_cat_general },
+    { id: 'AI Triage Quality', label: t.feedback_cat_ai },
+    { id: 'Medication Schedule', label: t.feedback_cat_meds },
+    { id: 'Volunteer Dispatch', label: t.feedback_cat_volunteer },
+    { id: 'Language / Translation', label: t.feedback_cat_language },
+    { id: 'App Bug / Glitch', label: t.feedback_cat_bug }
+  ];
+
   return (
     <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
       {/* Header */}
@@ -40,8 +63,8 @@ export const FeedbackScreen: React.FC = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Community Feedback</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Help us refine care for rural Kerala</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.feedback_title}</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.feedback_subtitle}</p>
         </div>
       </div>
 
@@ -51,9 +74,9 @@ export const FeedbackScreen: React.FC = () => {
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-xl font-black text-stone-900 dark:text-white">Nanni! Thank you.</h2>
+            <h2 className="text-xl font-black text-stone-900 dark:text-white">{t.feedback_thank_you}</h2>
             <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed max-w-xs mx-auto">
-              Your valuable feedback has been recorded. It directly shapes our community responder workflows and local medical triage.
+              {t.feedback_recorded}
             </p>
           </div>
           <button
@@ -61,7 +84,7 @@ export const FeedbackScreen: React.FC = () => {
             onClick={() => navigate('/home')}
             className="w-full py-3.5 bg-[#005448] hover:bg-[#004239] text-white rounded-2xl font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
           >
-            Return to Home Hub
+            {t.feedback_return_home}
           </button>
         </div>
       ) : (
@@ -69,7 +92,7 @@ export const FeedbackScreen: React.FC = () => {
           {/* Rating Card */}
           <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
             <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block">
-              How was your experience today?
+              {t.feedback_rating_label}
             </label>
             <div className="flex items-center justify-center gap-2 py-2">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -90,35 +113,28 @@ export const FeedbackScreen: React.FC = () => {
               ))}
             </div>
             <p className="text-center text-xs font-bold text-[#005448] dark:text-emerald-400">
-              {rating === 5 ? 'Excellent & Life-saving' : rating === 4 ? 'Very Helpful' : rating === 3 ? 'Satisfactory' : 'Needs Improvement'}
+              {getRatingText(rating)}
             </p>
           </div>
 
           {/* Feedback Category */}
           <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
             <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block">
-              Feedback Topic
+              {t.feedback_topic_label}
             </label>
             <div className="grid grid-cols-2 gap-2">
-              {[
-                'General Experience',
-                'AI Triage Quality',
-                'Medication Schedule',
-                'Volunteer Dispatch',
-                'Language / Translation',
-                'App Bug / Glitch'
-              ].map((cat) => (
+              {categories.map((cat) => (
                 <button
-                  key={cat}
+                  key={cat.id}
                   type="button"
-                  onClick={() => setCategory(cat)}
+                  onClick={() => setCategory(cat.id)}
                   className={`p-2.5 rounded-xl text-xs font-bold border transition-colors text-left cursor-pointer ${
-                    category === cat
+                    category === cat.id
                       ? 'bg-[#005448] text-white border-[#005448]'
                       : 'bg-stone-50 dark:bg-stone-800/80 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700'
                   }`}
                 >
-                  {cat}
+                  {cat.label}
                 </button>
               ))}
             </div>
@@ -127,13 +143,13 @@ export const FeedbackScreen: React.FC = () => {
           {/* Comments Textarea */}
           <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
             <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block">
-              Your Suggestions or Comments
+              {t.feedback_comments_label}
             </label>
             <textarea
               rows={4}
               value={comments}
               onChange={(e) => setComments(e.target.value)}
-              placeholder="Tell us what you liked, or what could be made easier for elders..."
+              placeholder={t.feedback_comments_placeholder}
               className="w-full border border-stone-300 dark:border-stone-700 rounded-2xl p-3.5 text-xs font-medium bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-white focus:border-[#005448] focus:outline-none transition-colors resize-none"
               required
             />
@@ -145,7 +161,7 @@ export const FeedbackScreen: React.FC = () => {
             className="w-full py-4 bg-[#005448] hover:bg-[#004239] disabled:opacity-50 text-white rounded-2xl font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all active:scale-98 cursor-pointer"
           >
             <Send className="w-4 h-4" />
-            <span>Submit Feedback</span>
+            <span>{t.feedback_submit}</span>
           </button>
         </form>
       )}

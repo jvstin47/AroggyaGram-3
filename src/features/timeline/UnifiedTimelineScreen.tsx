@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, CheckCircle2, Bot, Pill, AlertOctagon, HelpingHand } 
 import { useRequestsQuery } from '@/hooks/useRequestsQuery';
 import { useMedicationsQuery } from '@/hooks/useMedicationsQuery';
 import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
 
 interface TimelineEvent {
   time: string;
@@ -15,7 +16,8 @@ interface TimelineEvent {
 
 export const UnifiedTimelineScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
+  const t = getTranslation(profile?.language);
   const { requests } = useRequestsQuery();
   const { medications } = useMedicationsQuery(user?.id || 'dev-patient-1');
 
@@ -57,8 +59,8 @@ export const UnifiedTimelineScreen: React.FC = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Health & Care Timeline</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Chronological record of health events and assistance</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.timeline_title}</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.timeline_subtitle}</p>
         </div>
       </div>
 

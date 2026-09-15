@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { MapPin, PhoneCall, ArrowLeft, Building2, Pill, Stethoscope, AlertOctagon } from 'lucide-react';
 import { FacilityService } from '@/services/location/facility.service';
 import type { HealthcareFacility } from '@/types/database.types';
+import { useAuth } from '@/contexts/AuthContext';
+import { getTranslation } from '@/i18n/translations';
 
 export const FacilityDiscoveryScreen: React.FC = () => {
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const t = getTranslation(profile?.language);
   const [facilities, setFacilities] = useState<HealthcareFacility[]>([]);
   const [filter, setFilter] = useState<'all' | 'hospital' | 'clinic' | 'pharmacy'>('all');
   const [loading, setLoading] = useState(true);
@@ -33,18 +37,18 @@ export const FacilityDiscoveryScreen: React.FC = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Healthcare Facilities</h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Hospitals, PHCs, & Pharmacies nearby</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">{t.facilities_title}</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.facilities_subtitle}</p>
         </div>
       </div>
 
       {/* Filter Tabs */}
       <div className="flex gap-2 overflow-x-auto pb-1">
         {[
-          { id: 'all', label: 'All Places' },
-          { id: 'hospital', label: 'Hospitals' },
-          { id: 'clinic', label: 'Clinics & PHC' },
-          { id: 'pharmacy', label: 'Pharmacies' }
+          { id: 'all', label: t.facilities_all },
+          { id: 'hospital', label: t.facilities_hospitals },
+          { id: 'clinic', label: t.facilities_clinics },
+          { id: 'pharmacy', label: t.facilities_pharmacies }
         ].map((item) => (
           <button
             key={item.id}
@@ -76,7 +80,7 @@ export const FacilityDiscoveryScreen: React.FC = () => {
                   {fac.has_emergency && (
                     <span className="text-[10px] font-bold uppercase tracking-wider bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-md flex items-center gap-1">
                       <AlertOctagon className="w-3 h-3" />
-                      24/7 ER
+                      {t.facilities_er_24}
                     </span>
                   )}
                 </div>
@@ -98,7 +102,7 @@ export const FacilityDiscoveryScreen: React.FC = () => {
                 className="flex-1 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
               >
                 <PhoneCall className="w-4 h-4 text-[#005448] dark:text-emerald-400" />
-                <span>Call Center</span>
+                <span>{t.btn_call}</span>
               </a>
               <a
                 href={`https://maps.google.com/?q=${fac.latitude},${fac.longitude}`}
@@ -107,7 +111,7 @@ export const FacilityDiscoveryScreen: React.FC = () => {
                 className="flex-1 py-2.5 bg-[#005448] dark:bg-emerald-600 hover:bg-[#004239] dark:hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
               >
                 <MapPin className="w-4 h-4" />
-                <span>Directions</span>
+                <span>{t.btn_directions}</span>
               </a>
             </div>
           </div>
