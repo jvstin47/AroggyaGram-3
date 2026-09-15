@@ -1,32 +1,89 @@
-# React + TypeScript + Vite
+# AroggyaGram 3 — Rural Healthcare & Community Assistance Network
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, community-powered rural healthcare and assistance platform engineered from the ground up by synthesizing the strongest concepts of [AroggyaGram (Flutter)](https://github.com/jvstin47/AroggyaGram.git) and [Help-hive (React)](https://github.com/jvstin47/Help-hive.git).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌟 Architecture & Highlights
 
-## React Compiler
+1. **AI Clinical Health Assistant (`Ask Aroggya`)**:
+   - Structured symptom evaluation output (`LOW`, `MODERATE`, `HIGH`, `CRITICAL` risk classification).
+   - Clinical explanation, immediate actionable guidance, red-flag symptoms, and professional referral.
+   - Multilingual support for English, Malayalam (മലയാളം), Hindi (हिन्दी), Tamil (தமிழ்), and Bengali (বাংলা).
+   - Voice input integration via Web Speech API.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. **Universal Emergency SOS**:
+   - High-contrast, persistent 1-tap SOS overlay button accessible from every screen.
+   - Non-blocking GPS location acquisition with graceful fallback if coordinates are unavailable.
+   - Instant direct dial for 108/112 ambulance and registered family caregivers.
+   - Pre-formatted SMS emergency dispatch with live Google Maps coordinate links.
 
-## Expanding the Oxlint configuration
+3. **Intelligent Request Routing & Voice Wizard**:
+   - 3-step voice-first request wizard allowing citizens to speak naturally in their native tongue.
+   - Deterministic safety overrides: acute emergencies (falls, heart attacks, severe bleeding) are automatically detected and routed directly to emergency care, strictly preventing volunteers from replacing an ambulance.
+   - Automatic intent classification (`pharmacy_pickup`, `medical_transport`, `grocery_pickup`, `custom`).
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+4. **Volunteer Discovery & Geospatial Dashboard**:
+   - Dual List and interactive Leaflet map view for discovering open community needs.
+   - Transparent, explainable matching score based on distance, verified skills (e.g. `healthcare_first_responder`, `vehicle_owner`), availability, and task completion history.
+   - Safety guardrail banners reminding volunteers of non-clinical scope of practice.
+   - Complete status machine tracking (`submitted` → `accepted` → `in_progress` → `completed`).
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+5. **Medication Adherence Checklist**:
+   - Daily scheduled prescription adherence tracking.
+   - Dynamic AI adherence insights and local/server persistence.
+
+6. **Healthcare Facilities Finder**:
+   - Discovery for Taluk hospitals, Primary Health Centres (PHC), and 24/7 pharmacies with 1-tap phone dial and map directions.
+
+7. **Unified Activity Timeline**:
+   - Integrated chronological record of health events, consultations, medication schedules, and community assistance.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, Lucide React
+- **Server State**: TanStack Query v5
+- **Client State**: React Context (minimal, clean boundary for Auth & Accessibility)
+- **Backend**: Supabase (PostgreSQL, Row Level Security, Realtime)
+- **Maps**: Leaflet + React-Leaflet
+- **AI**: Google Gemini 2.5 Flash
+- **Mobile**: Capacitor v6 (Android packaging ready)
+- **Testing**: Vitest test runner
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install Dependencies
+```bash
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 2. Configure Environment Variables
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
+Provide your Supabase and Gemini credentials (optional for local/offline run).
+
+### 3. Run Development Server
+```bash
+npm run dev
+```
+
+### 4. Run Automated Unit Tests
+```bash
+npm test
+```
+
+### 5. Production Build
+```bash
+npm run build
+```
+
+---
+
+## 🛡️ Clinical & Safety Disclaimer
+AroggyaGram is a community-first assistance and preliminary triage system. AI symptom guidance is advisory only and does not replace certified clinical diagnoses. In any acute medical emergency, users are routed directly to emergency ambulance services (108/112).
