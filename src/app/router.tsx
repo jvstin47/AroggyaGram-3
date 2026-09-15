@@ -9,19 +9,34 @@ import { VolunteerDashboard } from '@/features/volunteers/VolunteerDashboard';
 import { FacilityDiscoveryScreen } from '@/features/facilities/FacilityDiscoveryScreen';
 import { UnifiedTimelineScreen } from '@/features/timeline/UnifiedTimelineScreen';
 import { ProfileScreen } from '@/features/profile/ProfileScreen';
+import { LoginScreen } from '@/features/auth/LoginScreen';
+import { NewsScreen } from '@/features/news/NewsScreen';
+import { AboutScreen } from '@/features/about/AboutScreen';
 
 export const router = createBrowserRouter([
+  {
+    path: '/login',
+    element: <LoginScreen />
+  },
   {
     path: '/',
     element: <AppShell />,
     children: [
       {
         index: true,
-        element: <Navigate to="/home" replace />
+        element: <Navigate to="/login" replace />
       },
       {
         path: 'home',
         element: <HomeScreen />
+      },
+      {
+        path: 'news',
+        element: <NewsScreen />
+      },
+      {
+        path: 'about',
+        element: <AboutScreen />
       },
       {
         path: 'ask-aroggya',

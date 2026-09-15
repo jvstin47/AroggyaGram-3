@@ -44,25 +44,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const initAuth = async () => {
       try {
         if (!isSupabaseConfigured) {
-          const savedRole = (localStorage.getItem('aroggya_role') as UserRole) || 'patient';
-          const savedName = localStorage.getItem('aroggya_name') || 'Lakshmi Amma';
-          const devUser: AuthUser = {
-            id: `dev-${savedRole}-1`,
-            email: `${savedRole}@aroggyagram.org`,
-            role: savedRole,
-            fullName: savedName
-          };
-          setUser(devUser);
-          setProfile({
-            id: devUser.id,
-            role: savedRole,
-            full_name: devUser.fullName,
-            phone: '+91 94471 23456',
-            language: (localStorage.getItem('aroggya_lang') as any) || 'en',
-            avatar_url: null,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          });
+          const savedRole = localStorage.getItem('aroggya_role') as UserRole | null;
+          const savedName = localStorage.getItem('aroggya_name');
+
+          if (savedRole && savedName) {
+            const devUser: AuthUser = {
+              id: `dev-${savedRole}-1`,
+              email: `${savedRole}@aroggyagram.org`,
+              role: savedRole,
+              fullName: savedName
+            };
+            setUser(devUser);
+            setProfile({
+              id: devUser.id,
+              role: savedRole,
+              full_name: devUser.fullName,
+              phone: '+91 94471 23456',
+              language: (localStorage.getItem('aroggya_lang') as any) || 'en',
+              avatar_url: null,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
+            });
+          } else {
+            setUser(null);
+            setProfile(null);
+          }
           setLoading(false);
           return;
         }

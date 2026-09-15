@@ -18,30 +18,15 @@ export const HomeScreen: React.FC = () => {
   const pendingMeds = medications.filter((m) => !m.taken);
 
   return (
-    <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6">
-      {/* Top Header & Role Switcher */}
-      <div className="flex items-center justify-between border-b border-stone-200 pb-4">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-[#2E7A5B]">
-            AroggyaGram · Community Health
-          </span>
-          <h1 className="text-2xl font-black text-[#121E1C] tracking-tight">
-            Namaskaram, {profile?.full_name?.split(' ')[0] || 'Friend'} 🙏
-          </h1>
-        </div>
-
-        {/* Quick Role Toggle for pair-testing */}
-        <button
-          onClick={() => {
-            const nextRole = user?.role === 'patient' ? 'volunteer' : 'patient';
-            signInDev(nextRole);
-            if (nextRole === 'volunteer') navigate('/volunteer/dashboard');
-          }}
-          className="text-xs bg-[#E0F2EE] text-[#005448] font-bold px-3 py-1.5 rounded-full border border-[#005448]/20 flex items-center gap-1.5 hover:bg-[#cbeae3] transition-colors"
-        >
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Role: {user?.role || 'patient'}</span>
-        </button>
+    <div className="pb-36 px-4 pt-4 max-w-lg mx-auto space-y-6">
+      {/* Quick Greeting */}
+      <div className="space-y-1">
+        <span className="text-xs font-bold uppercase tracking-widest text-[#2E7A5B]">
+          Welcome Back
+        </span>
+        <h2 className="text-2xl font-black text-[#121E1C] tracking-tight">
+          How can Aroggya help you today?
+        </h2>
       </div>
 
       {/* THREE PRIMARY BIG-TOUCH PILLARS */}
