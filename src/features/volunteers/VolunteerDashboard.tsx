@@ -70,14 +70,14 @@ export const VolunteerDashboard: React.FC = () => {
   };
 
   return (
-    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6">
+    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
       {/* Top Header & Role switcher */}
-      <div className="flex items-center justify-between border-b border-stone-200 pb-4">
+      <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-[#2E7A5B]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#2E7A5B] dark:text-emerald-400">
             Volunteer Network
           </span>
-          <h1 className="text-2xl font-black text-[#121E1C] tracking-tight">
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">
             Hi, Rahul Nair 🙌
           </h1>
         </div>
@@ -87,21 +87,21 @@ export const VolunteerDashboard: React.FC = () => {
             signInDev('patient');
             navigate('/home');
           }}
-          className="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold px-3 py-1.5 rounded-full border border-stone-300"
+          className="text-xs bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-bold px-3 py-1.5 rounded-full border border-stone-300 dark:border-stone-700"
         >
           Switch to Citizen
         </button>
       </div>
 
       {/* Trust & Verification Card */}
-      <div className="bg-white border border-[#E8E6DF] p-4 rounded-3xl shadow-sm flex items-center justify-between">
+      <div className="bg-white dark:bg-[#14211F] border border-[#E8E6DF] dark:border-stone-800 p-4 rounded-3xl shadow-sm flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold">
             <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-black text-stone-900">Community Verified</span>
+              <span className="text-sm font-black text-stone-900 dark:text-white">Community Verified</span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
             <p className="text-xs text-stone-500">
@@ -110,14 +110,14 @@ export const VolunteerDashboard: React.FC = () => {
           </div>
         </div>
 
-        <span className="text-sm font-black text-[#005448] bg-[#E0F2EE] px-3 py-1 rounded-full">
+        <span className="text-sm font-black text-[#005448] dark:text-emerald-300 bg-[#E0F2EE] dark:bg-emerald-950/60 px-3 py-1 rounded-full">
           ⭐ {MOCK_VOLUNTEER_PROFILE.average_rating}
         </span>
       </div>
 
       {/* Safety Guardrail Banner */}
-      <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-xs text-amber-900 flex items-start gap-2.5">
-        <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+      <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-4 rounded-2xl text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2.5">
+        <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <div>
           <strong>Community Volunteer Reminder:</strong> You are assisting as a trusted neighbor. You are not a certified doctor. Only provide the specified delivery or accompaniment assistance.
         </div>
@@ -125,11 +125,11 @@ export const VolunteerDashboard: React.FC = () => {
 
       {/* Tabs & View Mode toggle */}
       <div className="flex items-center justify-between gap-2">
-        <div className="flex bg-stone-100 p-1 rounded-2xl text-xs font-bold text-stone-600">
+        <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-2xl text-xs font-bold text-stone-600 dark:text-stone-300">
           <button
             onClick={() => setActiveTab('available')}
             className={`py-2 px-3 rounded-xl transition-all ${
-              activeTab === 'available' ? 'bg-white text-[#005448] shadow-sm' : ''
+              activeTab === 'available' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : ''
             }`}
           >
             Nearby ({availableRequests.length})
@@ -137,7 +137,7 @@ export const VolunteerDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('active')}
             className={`py-2 px-3 rounded-xl transition-all ${
-              activeTab === 'active' ? 'bg-white text-[#005448] shadow-sm' : ''
+              activeTab === 'active' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : ''
             }`}
           >
             My Active ({activeRequests.length})
@@ -145,7 +145,7 @@ export const VolunteerDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('history')}
             className={`py-2 px-3 rounded-xl transition-all ${
-              activeTab === 'history' ? 'bg-white text-[#005448] shadow-sm' : ''
+              activeTab === 'history' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : ''
             }`}
           >
             Done ({completedRequests.length})
@@ -153,17 +153,17 @@ export const VolunteerDashboard: React.FC = () => {
         </div>
 
         {activeTab === 'available' && (
-          <div className="flex bg-stone-100 p-1 rounded-2xl text-xs font-bold">
+          <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-2xl text-xs font-bold">
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-xl ${viewMode === 'list' ? 'bg-white text-[#005448] shadow-sm' : 'text-stone-500'}`}
+              className={`p-2 rounded-xl ${viewMode === 'list' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : 'text-stone-500'}`}
               aria-label="List View"
             >
               <List className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('map')}
-              className={`p-2 rounded-xl ${viewMode === 'map' ? 'bg-white text-[#005448] shadow-sm' : 'text-stone-500'}`}
+              className={`p-2 rounded-xl ${viewMode === 'map' ? 'bg-white dark:bg-stone-700 text-[#005448] dark:text-emerald-400 shadow-sm' : 'text-stone-500'}`}
               aria-label="Map View"
             >
               <MapIcon className="w-4 h-4" />
@@ -188,24 +188,24 @@ export const VolunteerDashboard: React.FC = () => {
                 return (
                   <div
                     key={req.id}
-                    className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm space-y-3 hover:border-[#005448] transition-all"
+                    className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3 hover:border-[#005448] dark:hover:border-emerald-600 transition-all"
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <span className="text-[11px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                        <span className="text-[11px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">
                           {req.category.replace('_', ' ')}
                         </span>
-                        <h3 className="text-lg font-black text-stone-900 mt-1">{req.title}</h3>
+                        <h3 className="text-lg font-black text-stone-900 dark:text-white mt-1">{req.title}</h3>
                       </div>
-                      <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">
+                      <span className="text-xs font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/50 px-2 py-1 rounded-lg">
                         {req.urgency.toUpperCase()}
                       </span>
                     </div>
 
-                    <p className="text-xs text-stone-600 leading-relaxed">{req.description}</p>
+                    <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">{req.description}</p>
 
                     {/* Match explanation */}
-                    <div className="bg-[#FAF9F4] p-2.5 rounded-xl border border-[#E8E6DF] text-[11px] text-stone-600">
+                    <div className="bg-[#FAF9F4] dark:bg-stone-800/60 p-2.5 rounded-xl border border-[#E8E6DF] dark:border-stone-700 text-[11px] text-stone-600 dark:text-stone-400">
                       <strong>Matching Score ({match.totalScore}/100):</strong> {match.explanation}
                     </div>
 
@@ -224,9 +224,9 @@ export const VolunteerDashboard: React.FC = () => {
               })}
 
               {availableRequests.length === 0 && (
-                <div className="text-center py-12 bg-white rounded-3xl border border-stone-200">
+                <div className="text-center py-12 bg-white dark:bg-[#14211F] rounded-3xl border border-stone-200 dark:border-stone-800">
                   <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-2" />
-                  <p className="text-lg font-bold text-stone-800">All caught up!</p>
+                  <p className="text-lg font-bold text-stone-800 dark:text-stone-200">All caught up!</p>
                   <p className="text-xs text-stone-500">No open requests in your area right now.</p>
                 </div>
               )}
@@ -271,26 +271,26 @@ export const VolunteerDashboard: React.FC = () => {
           {activeRequests.map((req) => (
             <div
               key={req.id}
-              className="bg-emerald-50/60 p-5 rounded-3xl border-2 border-emerald-300 shadow-sm space-y-3"
+              className="bg-emerald-50/60 dark:bg-emerald-950/20 p-5 rounded-3xl border-2 border-emerald-300 dark:border-emerald-800 shadow-sm space-y-3"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">
                     Active Mission
                   </span>
-                  <h3 className="text-lg font-black text-stone-900 mt-1">{req.title}</h3>
+                  <h3 className="text-lg font-black text-stone-900 dark:text-white mt-1">{req.title}</h3>
                 </div>
               </div>
 
-              <p className="text-xs text-stone-700 leading-relaxed">{req.description}</p>
-              <p className="text-xs font-semibold text-stone-600">Location: {req.address}</p>
+              <p className="text-xs text-stone-700 dark:text-stone-300 leading-relaxed">{req.description}</p>
+              <p className="text-xs font-semibold text-stone-600 dark:text-stone-400">Location: {req.address}</p>
 
               <div className="flex gap-2 pt-2">
                 <a
                   href={`https://maps.google.com/?q=${req.latitude},${req.longitude}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 py-2.5 bg-white border border-stone-300 text-stone-800 rounded-xl font-bold text-xs text-center shadow-xs"
+                  className="flex-1 py-2.5 bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 rounded-xl font-bold text-xs text-center shadow-xs"
                 >
                   Navigate on Maps
                 </a>
@@ -306,8 +306,8 @@ export const VolunteerDashboard: React.FC = () => {
           ))}
 
           {activeRequests.length === 0 && (
-            <div className="text-center py-10 bg-white rounded-3xl border border-stone-200">
-              <p className="text-sm font-bold text-stone-700">No active tasks in progress</p>
+            <div className="text-center py-10 bg-white dark:bg-[#14211F] rounded-3xl border border-stone-200 dark:border-stone-800">
+              <p className="text-sm font-bold text-stone-700 dark:text-stone-300">No active tasks in progress</p>
               <p className="text-xs text-stone-500 mt-1">Accept a nearby request to help a neighbor.</p>
             </div>
           )}
@@ -318,9 +318,9 @@ export const VolunteerDashboard: React.FC = () => {
       {activeTab === 'history' && (
         <div className="space-y-3">
           {completedRequests.map((req) => (
-            <div key={req.id} className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
+            <div key={req.id} className="bg-white dark:bg-[#14211F] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-xs flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-bold text-stone-900">{req.title}</h4>
+                <h4 className="text-sm font-bold text-stone-900 dark:text-white">{req.title}</h4>
                 <p className="text-xs text-stone-500">{req.category.replace('_', ' ')} · Completed</p>
               </div>
               <CheckCircle2 className="w-5 h-5 text-emerald-600" />

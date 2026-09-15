@@ -35,7 +35,7 @@ export const CareCaseDetailScreen: React.FC = () => {
     return (
       <div className="p-8 text-center space-y-4 max-w-md mx-auto pt-20">
         <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto" />
-        <h3 className="text-lg font-bold text-stone-800">Care Case Not Found</h3>
+        <h3 className="text-lg font-bold text-stone-800 dark:text-stone-200">Care Case Not Found</h3>
         <p className="text-xs text-stone-500">The requested care case could not be located in local memory.</p>
         <button
           type="button"
@@ -96,47 +96,47 @@ export const CareCaseDetailScreen: React.FC = () => {
   const getStatusBadge = (status: CareCaseStatus) => {
     switch (status) {
       case 'DRAFT':
-        return <span className="bg-stone-100 text-stone-700 px-2.5 py-0.5 rounded-full text-xs font-bold">DRAFT</span>;
+        return <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 px-2.5 py-0.5 rounded-full text-xs font-bold">DRAFT</span>;
       case 'ANALYZING':
-        return <span className="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold animate-pulse">ANALYZING</span>;
+        return <span className="bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 px-2.5 py-0.5 rounded-full text-xs font-bold animate-pulse">ANALYZING</span>;
       case 'ASSESSED':
-        return <span className="bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full text-xs font-bold">ASSESSED</span>;
+        return <span className="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 px-2.5 py-0.5 rounded-full text-xs font-bold">ASSESSED</span>;
       case 'ACTION_REQUIRED':
-        return <span className="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full text-xs font-bold">ACTION REQUIRED</span>;
+        return <span className="bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 px-2.5 py-0.5 rounded-full text-xs font-bold">ACTION REQUIRED</span>;
       case 'MATCHING':
-        return <span className="bg-purple-100 text-purple-700 px-2.5 py-0.5 rounded-full text-xs font-bold animate-pulse">MATCHING RESPONDER</span>;
+        return <span className="bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 px-2.5 py-0.5 rounded-full text-xs font-bold animate-pulse">MATCHING RESPONDER</span>;
       case 'ASSIGNED':
-        return <span className="bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-full text-xs font-bold">RESPONDER ASSIGNED</span>;
+        return <span className="bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 px-2.5 py-0.5 rounded-full text-xs font-bold">RESPONDER ASSIGNED</span>;
       case 'IN_PROGRESS':
-        return <span className="bg-emerald-100 text-[#005448] px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />IN PROGRESS</span>;
+        return <span className="bg-emerald-100 dark:bg-emerald-950 text-[#005448] dark:text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />IN PROGRESS</span>;
       case 'COMPLETED':
-        return <span className="bg-green-100 text-green-800 px-2.5 py-0.5 rounded-full text-xs font-bold">COMPLETED</span>;
+        return <span className="bg-green-100 dark:bg-green-950 text-green-800 dark:text-green-300 px-2.5 py-0.5 rounded-full text-xs font-bold">COMPLETED</span>;
       case 'FOLLOW_UP':
-        return <span className="bg-orange-100 text-orange-800 px-2.5 py-0.5 rounded-full text-xs font-bold">FOLLOW-UP ACTIVE</span>;
+        return <span className="bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 px-2.5 py-0.5 rounded-full text-xs font-bold">FOLLOW-UP ACTIVE</span>;
       case 'RESOLVED':
-        return <span className="bg-stone-200 text-stone-800 px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />RESOLVED & CLOSED</span>;
+        return <span className="bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />RESOLVED & CLOSED</span>;
       case 'ESCALATED':
         return <span className="bg-red-600 text-white px-2.5 py-0.5 rounded-full text-xs font-bold animate-bounce">108 EMERGENCY DISPATCH</span>;
       default:
-        return <span className="bg-stone-100 text-stone-700 px-2.5 py-0.5 rounded-full text-xs font-bold">{status}</span>;
+        return <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 px-2.5 py-0.5 rounded-full text-xs font-bold">{status}</span>;
     }
   };
 
   return (
-    <div className="pb-36 px-4 pt-3 max-w-xl mx-auto space-y-5">
+    <div className="pb-36 px-4 pt-3 max-w-xl mx-auto space-y-5 text-stone-900 dark:text-stone-100 transition-colors">
       
       {/* Top Bar */}
       <div className="flex items-center justify-between">
         <button
           type="button"
           onClick={() => navigate('/care-cases')}
-          className="flex items-center gap-1.5 text-xs font-bold text-stone-600 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 px-3 py-1.5 rounded-xl transition-colors"
+          className="flex items-center gap-1.5 text-xs font-bold text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 px-3 py-1.5 rounded-xl transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Care Network Cases
         </button>
 
-        <span className="text-xs font-mono font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded-md">
+        <span className="text-xs font-mono font-bold text-stone-500 dark:text-stone-400 bg-stone-100 dark:bg-stone-800 px-2 py-1 rounded-md">
           {careCase.trackingNumber}
         </span>
       </div>
@@ -176,42 +176,42 @@ export const CareCaseDetailScreen: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         
         {/* WHO: PERSON CONTEXT */}
-        <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-2.5">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448]">
+        <div className="bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] rounded-2xl p-4 shadow-sm space-y-2.5">
+          <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1E302C] pb-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
               <User className="w-4 h-4" />
               Person Context
             </div>
-            <span className="text-[11px] font-bold text-stone-500 capitalize">
+            <span className="text-[11px] font-bold text-stone-500 dark:text-stone-400 capitalize">
               {careCase.personContext.livingSituation.replace(/_/g, ' ')}
             </span>
           </div>
 
           <div className="space-y-1.5 text-xs">
             <div className="flex justify-between">
-              <span className="text-stone-500">Mobility:</span>
-              <span className="font-semibold text-stone-800 capitalize">
+              <span className="text-stone-500 dark:text-stone-400">Mobility:</span>
+              <span className="font-semibold text-stone-800 dark:text-stone-200 capitalize">
                 {careCase.personContext.mobilityLevel.replace(/_/g, ' ')}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-stone-500">Language:</span>
-              <span className="font-semibold text-stone-800 uppercase">
+              <span className="text-stone-500 dark:text-stone-400">Language:</span>
+              <span className="font-semibold text-stone-800 dark:text-stone-200 uppercase">
                 {careCase.personContext.primaryLanguage}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-stone-500">Vulnerability Index:</span>
-              <span className="font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+              <span className="text-stone-500 dark:text-stone-400">Vulnerability Index:</span>
+              <span className="font-black text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-800">
                 {careCase.personContext.vulnerabilityScore} / 100
               </span>
             </div>
             {careCase.personContext.emergencyContactPhone && (
               <div className="flex justify-between items-center pt-1">
-                <span className="text-stone-500">Family Alert:</span>
+                <span className="text-stone-500 dark:text-stone-400">Family Alert:</span>
                 <a
                   href={`tel:${careCase.personContext.emergencyContactPhone}`}
-                  className="font-bold text-[#005448] flex items-center gap-1 text-[11px]"
+                  className="font-bold text-[#005448] dark:text-emerald-400 flex items-center gap-1 text-[11px]"
                 >
                   <Phone className="w-3 h-3" />
                   {careCase.personContext.emergencyContactName || 'Caregiver'}
@@ -222,9 +222,9 @@ export const CareCaseDetailScreen: React.FC = () => {
         </div>
 
         {/* CLINICAL TRIAGE & RISK */}
-        <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-2.5">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448]">
+        <div className="bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] rounded-2xl p-4 shadow-sm space-y-2.5">
+          <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1E302C] pb-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
               <Activity className="w-4 h-4" />
               Clinical Triage
             </div>
@@ -246,24 +246,24 @@ export const CareCaseDetailScreen: React.FC = () => {
           <div className="space-y-1.5 text-xs">
             {careCase.healthContext.knownConditions.length > 0 && (
               <div>
-                <span className="text-stone-500 block text-[10px] font-bold uppercase">Chronic Conditions:</span>
-                <p className="font-semibold text-stone-800">
+                <span className="text-stone-500 dark:text-stone-400 block text-[10px] font-bold uppercase">Chronic Conditions:</span>
+                <p className="font-semibold text-stone-800 dark:text-stone-200">
                   {careCase.healthContext.knownConditions.join(', ')}
                 </p>
               </div>
             )}
             {careCase.healthContext.currentMedications.length > 0 && (
               <div>
-                <span className="text-stone-500 block text-[10px] font-bold uppercase">Medications:</span>
-                <p className="font-semibold text-stone-800">
+                <span className="text-stone-500 dark:text-stone-400 block text-[10px] font-bold uppercase">Medications:</span>
+                <p className="font-semibold text-stone-800 dark:text-stone-200">
                   {careCase.healthContext.currentMedications.join(', ')}
                 </p>
               </div>
             )}
             {careCase.healthContext.vitalSigns?.bloodPressure && (
               <div className="flex justify-between">
-                <span className="text-stone-500">Baseline BP:</span>
-                <span className="font-bold text-stone-900">{careCase.healthContext.vitalSigns.bloodPressure}</span>
+                <span className="text-stone-500 dark:text-stone-400">Baseline BP:</span>
+                <span className="font-bold text-stone-900 dark:text-white">{careCase.healthContext.vitalSigns.bloodPressure}</span>
               </div>
             )}
           </div>
@@ -272,19 +272,19 @@ export const CareCaseDetailScreen: React.FC = () => {
       </div>
 
       {/* WHAT: IMMEDIATE NEED & CONSTRAINTS */}
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-2">
-        <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448]">
+      <div className="bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] rounded-2xl p-4 shadow-sm space-y-2">
+        <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
           <HeartPulse className="w-4 h-4" />
           Immediate Need & Constraints
         </div>
-        <p className="text-xs text-stone-700 leading-relaxed font-medium">
+        <p className="text-xs text-stone-700 dark:text-stone-300 leading-relaxed font-medium">
           {careCase.immediateNeed.description}
         </p>
 
         {careCase.constraints.length > 0 && (
           <div className="flex flex-wrap gap-1.5 pt-1">
             {careCase.constraints.map((c, i) => (
-              <span key={i} className="text-[10px] bg-stone-100 border border-stone-200 text-stone-700 px-2 py-0.5 rounded-md">
+              <span key={i} className="text-[10px] bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 px-2 py-0.5 rounded-md">
                 {c}
               </span>
             ))}
@@ -293,14 +293,14 @@ export const CareCaseDetailScreen: React.FC = () => {
       </div>
 
       {/* RESPONSE ORCHESTRATION PLAN & LIVE ACTIONS */}
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+      <div className="bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] rounded-2xl p-4 shadow-sm space-y-4">
+        <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1E302C] pb-3">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448]">
-              <Sparkles className="w-4 h-4 text-emerald-600" />
+            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
+              <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               4-Step Response Orchestration Plan
             </div>
-            <p className="text-[11px] text-stone-500 mt-0.5">
+            <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">
               Estimated Resolution: ~{careCase.responsePlan.estimatedResolutionMins} mins
             </p>
           </div>
@@ -312,7 +312,7 @@ export const CareCaseDetailScreen: React.FC = () => {
                 type="button"
                 onClick={handleTriggerMatching}
                 disabled={isMatchingActive}
-                className="bg-[#005448] text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow hover:bg-[#004037] transition-all flex items-center gap-1"
+                className="bg-[#005448] dark:bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow hover:bg-[#004037] dark:hover:bg-emerald-700 transition-all flex items-center gap-1"
               >
                 {isMatchingActive ? 'Matching...' : 'Find Volunteer'}
               </button>
@@ -349,30 +349,30 @@ export const CareCaseDetailScreen: React.FC = () => {
               key={step.id}
               className={`p-3 rounded-xl border transition-colors ${
                 step.status === 'completed'
-                  ? 'bg-emerald-50/70 border-emerald-200'
+                  ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60'
                   : step.status === 'in_progress'
-                  ? 'bg-amber-50/70 border-amber-300 ring-2 ring-amber-400/30'
-                  : 'bg-stone-50 border-stone-200 opacity-80'
+                  ? 'bg-amber-50/70 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 ring-2 ring-amber-400/30'
+                  : 'bg-stone-50 dark:bg-stone-800/40 border-stone-200 dark:border-stone-700 opacity-80'
               }`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-start gap-2.5">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 mt-0.5 bg-white border border-stone-200 shadow-sm">
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 mt-0.5 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-800 dark:text-stone-200 shadow-sm">
                     {step.status === 'completed' ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     ) : (
                       idx + 1
                     )}
                   </div>
                   <div>
-                    <h4 className="text-xs font-black text-stone-900 leading-snug">
+                    <h4 className="text-xs font-black text-stone-900 dark:text-white leading-snug">
                       {step.title}
                     </h4>
-                    <p className="text-[11px] text-stone-600 mt-0.5 leading-relaxed">
+                    <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-0.5 leading-relaxed">
                       {step.description}
                     </p>
                     {step.actorName && (
-                      <p className="text-[11px] font-semibold text-[#005448] mt-1 flex items-center gap-1">
+                      <p className="text-[11px] font-semibold text-[#005448] dark:text-emerald-400 mt-1 flex items-center gap-1">
                         <User className="w-3 h-3" />
                         Assigned: {step.actorName} {step.actorPhone ? `(${step.actorPhone})` : ''}
                       </p>
@@ -383,10 +383,10 @@ export const CareCaseDetailScreen: React.FC = () => {
                 <span
                   className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full shrink-0 ${
                     step.status === 'completed'
-                      ? 'bg-emerald-200 text-emerald-900'
+                      ? 'bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-200'
                       : step.status === 'in_progress'
-                      ? 'bg-amber-200 text-amber-900 animate-pulse'
-                      : 'bg-stone-200 text-stone-700'
+                      ? 'bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200 animate-pulse'
+                      : 'bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300'
                   }`}
                 >
                   {step.status}
@@ -399,13 +399,13 @@ export const CareCaseDetailScreen: React.FC = () => {
 
       {/* ASSIGNED VOLUNTEER & "WHY THIS MATCH?" */}
       {careCase.assignedVolunteer && (
-        <div className="bg-white border-2 border-emerald-500/40 rounded-2xl p-4 shadow-sm space-y-3">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#005448]">
-              <Shield className="w-4 h-4 text-emerald-600" />
+        <div className="bg-white dark:bg-[#14211F] border-2 border-emerald-500/40 dark:border-emerald-600/40 rounded-2xl p-4 shadow-sm space-y-3">
+          <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1E302C] pb-2">
+            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#005448] dark:text-emerald-400">
+              <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               Assigned First Responder
             </div>
-            <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+            <span className="text-xs font-black text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800">
               {careCase.assignedVolunteer.matchScore}/100 Match Score
             </span>
           </div>
@@ -414,36 +414,36 @@ export const CareCaseDetailScreen: React.FC = () => {
             <img
               src={careCase.assignedVolunteer.avatarUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'}
               alt={careCase.assignedVolunteer.fullName}
-              className="w-12 h-12 rounded-xl object-cover border border-stone-200"
+              className="w-12 h-12 rounded-xl object-cover border border-stone-200 dark:border-stone-700"
             />
             <div className="flex-1">
-              <h4 className="text-sm font-black text-stone-900">
+              <h4 className="text-sm font-black text-stone-900 dark:text-white">
                 {careCase.assignedVolunteer.fullName}
               </h4>
-              <p className="text-[11px] text-stone-500 font-medium">
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 font-medium">
                 {careCase.assignedVolunteer.verificationBadge} • {careCase.assignedVolunteer.tasksCompleted} tasks completed
               </p>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-xs font-bold text-amber-600">
+                <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
                   ★ {careCase.assignedVolunteer.rating}
                 </span>
-                <span className="text-xs text-stone-400">•</span>
-                <span className="text-xs font-semibold text-stone-600">
+                <span className="text-xs text-stone-400 dark:text-stone-500">•</span>
+                <span className="text-xs font-semibold text-stone-600 dark:text-stone-300">
                   {careCase.assignedVolunteer.distanceKm} km away
                 </span>
               </div>
             </div>
             <a
               href={`tel:${careCase.assignedVolunteer.phone}`}
-              className="w-10 h-10 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-[#005448] flex items-center justify-center transition-colors shadow-sm shrink-0"
+              className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 hover:bg-emerald-200 dark:hover:bg-emerald-900 text-[#005448] dark:text-emerald-300 flex items-center justify-center transition-colors shadow-sm shrink-0"
             >
               <Phone className="w-5 h-5" />
             </a>
           </div>
 
           {/* Explainability Card */}
-          <div className="bg-emerald-50/60 border border-emerald-100 p-2.5 rounded-xl text-xs text-[#004037] leading-relaxed">
-            <span className="font-bold block text-[10px] uppercase text-emerald-800 mb-0.5">Why this match:</span>
+          <div className="bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/60 p-2.5 rounded-xl text-xs text-[#004037] dark:text-emerald-200 leading-relaxed">
+            <span className="font-bold block text-[10px] uppercase text-emerald-800 dark:text-emerald-300 mb-0.5">Why this match:</span>
             {careCase.assignedVolunteer.matchExplanation}
           </div>
         </div>
@@ -451,14 +451,14 @@ export const CareCaseDetailScreen: React.FC = () => {
 
       {/* POST-CARE FOLLOW-UP VERIFICATION */}
       {(careCase.status === 'COMPLETED' || careCase.status === 'FOLLOW_UP' || careCase.status === 'RESOLVED') && (
-        <div className="bg-white border-2 border-teal-600/30 rounded-2xl p-4 shadow-sm space-y-3">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448]">
-              <CheckSquare className="w-4 h-4 text-teal-600" />
+        <div className="bg-white dark:bg-[#14211F] border-2 border-teal-600/30 dark:border-teal-700/40 rounded-2xl p-4 shadow-sm space-y-3">
+          <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1E302C] pb-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
+              <CheckSquare className="w-4 h-4 text-teal-600 dark:text-teal-400" />
               Post-Care Health & Satisfaction Verification
             </div>
             {careCase.status === 'RESOLVED' && (
-              <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
                 Archived & Closed
               </span>
             )}
@@ -466,7 +466,7 @@ export const CareCaseDetailScreen: React.FC = () => {
 
           {careCase.status !== 'RESOLVED' ? (
             <div className="space-y-3">
-              <p className="text-xs text-stone-600">
+              <p className="text-xs text-stone-600 dark:text-stone-300">
                 Please complete the follow-up checklist to verify patient safety and conclude the care case:
               </p>
 
@@ -478,7 +478,7 @@ export const CareCaseDetailScreen: React.FC = () => {
                     onChange={(e) => setFollowUpSymptoms(e.target.checked)}
                     className="w-4 h-4 rounded text-[#005448] focus:ring-[#005448]"
                   />
-                  <span className="font-semibold text-stone-800">Patient reports dizziness/symptoms improved</span>
+                  <span className="font-semibold text-stone-800 dark:text-stone-200">Patient reports dizziness/symptoms improved</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -488,7 +488,7 @@ export const CareCaseDetailScreen: React.FC = () => {
                     onChange={(e) => setFollowUpMeds(e.target.checked)}
                     className="w-4 h-4 rounded text-[#005448] focus:ring-[#005448]"
                   />
-                  <span className="font-semibold text-stone-800">Correct prescription/aid physically received</span>
+                  <span className="font-semibold text-stone-800 dark:text-stone-200">Correct prescription/aid physically received</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -498,7 +498,7 @@ export const CareCaseDetailScreen: React.FC = () => {
                     onChange={(e) => setFollowUpComfort(e.target.checked)}
                     className="w-4 h-4 rounded text-[#005448] focus:ring-[#005448]"
                   />
-                  <span className="font-semibold text-stone-800">Patient is in a safe and comfortable condition</span>
+                  <span className="font-semibold text-stone-800 dark:text-stone-200">Patient is in a safe and comfortable condition</span>
                 </label>
               </div>
 
@@ -507,22 +507,22 @@ export const CareCaseDetailScreen: React.FC = () => {
                 value={followUpNotes}
                 onChange={(e) => setFollowUpNotes(e.target.value)}
                 placeholder="Optional closing observation notes..."
-                className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#005448]"
+                className="w-full text-xs p-2.5 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-[#005448]"
               />
 
               <button
                 type="button"
                 onClick={handleCompleteFollowUp}
-                className="w-full py-2.5 bg-[#005448] hover:bg-[#004037] text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 bg-[#005448] hover:bg-[#004037] text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 Submit Verification & Archive Case
               </button>
             </div>
           ) : (
-            <div className="text-xs space-y-1 text-stone-700 bg-stone-50 p-3 rounded-xl border border-stone-200">
-              <p className="font-bold text-emerald-800">✓ Follow-Up Verification Confirmed</p>
-              <p className="text-[11px] text-stone-500">
+            <div className="text-xs space-y-1 text-stone-700 dark:text-stone-300 bg-stone-50 dark:bg-stone-800/50 p-3 rounded-xl border border-stone-200 dark:border-stone-700">
+              <p className="font-bold text-emerald-800 dark:text-emerald-300">✓ Follow-Up Verification Confirmed</p>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400">
                 Symptoms resolved, medication delivery verified, audit log filed. Case successfully completed.
               </p>
             </div>
@@ -531,32 +531,32 @@ export const CareCaseDetailScreen: React.FC = () => {
       )}
 
       {/* UNIFIED LIVE TIMELINE */}
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
-        <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448]">
+      <div className="bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] rounded-2xl p-4 shadow-sm space-y-3">
+        <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1E302C] pb-2">
+          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
             <Clock className="w-4 h-4" />
             Unified Real-Time Audit Log
           </div>
-          <span className="text-[11px] font-bold text-stone-500">
+          <span className="text-[11px] font-bold text-stone-500 dark:text-stone-400">
             {careCase.events.length} events
           </span>
         </div>
 
-        <div className="space-y-3 relative pl-3 border-l-2 border-stone-200 ml-2">
+        <div className="space-y-3 relative pl-3 border-l-2 border-stone-200 dark:border-stone-700 ml-2">
           {careCase.events.map((evt) => (
             <div key={evt.id} className="relative group">
-              <div className="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-[#005448] border-2 border-white ring-2 ring-stone-200" />
+              <div className="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-[#005448] dark:bg-emerald-400 border-2 border-white dark:border-stone-900 ring-2 ring-stone-200 dark:ring-stone-700" />
               <div>
                 <div className="flex items-center justify-between">
-                  <h5 className="text-xs font-bold text-stone-900">{evt.title}</h5>
-                  <span className="text-[10px] text-stone-400">
+                  <h5 className="text-xs font-bold text-stone-900 dark:text-white">{evt.title}</h5>
+                  <span className="text-[10px] text-stone-400 dark:text-stone-500">
                     {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
-                <p className="text-[11px] text-stone-600 mt-0.5 leading-relaxed">
+                <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-0.5 leading-relaxed">
                   {evt.description}
                 </p>
-                <span className="text-[9px] uppercase font-bold text-stone-400 mt-0.5 inline-block">
+                <span className="text-[9px] uppercase font-bold text-stone-400 dark:text-stone-500 mt-0.5 inline-block">
                   Actor: {evt.actorRole} {evt.actorName ? `(${evt.actorName})` : ''}
                 </span>
               </div>

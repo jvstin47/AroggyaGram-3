@@ -119,26 +119,26 @@ export const AskAroggyaScreen: React.FC = () => {
   };
 
   return (
-    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6">
+    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
       {/* Header */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => navigate('/home')}
-          className="p-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
+          className="p-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition-colors cursor-pointer"
           aria-label="Back to home"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] tracking-tight">Ask Aroggya</h1>
-          <p className="text-xs text-stone-500 font-medium">Safe clinical preliminary health assessment</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Ask Aroggya</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Safe clinical preliminary health assessment</p>
         </div>
       </div>
 
       {/* Safety Disclaimer Banner */}
-      <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-xs text-[#005448] flex items-start gap-2.5">
-        <Bot className="w-5 h-5 text-[#005448] shrink-0 mt-0.5" />
+      <div className="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 text-xs text-[#005448] dark:text-emerald-300 flex items-start gap-2.5">
+        <Bot className="w-5 h-5 text-[#005448] dark:text-emerald-400 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
           <strong>Important Clinical Notice:</strong> AroggyaGram AI provides initial risk classification and home guidance only. It does not replace clinical diagnosis by a registered medical officer or prescribe prescription dosages.
         </p>
@@ -152,7 +152,7 @@ export const AskAroggyaScreen: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Describe your symptoms in your own words (e.g. 'Having severe dizziness and chest discomfort for the last 2 hours')..."
             rows={4}
-            className="w-full rounded-2xl border-2 border-stone-200 bg-white p-4 pr-14 text-base focus:border-[#005448] focus:outline-none transition-all resize-none shadow-sm text-stone-800"
+            className="w-full rounded-2xl border-2 border-stone-200 dark:border-[#223733] bg-white dark:bg-[#0E1A18] p-4 pr-14 text-base focus:border-[#005448] dark:focus:border-emerald-500 focus:outline-none transition-all resize-none shadow-sm text-stone-800 dark:text-white"
           />
 
           {/* Voice Mic inside textarea */}
@@ -160,10 +160,10 @@ export const AskAroggyaScreen: React.FC = () => {
             type="button"
             onClick={handleVoiceToggle}
             aria-label={isListening ? 'Stop voice recording' : 'Start speech recognition'}
-            className={`absolute right-3.5 bottom-4 p-3 rounded-xl transition-all ${
+            className={`absolute right-3.5 bottom-4 p-3 rounded-xl transition-all cursor-pointer ${
               isListening
                 ? 'bg-red-500 text-white animate-pulse shadow-md'
-                : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
             }`}
           >
             {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
@@ -171,7 +171,7 @@ export const AskAroggyaScreen: React.FC = () => {
         </div>
 
         {!speechSupported && (
-          <p className="text-xs text-stone-500">
+          <p className="text-xs text-stone-500 dark:text-stone-400">
             Voice speech recognition is unavailable in this web context. Please type your message.
           </p>
         )}
@@ -179,7 +179,7 @@ export const AskAroggyaScreen: React.FC = () => {
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="w-full py-4 bg-[#005448] hover:bg-[#004239] disabled:opacity-50 text-white rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
+          className="w-full py-4 bg-[#005448] dark:bg-emerald-600 hover:bg-[#004239] dark:hover:bg-emerald-700 disabled:opacity-50 text-white rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-md transition-all active:scale-98 cursor-pointer"
         >
           {loading ? (
             <>
@@ -205,8 +205,8 @@ export const AskAroggyaScreen: React.FC = () => {
             <div
               className={`max-w-[85%] p-4 rounded-3xl text-sm leading-relaxed ${
                 msg.sender === 'user'
-                  ? 'bg-[#005448] text-white rounded-br-xs shadow-sm font-medium'
-                  : 'bg-white border border-stone-200 text-stone-900 rounded-bl-xs shadow-xs'
+                  ? 'bg-[#005448] dark:bg-emerald-700 text-white rounded-br-xs shadow-sm font-medium'
+                  : 'bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] text-stone-900 dark:text-stone-100 rounded-bl-xs shadow-xs'
               }`}
             >
               {msg.text}
@@ -217,19 +217,19 @@ export const AskAroggyaScreen: React.FC = () => {
               <div
                 className={`w-full rounded-3xl p-5 border-2 space-y-4 shadow-lg transition-all ${
                   msg.result.risk_level === 'CRITICAL'
-                    ? 'bg-red-50 border-red-500'
+                    ? 'bg-red-50 dark:bg-red-950/50 border-red-500 dark:border-red-700'
                     : msg.result.risk_level === 'HIGH'
-                    ? 'bg-orange-50 border-orange-400'
-                    : 'bg-white border-stone-200'
+                    ? 'bg-orange-50 dark:bg-orange-950/40 border-orange-400 dark:border-orange-800'
+                    : 'bg-white dark:bg-[#14211F] border-stone-200 dark:border-[#223733]'
                 }`}
               >
                 {/* Header risk bar */}
-                <div className="flex items-center justify-between border-b border-stone-200/60 pb-3">
+                <div className="flex items-center justify-between border-b border-stone-200/60 dark:border-[#1E302C] pb-3">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
                       Possible Condition
                     </span>
-                    <h3 className="text-xl font-black text-stone-900">{msg.result.possible_condition}</h3>
+                    <h3 className="text-xl font-black text-stone-900 dark:text-white">{msg.result.possible_condition}</h3>
                   </div>
                   <div>{getRiskBadge(msg.result.risk_level)}</div>
                 </div>
@@ -251,7 +251,7 @@ export const AskAroggyaScreen: React.FC = () => {
                           const sosBtn = document.querySelector('button[aria-label*="Emergency SOS"]') as HTMLButtonElement;
                           if (sosBtn) sosBtn.click();
                         }}
-                        className="flex-1 bg-white text-red-600 font-black py-2.5 rounded-xl text-center text-sm shadow-md"
+                        className="flex-1 bg-white text-red-600 font-black py-2.5 rounded-xl text-center text-sm shadow-md cursor-pointer"
                       >
                         Activate SOS Now
                       </button>
@@ -268,14 +268,14 @@ export const AskAroggyaScreen: React.FC = () => {
 
                 {/* Immediate Steps */}
                 {msg.result.immediate_actions?.length > 0 && (
-                  <div className="space-y-2 bg-stone-50 p-4 rounded-2xl border border-stone-100">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#005448]">
+                  <div className="space-y-2 bg-stone-50 dark:bg-[#0E1A18] p-4 rounded-2xl border border-stone-100 dark:border-[#1E302C]">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#005448] dark:text-emerald-400">
                       Immediate Actions to Take
                     </h4>
                     <ul className="space-y-1.5">
                       {msg.result.immediate_actions.map((act, i) => (
-                        <li key={i} className="text-xs text-stone-700 flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#2E7A5B] shrink-0 mt-0.5" />
+                        <li key={i} className="text-xs text-stone-700 dark:text-stone-300 flex items-start gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-[#2E7A5B] dark:text-emerald-400 shrink-0 mt-0.5" />
                           <span>{act}</span>
                         </li>
                       ))}
@@ -285,9 +285,9 @@ export const AskAroggyaScreen: React.FC = () => {
 
                 {/* Warning signs */}
                 {msg.result.warning_signs?.length > 0 && (
-                  <div className="space-y-1 text-xs text-amber-900 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                  <div className="space-y-1 text-xs text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/50 p-3 rounded-xl border border-amber-200 dark:border-amber-800">
                     <span className="font-bold flex items-center gap-1">
-                      <AlertTriangle className="w-4 h-4 text-amber-600" />
+                      <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                       Red Flag Symptoms:
                     </span>
                     <p>{msg.result.warning_signs.join(' · ')}</p>
@@ -295,13 +295,13 @@ export const AskAroggyaScreen: React.FC = () => {
                 )}
 
                 {/* Recommendation */}
-                <div className="pt-2 text-xs text-stone-500 border-t border-stone-100 italic">
+                <div className="pt-2 text-xs text-stone-500 dark:text-stone-400 border-t border-stone-100 dark:border-[#1E302C] italic">
                   {msg.result.recommendation}
                 </div>
               </div>
             )}
 
-            <span className="text-[10px] text-stone-400 px-2 font-medium">{msg.timestamp}</span>
+            <span className="text-[10px] text-stone-400 dark:text-stone-500 px-2 font-medium">{msg.timestamp}</span>
           </div>
         ))}
       </div>

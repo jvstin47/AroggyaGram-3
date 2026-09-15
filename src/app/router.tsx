@@ -16,6 +16,8 @@ import { CareCaseListScreen } from '@/features/care-cases/CareCaseListScreen';
 import { CareCaseDetailScreen } from '@/features/care-cases/CareCaseDetailScreen';
 import { ResponseSimulator } from '@/features/simulator/ResponseSimulator';
 
+import { ApiKeySettingsScreen } from '@/features/settings/ApiKeySettingsScreen';
+
 export const router = createBrowserRouter([
   {
     path: '/login',
@@ -80,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile',
         element: <ProfileScreen />
+      },
+      {
+        path: 'settings/api-key',
+        element: <ApiKeySettingsScreen />
       },
       {
         path: '*',

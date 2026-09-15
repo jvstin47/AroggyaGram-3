@@ -118,20 +118,20 @@ export const NewRequestWizard: React.FC = () => {
   };
 
   return (
-    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6">
+    <div className="pb-36 px-4 pt-6 max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
       {/* Top Header */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => (step > 1 ? setStep((step - 1) as any) : navigate('/home'))}
-          className="p-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
+          className="p-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition-colors"
           aria-label="Back"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] tracking-tight">Request Assistance</h1>
-          <p className="text-xs text-stone-500 font-medium">Step {step} of 3 · Voice & AI Powered</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Request Assistance</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Step {step} of 3 · Voice & AI Powered</p>
         </div>
       </div>
 
@@ -141,7 +141,7 @@ export const NewRequestWizard: React.FC = () => {
           <div
             key={s}
             className={`h-2.5 rounded-full transition-all duration-300 ${
-              s === step ? 'w-8 bg-[#005448]' : s < step ? 'w-2.5 bg-[#2E7A5B]' : 'w-2.5 bg-stone-200'
+              s === step ? 'w-8 bg-[#005448]' : s < step ? 'w-2.5 bg-[#2E7A5B]' : 'w-2.5 bg-stone-200 dark:bg-stone-700'
             }`}
           />
         ))}
@@ -150,9 +150,9 @@ export const NewRequestWizard: React.FC = () => {
       {/* STEP 1: Voice-First Description */}
       {step === 1 && (
         <div className="space-y-5">
-          <div className="bg-[#FAF9F4] p-5 rounded-3xl border border-[#E8E6DF] space-y-2">
-            <h2 className="text-xl font-black text-[#121E1C]">Tell us what you need in your own words</h2>
-            <p className="text-xs text-stone-600 leading-relaxed">
+          <div className="bg-[#FAF9F4] dark:bg-[#13201E] p-5 rounded-3xl border border-[#E8E6DF] dark:border-stone-800 space-y-2">
+            <h2 className="text-xl font-black text-[#121E1C] dark:text-white">Tell us what you need in your own words</h2>
+            <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
               Tap the microphone to speak, or type naturally. AroggyaGram AI will interpret the task, urgency, and category for you.
             </p>
           </div>
@@ -163,7 +163,7 @@ export const NewRequestWizard: React.FC = () => {
               onChange={(e) => setNaturalText(e.target.value)}
               placeholder="e.g. 'I need someone to pick up my blood pressure medication from Jan Aushadhi pharmacy this afternoon'..."
               rows={5}
-              className="w-full rounded-3xl border-2 border-stone-200 bg-white p-5 pr-16 text-base focus:border-[#005448] focus:outline-none transition-all resize-none shadow-sm text-stone-800 leading-relaxed"
+              className="w-full rounded-3xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-[#14211F] p-5 pr-16 text-base focus:border-[#005448] focus:outline-none transition-all resize-none shadow-sm text-stone-800 dark:text-stone-100 leading-relaxed"
             />
 
             <button
@@ -182,7 +182,7 @@ export const NewRequestWizard: React.FC = () => {
 
           {/* Preset Quick Chips */}
           <div className="space-y-1.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-stone-500">Quick Examples:</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">Quick Examples:</span>
             <div className="flex flex-wrap gap-2">
               {[
                 'Pick up prescription medicines from pharmacy',
@@ -193,7 +193,7 @@ export const NewRequestWizard: React.FC = () => {
                   key={idx}
                   type="button"
                   onClick={() => setNaturalText(chip)}
-                  className="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium px-3 py-1.5 rounded-xl transition-colors text-left"
+                  className="text-xs bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-medium px-3 py-1.5 rounded-xl transition-colors text-left"
                 >
                   "{chip}"
                 </button>
@@ -244,28 +244,28 @@ export const NewRequestWizard: React.FC = () => {
             </div>
           )}
 
-          <div className="space-y-4 bg-white p-5 rounded-3xl border border-stone-200 shadow-sm">
+          <div className="space-y-4 bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm">
             <div>
-              <label className="text-xs font-bold text-stone-600 uppercase tracking-wider block mb-1">
+              <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
                 Request Title
               </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full border border-stone-300 rounded-xl p-3 text-sm font-semibold focus:border-[#005448] focus:outline-none"
+                className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-sm font-semibold focus:border-[#005448] focus:outline-none bg-white dark:bg-stone-800/80 text-stone-900 dark:text-white"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-bold text-stone-600 uppercase tracking-wider block mb-1">
+                <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
                   Category
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as any)}
-                  className="w-full border border-stone-300 rounded-xl p-3 text-xs font-semibold focus:border-[#005448] focus:outline-none bg-white"
+                  className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs font-semibold focus:border-[#005448] focus:outline-none bg-white dark:bg-stone-800/80 text-stone-900 dark:text-white"
                 >
                   <option value="medicine_pickup">Medicine Pickup</option>
                   <option value="transportation">Transportation</option>
@@ -277,13 +277,13 @@ export const NewRequestWizard: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-stone-600 uppercase tracking-wider block mb-1">
+                <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
                   Urgency
                 </label>
                 <select
                   value={urgency}
                   onChange={(e) => setUrgency(e.target.value as any)}
-                  className="w-full border border-stone-300 rounded-xl p-3 text-xs font-semibold focus:border-[#005448] focus:outline-none bg-white"
+                  className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs font-semibold focus:border-[#005448] focus:outline-none bg-white dark:bg-stone-800/80 text-stone-900 dark:text-white"
                 >
                   <option value="critical">Critical / Immediate</option>
                   <option value="today">Today</option>
@@ -293,26 +293,26 @@ export const NewRequestWizard: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-stone-600 uppercase tracking-wider block mb-1">
+              <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
                 Task Details
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
-                className="w-full border border-stone-300 rounded-xl p-3 text-xs font-medium focus:border-[#005448] focus:outline-none"
+                className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs font-medium focus:border-[#005448] focus:outline-none bg-white dark:bg-stone-800/80 text-stone-900 dark:text-white"
               />
             </div>
 
             <div>
-              <label className="text-xs font-bold text-stone-600 uppercase tracking-wider block mb-1">
+              <label className="text-xs font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
                 Your Pickup / Assistance Address
               </label>
               <input
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full border border-stone-300 rounded-xl p-3 text-sm font-semibold focus:border-[#005448] focus:outline-none"
+                className="w-full border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-sm font-semibold focus:border-[#005448] focus:outline-none bg-white dark:bg-stone-800/80 text-stone-900 dark:text-white"
               />
             </div>
           </div>
@@ -330,17 +330,17 @@ export const NewRequestWizard: React.FC = () => {
       {/* STEP 3: Final Confirmation & Safety Consent */}
       {step === 3 && (
         <div className="space-y-5">
-          <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-            <h3 className="text-xl font-black text-[#121E1C]">{title}</h3>
+          <div className="bg-white dark:bg-[#14211F] p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+            <h3 className="text-xl font-black text-[#121E1C] dark:text-white">{title}</h3>
 
-            <div className="space-y-2 text-xs text-stone-700">
+            <div className="space-y-2 text-xs text-stone-700 dark:text-stone-300">
               <p><strong>Category:</strong> {category.replace('_', ' ')}</p>
               <p><strong>Urgency:</strong> {urgency.toUpperCase()}</p>
               <p><strong>Location:</strong> {address}</p>
               <p><strong>Details:</strong> {description}</p>
             </div>
 
-            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs text-[#005448] space-y-1">
+            <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-2xl text-xs text-[#005448] dark:text-emerald-300 space-y-1">
               <span className="font-bold">Privacy & Trust Guarantee:</span>
               <p>
                 Your exact home coordinates and health history remain private. Nearby verified community volunteers will only see the task description and general junction.

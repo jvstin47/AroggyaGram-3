@@ -17,10 +17,12 @@ import {
   Sliders,
   Sparkles,
   Moon,
-  Sun
+  Sun,
+  Key
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { AIKeyService } from '@/services/ai/aiKey.service';
 
 interface DrawerMenuProps {
   isOpen: boolean;
@@ -172,7 +174,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           </div>
 
           {/* Dark Mode Switch inside Drawer */}
-          <div className="flex items-center justify-between px-3 py-3 rounded-2xl bg-stone-50 dark:bg-stone-800/60">
+          <div className="flex items-center justify-between px-3 py-3 rounded-2xl bg-stone-100 dark:bg-stone-800/60">
             <div className="flex items-center gap-3">
               {darkMode ? (
                 <Moon className="w-5 h-5 text-indigo-400" />
@@ -197,6 +199,28 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
               />
             </button>
           </div>
+
+          <button
+            onClick={() => handleNavigate('/settings/api-key')}
+            className="w-full flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 font-semibold text-sm transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <Key className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <span>Gemini AI API Key</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              {AIKeyService.hasCustomKey() ? (
+                <span className="text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-[#005448] dark:text-emerald-300 px-2 py-0.5 rounded-full">
+                  Custom
+                </span>
+              ) : AIKeyService.hasAnyKey() ? (
+                <span className="text-[10px] font-bold bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 px-2 py-0.5 rounded-full">
+                  Default
+                </span>
+              ) : null}
+              <ChevronRight className="w-4 h-4 text-stone-400" />
+            </div>
+          </button>
 
           <button
             onClick={() => handleNavigate('/profile')}

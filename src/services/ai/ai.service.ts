@@ -1,8 +1,9 @@
 import type { HealthAnalysisResult, RequestIntentClassification } from '@/types/ai.types';
+import { AIKeyService } from './aiKey.service';
 
 export class AIService {
   private static getApiKey(): string {
-    return import.meta.env.VITE_GEMINI_API_KEY || '';
+    return AIKeyService.getApiKey();
   }
 
   /**

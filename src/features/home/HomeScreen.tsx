@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMedicationsQuery } from '@/hooks/useMedicationsQuery';
-import { ResponseOrchestrator } from '@/services/orchestration/orchestrator.service';
 import { CareCaseIntakeModal } from '@/features/care-cases/CareCaseIntakeModal';
 
 export const HomeScreen: React.FC = () => {
@@ -18,8 +17,6 @@ export const HomeScreen: React.FC = () => {
   const [initialIntakeQuery, setInitialIntakeQuery] = useState('');
 
   const pendingMeds = medications.filter((m) => !m.taken);
-  const allCases = ResponseOrchestrator.getCareCases();
-  const activeCases = allCases.filter(c => ['ACTION_REQUIRED', 'MATCHING', 'ASSIGNED', 'IN_PROGRESS', 'FOLLOW_UP'].includes(c.status));
 
   const handleOpenIntakeWithPrompt = (prompt: string) => {
     setInitialIntakeQuery(prompt);
@@ -102,84 +99,6 @@ export const HomeScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* ACTIVE CARE NETWORK CASES ("MISSION CONTROL") */}
-      {activeCases.length > 0 && (
-        <div className="space-y-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-[#005448] dark:text-emerald-400" />
-              <h3 className="text-xs font-black uppercase tracking-wider text-stone-800 dark:text-stone-200">
-                Active Care Network Cases ({activeCases.length})
-              </h3>
-            </div>
-            <button
-              type="button"
-              onClick={() => navigate('/care-cases')}
-              className="text-[11px] font-bold text-[#005448] dark:text-emerald-400 hover:underline flex items-center gap-0.5 cursor-pointer"
-            >
-              View All
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          <div className="space-y-2.5">
-            {activeCases.slice(0, 2).map((c) => (
-              <div
-                key={c.id}
-                onClick={() => navigate(`/care-cases/${c.id}`)}
-                className="bg-white dark:bg-[#14211F] border-2 border-emerald-600/30 dark:border-emerald-700/40 p-4 rounded-2xl shadow-sm hover:border-[#005448] dark:hover:border-emerald-500 transition-all cursor-pointer space-y-2.5"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono font-bold text-stone-400 dark:text-stone-500 bg-stone-100 dark:bg-stone-800 px-1.5 py-0.5 rounded">
-                        {c.trackingNumber}
-                      </span>
-                      <span className="text-xs font-bold text-stone-700 dark:text-stone-300">
-                        {c.personContext.fullName} {c.personContext.age ? `(${c.personContext.age}y)` : ''}
-                      </span>
-                    </div>
-                    <h4 className="text-xs font-black text-stone-900 dark:text-white mt-0.5">
-                      {c.immediateNeed.title}
-                    </h4>
-                  </div>
-
-                  <span
-                    className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
-                      c.status === 'IN_PROGRESS'
-                        ? 'bg-emerald-100 dark:bg-emerald-950 text-[#005448] dark:text-emerald-300'
-                        : c.status === 'ACTION_REQUIRED'
-                        ? 'bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300'
-                        : 'bg-teal-100 dark:bg-teal-950 text-teal-900 dark:text-teal-300'
-                    }`}
-                  >
-                    {c.status.replace(/_/g, ' ')}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between text-[11px] pt-1 border-t border-stone-100 dark:border-stone-800 text-stone-500 dark:text-stone-400">
-                  <span className="flex items-center gap-1 font-medium">
-                    <MapPin className="w-3.5 h-3.5 text-stone-400" />
-                    {c.address.split(',')[0]}
-                  </span>
-                  
-                  {c.assignedVolunteer ? (
-                    <span className="font-bold text-[#005448] dark:text-emerald-400 flex items-center gap-1">
-                      <User className="w-3.5 h-3.5" />
-                      {c.assignedVolunteer.fullName} ({c.assignedVolunteer.distanceKm}km)
-                    </span>
-                  ) : (
-                    <span className="font-bold text-amber-700 dark:text-amber-400">
-                      Awaiting Responder Match
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* SECONDARY PILLARS */}
       <div className="grid grid-cols-2 gap-3">
         {/* PILLAR 1: ASK AROGGYA */}
@@ -221,7 +140,7 @@ export const HomeScreen: React.FC = () => {
         </button>
       </div>
 
-      {/* QUICK STATUS SNAPSHOTS (MEDICATIONS & CARE CASES) */}
+      {/* QUICK STATUS SNAPSHOTS (MEDICATIONS & CLINICS) */}
       <div className="grid grid-cols-2 gap-3">
         <div
           onClick={() => navigate('/medications')}
@@ -240,18 +159,18 @@ export const HomeScreen: React.FC = () => {
         </div>
 
         <div
-          onClick={() => navigate('/care-cases')}
-          className="bg-white dark:bg-[#14211F] p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm cursor-pointer hover:border-[#E68A00] dark:hover:border-amber-600 transition-colors"
+          onClick={() => navigate('/facilities')}
+          className="bg-white dark:bg-[#14211F] p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm cursor-pointer hover:border-blue-600 dark:hover:border-blue-500 transition-colors"
         >
-          <div className="flex items-center gap-1.5 text-[#E68A00] dark:text-amber-400 mb-1">
-            <Clock className="w-4 h-4" />
-            <span className="text-[11px] font-bold uppercase tracking-wider">Care Cases</span>
+          <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 mb-1">
+            <MapPin className="w-4 h-4" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">Nearby Clinics</span>
           </div>
           <div className="text-xl font-black text-stone-900 dark:text-white">
-            {allCases.length} <span className="text-xs font-semibold text-stone-500 dark:text-stone-400">registered</span>
+            CHCs & PHCs
           </div>
           <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5 truncate">
-            {activeCases.length} active in community
+            Find doctors & pharmacies
           </p>
         </div>
       </div>

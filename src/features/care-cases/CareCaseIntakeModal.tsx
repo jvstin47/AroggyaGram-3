@@ -129,10 +129,10 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-xl max-h-[92vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden border border-stone-100">
+      <div className="w-full max-w-xl max-h-[92vh] flex flex-col bg-white dark:bg-[#14211F] text-stone-900 dark:text-stone-100 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden border border-stone-100 dark:border-[#223733] transition-colors">
         
         {/* Header */}
-        <div className="p-5 border-b border-stone-100 bg-[#005448] text-white flex items-center justify-between">
+        <div className="p-5 border-b border-stone-100 dark:border-[#1E302C] bg-[#005448] dark:bg-[#07362E] text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-emerald-300" />
@@ -157,7 +157,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
           {/* Natural Story Input */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-stone-600">
+              <label className="text-xs font-bold uppercase tracking-wider text-stone-600 dark:text-stone-300">
                 Describe the situation in your own words
               </label>
               <button
@@ -166,7 +166,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
                 className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full transition-colors ${
                   isListening
                     ? 'bg-red-500 text-white animate-pulse'
-                    : 'bg-emerald-50 text-[#005448] hover:bg-emerald-100'
+                    : 'bg-emerald-50 dark:bg-emerald-950/60 text-[#005448] dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
                 }`}
               >
                 {isListening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
@@ -185,14 +185,14 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
                   }
                 }}
                 placeholder="Example: My 74-year-old mother lives alone in Kanjirappally and ran out of blood pressure medicine. She feels dizzy and cannot walk to the pharmacy..."
-                className="w-full text-stone-900 bg-stone-50 border border-stone-200 rounded-2xl p-3.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#005448] focus:bg-white transition-all resize-none"
+                className="w-full text-stone-900 dark:text-white bg-stone-50 dark:bg-[#0E1A18] border border-stone-200 dark:border-[#223733] rounded-2xl p-3.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#005448] focus:bg-white dark:focus:bg-[#14211F] transition-all resize-none"
               />
             </div>
           </div>
 
           {/* Quick Scenario Buttons */}
           <div className="space-y-1.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600 dark:text-stone-400">
               Or select a sample situation:
             </span>
             <div className="flex flex-wrap gap-2">
@@ -204,7 +204,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
                     setInputStory(scen.text);
                     handleAnalyze(scen.text);
                   }}
-                  className="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 px-3 py-1.5 rounded-xl font-medium transition-colors border border-stone-200"
+                  className="text-xs bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 px-3 py-1.5 rounded-xl font-medium transition-colors border border-stone-200 dark:border-stone-700"
                 >
                   {scen.label}
                 </button>
@@ -213,50 +213,50 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
           </div>
 
           {/* Location context */}
-          <div className="bg-stone-50 border border-stone-200 rounded-2xl p-3.5 flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-[#005448] shrink-0" />
+          <div className="bg-stone-50 dark:bg-[#0E1A18] border border-stone-200 dark:border-[#223733] rounded-2xl p-3.5 flex items-center gap-3">
+            <MapPin className="w-5 h-5 text-[#005448] dark:text-emerald-400 shrink-0" />
             <div className="flex-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-stone-600 block">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-stone-600 dark:text-stone-400 block">
                 Response Location
               </label>
               <input
                 type="text"
                 value={activeAddress}
                 onChange={(e) => setActiveAddress(e.target.value)}
-                className="w-full bg-transparent text-xs font-semibold text-stone-800 focus:outline-none"
+                className="w-full bg-transparent text-xs font-semibold text-stone-800 dark:text-stone-200 focus:outline-none"
               />
             </div>
           </div>
 
           {/* Live Analysis Feedback */}
           {isAnalyzing && (
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center gap-3 animate-pulse">
-              <Sparkles className="w-5 h-5 text-[#005448] animate-spin" />
-              <p className="text-xs font-semibold text-[#005448]">
+            <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800/60 flex items-center gap-3 animate-pulse">
+              <Sparkles className="w-5 h-5 text-[#005448] dark:text-emerald-400 animate-spin" />
+              <p className="text-xs font-semibold text-[#005448] dark:text-emerald-300">
                 Synthesizing person context, medical signals, and evaluating safety rules...
               </p>
             </div>
           )}
 
           {extracted && !isAnalyzing && (
-            <div className="space-y-3.5 pt-2 border-t border-stone-100">
+            <div className="space-y-3.5 pt-2 border-t border-stone-100 dark:border-[#1E302C]">
               
               {/* Emergency Guardrail Warning if acute */}
               {extracted.isEmergencyOverride ? (
-                <div className="p-4 rounded-2xl bg-red-50 border-2 border-red-500 text-red-900 space-y-2">
+                <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/50 border-2 border-red-500 text-red-900 dark:text-red-200 space-y-2">
                   <div className="flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 animate-bounce" />
-                    <h4 className="text-sm font-black uppercase tracking-wide text-red-700">
+                    <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0 animate-bounce" />
+                    <h4 className="text-sm font-black uppercase tracking-wide text-red-700 dark:text-red-300">
                       Deterministic Emergency Safety Override
                     </h4>
                   </div>
-                  <p className="text-xs font-medium text-red-800 leading-relaxed">
+                  <p className="text-xs font-medium text-red-800 dark:text-red-300 leading-relaxed">
                     Acute life-safety trigger detected. Standard volunteer matching is bypassed — this will immediately trigger the 108 Emergency Medical Protocol.
                   </p>
                 </div>
               ) : (
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center gap-2.5 text-[#005448]">
-                  <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+                <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 flex items-center gap-2.5 text-[#005448] dark:text-emerald-300">
+                  <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <p className="text-xs font-bold">
                     Deterministic Safety Check Passed — Eligible for Coordinated Community Response
                   </p>
@@ -266,23 +266,23 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
               {/* Extracted Blueprint Cards */}
               <div className="grid grid-cols-2 gap-3 text-xs">
                 {/* Person Identified */}
-                <div className="bg-stone-50 border border-stone-200 p-3 rounded-xl space-y-1">
-                  <div className="flex items-center gap-1.5 text-stone-500 font-bold uppercase text-[10px]">
-                    <User className="w-3.5 h-3.5 text-[#005448]" />
+                <div className="bg-stone-50 dark:bg-[#0E1A18] border border-stone-200 dark:border-[#223733] p-3 rounded-xl space-y-1">
+                  <div className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 font-bold uppercase text-[10px]">
+                    <User className="w-3.5 h-3.5 text-[#005448] dark:text-emerald-400" />
                     Person & Vulnerability
                   </div>
-                  <p className="font-bold text-stone-900 truncate">
+                  <p className="font-bold text-stone-900 dark:text-white truncate">
                     {extracted.personContext.fullName} {extracted.personContext.age ? `(${extracted.personContext.age})` : ''}
                   </p>
-                  <p className="text-stone-500 text-[11px] capitalize">
+                  <p className="text-stone-500 dark:text-stone-400 text-[11px] capitalize">
                     {extracted.personContext.livingSituation.replace(/_/g, ' ')} • Score: {extracted.personContext.vulnerabilityScore}/100
                   </p>
                 </div>
 
                 {/* Clinical Risk Meter */}
-                <div className="bg-stone-50 border border-stone-200 p-3 rounded-xl space-y-1">
-                  <div className="flex items-center gap-1.5 text-stone-500 font-bold uppercase text-[10px]">
-                    <Activity className="w-3.5 h-3.5 text-amber-600" />
+                <div className="bg-stone-50 dark:bg-[#0E1A18] border border-stone-200 dark:border-[#223733] p-3 rounded-xl space-y-1">
+                  <div className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 font-bold uppercase text-[10px]">
+                    <Activity className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     Triage & Risk Level
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -299,29 +299,29 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
                     >
                       {extracted.healthContext.riskLevel} RISK
                     </span>
-                    <span className="text-stone-500 text-[11px]">
+                    <span className="text-stone-500 dark:text-stone-400 text-[11px]">
                       {extracted.immediateNeed.timeSensitivity.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <p className="text-stone-600 text-[11px] truncate">
+                  <p className="text-stone-600 dark:text-stone-300 text-[11px] truncate">
                     {extracted.healthContext.knownConditions[0] || 'No chronic tags'}
                   </p>
                 </div>
               </div>
 
               {/* Action Plan Preview */}
-              <div className="bg-stone-50 border border-stone-200 p-3.5 rounded-xl space-y-2">
-                <div className="flex items-center gap-1.5 text-stone-600 font-bold text-[11px] uppercase tracking-wider">
-                  <HeartPulse className="w-4 h-4 text-[#005448]" />
+              <div className="bg-stone-50 dark:bg-[#0E1A18] border border-stone-200 dark:border-[#223733] p-3.5 rounded-xl space-y-2">
+                <div className="flex items-center gap-1.5 text-stone-600 dark:text-stone-400 font-bold text-[11px] uppercase tracking-wider">
+                  <HeartPulse className="w-4 h-4 text-[#005448] dark:text-emerald-400" />
                   Identified Need
                 </div>
-                <p className="text-xs font-black text-stone-900">
+                <p className="text-xs font-black text-stone-900 dark:text-white">
                   {extracted.immediateNeed.title}
                 </p>
                 {extracted.constraints.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {extracted.constraints.map((c, i) => (
-                      <span key={i} className="bg-white border border-stone-200 text-stone-600 text-[10px] px-2 py-0.5 rounded-md">
+                      <span key={i} className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-300 text-[10px] px-2 py-0.5 rounded-md">
                         {c}
                       </span>
                     ))}
@@ -333,11 +333,11 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t border-stone-100 bg-stone-50 flex items-center gap-3">
+        <div className="p-4 border-t border-stone-100 dark:border-[#223733] bg-stone-50 dark:bg-[#0B1413] flex items-center gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-3 px-4 rounded-xl border border-stone-300 text-xs font-bold text-stone-700 hover:bg-stone-100 transition-colors"
+            className="flex-1 py-3 px-4 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
           >
             Cancel
           </button>
@@ -345,7 +345,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
             type="button"
             disabled={!extracted || isAnalyzing}
             onClick={handleSubmitCareCase}
-            className="flex-2 py-3 px-5 rounded-xl bg-[#005448] hover:bg-[#004238] disabled:opacity-50 text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-md shadow-[#005448]/20 transition-all"
+            className="flex-2 py-3 px-5 rounded-xl bg-[#005448] dark:bg-emerald-600 hover:bg-[#004238] dark:hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-md shadow-[#005448]/20 transition-all cursor-pointer"
           >
             Launch Response Plan
             <ArrowRight className="w-4 h-4" />

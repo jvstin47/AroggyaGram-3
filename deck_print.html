@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AroggyaGram — Hackathon Pitch Deck</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0B1413 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .slide {
+      display: flex !important;
+      width: 16in;
+      height: 9in;
+      min-height: 9in;
+      max-height: 9in;
+      page-break-after: always;
+      break-after: page;
+      box-sizing: border-box;
+      padding: 0.6in 1in;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .slide:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .fixed { display: none !important; }
+</style>
+</head>
+<body class="bg-[#0B1413] text-white min-h-screen flex flex-col">
+
+  <!-- Slide container -->
+  <div id="deck" class="flex-1 flex flex-col">
+
+    <!-- ======================== SLIDE 1: TITLE ======================== -->
+    <div class="slide active flex-col items-center justify-center min-h-screen px-8 py-12 text-center bg-gradient-to-br from-[#005448] via-[#0A433A] to-[#0B1413]" id="slide-1">
+      <div class="max-w-2xl mx-auto space-y-6">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-300 mb-2">
+          <span class="dot-pulse w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+          National Level Hackathon 2026
+        </div>
+        <h1 class="text-6xl font-black leading-none tracking-tight">
+          Aroggy<span class="gradient-text">aGram</span>
+        </h1>
+        <p class="text-2xl font-bold text-emerald-100">
+          Rural India's AI-Powered Emergency<br/>Health Response Network
+        </p>
+        <p class="text-base text-emerald-200/80 font-medium leading-relaxed max-w-lg mx-auto">
+          When the nearest hospital is 40 km away and the ambulance takes 90 minutes,<br/>
+          <strong class="text-white">AroggyaGram responds in seconds.</strong>
+        </p>
+        <div class="flex items-center justify-center gap-6 pt-4 text-sm text-emerald-300 font-semibold">
+          <span>🤖 Gemini AI Triage</span>
+          <span>·</span>
+          <span>🚨 SOS Network</span>
+          <span>·</span>
+          <span>🤝 Verified Volunteers</span>
+          <span>·</span>
+          <span>💊 Med Adherence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 2: PROBLEM ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 bg-[#0B1413]" id="slide-2">
+      <div class="max-w-3xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-black uppercase tracking-widest text-red-400">The Crisis</span>
+          <h2 class="text-4xl font-black text-white">Rural India's Healthcare Desert</h2>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="bg-red-950/40 border border-red-800/60 p-6 rounded-3xl text-center space-y-2">
+            <div class="text-5xl font-black text-red-400">65%</div>
+            <p class="text-sm text-red-200 font-medium">of India lives in rural areas with &lt;30% of healthcare infrastructure</p>
+          </div>
+          <div class="bg-red-950/40 border border-red-800/60 p-6 rounded-3xl text-center space-y-2">
+            <div class="text-5xl font-black text-red-400">90+</div>
+            <p class="text-sm text-red-200 font-medium">minutes average ambulance response time in Tier-3 districts</p>
+          </div>
+          <div class="bg-red-950/40 border border-red-800/60 p-6 rounded-3xl text-center space-y-2">
+            <div class="text-5xl font-black text-red-400">1:10K</div>
+            <p class="text-sm text-red-200 font-medium">doctor-to-patient ratio in rural Kerala vs 1:1000 urban average</p>
+          </div>
+        </div>
+        <div class="bg-[#13201E] border border-stone-800 p-6 rounded-3xl space-y-3">
+          <h3 class="font-black text-white text-lg">The Daily Reality</h3>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="flex items-start gap-2 text-stone-300"><span class="text-red-400 text-lg leading-none">→</span><span>Elderly diabetic patients missing insulin doses because the pharmacy is 12 km away</span></div>
+            <div class="flex items-start gap-2 text-stone-300"><span class="text-red-400 text-lg leading-none">→</span><span>ASHA workers unable to escalate urgent cases without real-time clinical guidance</span></div>
+            <div class="flex items-start gap-2 text-stone-300"><span class="text-red-400 text-lg leading-none">→</span><span>Falls and cardiac events going unreported for hours in isolated homesteads</span></div>
+            <div class="flex items-start gap-2 text-stone-300"><span class="text-red-400 text-lg leading-none">→</span><span>Language barriers preventing patients from describing symptoms correctly</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 3: SOLUTION ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 bg-[#0B1413]" id="slide-3">
+      <div class="max-w-3xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-black uppercase tracking-widest text-emerald-400">The Solution</span>
+          <h2 class="text-4xl font-black text-white">AroggyaGram: One Platform,<br/>Four Critical Pillars</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-[#0D3B33] border border-emerald-900 p-5 rounded-3xl space-y-3">
+            <div class="w-11 h-11 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-2xl">🤖</div>
+            <h3 class="font-black text-emerald-300 text-base">AI Clinical Triage</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">Gemini-powered multilingual symptom assessment in Malayalam, Hindi, Tamil & English. Provides risk classification, first-aid guidance, and escalation decisions — no doctor needed at Step 1.</p>
+          </div>
+          <div class="bg-[#2D1800] border border-amber-900 p-5 rounded-3xl space-y-3">
+            <div class="w-11 h-11 rounded-2xl bg-amber-500/20 flex items-center justify-center text-2xl">🚨</div>
+            <h3 class="font-black text-amber-300 text-base">Deterministic SOS</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">Keyword-triggered emergency protocols that bypass AI and directly call 9539141210 (configured rescue number) + display geo-tagged location. Falls, chest pain, unconsciousness → instant response.</p>
+          </div>
+          <div class="bg-[#1A0A2E] border border-purple-900 p-5 rounded-3xl space-y-3">
+            <div class="w-11 h-11 rounded-2xl bg-purple-500/20 flex items-center justify-center text-2xl">💊</div>
+            <h3 class="font-black text-purple-300 text-base">Medication Adherence</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">Smart structured med tracking with food-timing awareness, native time pickers, and daily adherence scores. Reduces the #1 cause of rural chronic illness complications — missed doses.</p>
+          </div>
+          <div class="bg-[#0A1F3D] border border-blue-900 p-5 rounded-3xl space-y-3">
+            <div class="w-11 h-11 rounded-2xl bg-blue-500/20 flex items-center justify-center text-2xl">🤝</div>
+            <h3 class="font-black text-blue-300 text-base">Volunteer Task Network</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">Community-verified neighbors accept geo-matched tasks for medicine pickup, clinic transport & welfare checks. AI-calculated match scores ensure the right person responds to every request.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 4: HOW IT WORKS ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 bg-[#0B1413]" id="slide-4">
+      <div class="max-w-3xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Intelligent Orchestration</span>
+          <h2 class="text-4xl font-black text-white">From Distress Signal to<br/>Coordinated Response</h2>
+        </div>
+        <div class="relative">
+          <!-- Connector line -->
+          <div class="absolute left-7 top-8 bottom-8 w-0.5 bg-gradient-to-b from-emerald-500 via-amber-500 to-blue-500 opacity-40"></div>
+          <div class="space-y-4">
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-600/40 flex items-center justify-center font-black text-emerald-400 text-xl shrink-0 z-10">1</div>
+              <div class="bg-[#13201E] border border-stone-800 p-4 rounded-2xl flex-1">
+                <h4 class="font-black text-white text-sm mb-1">Voice / Text Intake</h4>
+                <p class="text-xs text-stone-400">Patient speaks or types in their native language. Natural language processing understands context, urgency, and category — not just keywords.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-600/40 flex items-center justify-center font-black text-amber-400 text-xl shrink-0 z-10">2</div>
+              <div class="bg-[#13201E] border border-stone-800 p-4 rounded-2xl flex-1">
+                <h4 class="font-black text-white text-sm mb-1">AI Situation Engine Triages</h4>
+                <p class="text-xs text-stone-400">Gemini analyzes the situation against clinical heuristics. Emergency keywords → immediate SOS. Non-emergency → structured care case with risk classification (LOW / MEDIUM / HIGH).</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-600/40 flex items-center justify-center font-black text-purple-400 text-xl shrink-0 z-10">3</div>
+              <div class="bg-[#13201E] border border-stone-800 p-4 rounded-2xl flex-1">
+                <h4 class="font-black text-white text-sm mb-1">Volunteer Matching & Dispatch</h4>
+                <p class="text-xs text-stone-400">MatchingService scores nearby verified volunteers by proximity, skills, vehicle availability, and past rating. Best match receives push notification with task details.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-2xl bg-blue-500/20 border border-blue-600/40 flex items-center justify-center font-black text-blue-400 text-xl shrink-0 z-10">4</div>
+              <div class="bg-[#13201E] border border-stone-800 p-4 rounded-2xl flex-1">
+                <h4 class="font-black text-white text-sm mb-1">Tracked Resolution & Feedback</h4>
+                <p class="text-xs text-stone-400">Unified Health Timeline records all events. Volunteer marks task complete. Patient rates experience. Data feeds back to improve future matching quality.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 5: AI ENGINE ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 bg-[#0B1413]" id="slide-5">
+      <div class="max-w-3xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Technology</span>
+          <h2 class="text-4xl font-black text-white">Gemini-Powered Intelligence<br/>with Deterministic Safety</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-[#0D3B33] border border-emerald-800 p-5 rounded-3xl space-y-3">
+              <h3 class="font-black text-emerald-300">AI Capabilities</h3>
+              <ul class="text-xs text-stone-400 space-y-2">
+                <li class="flex gap-2"><span class="text-emerald-400">✓</span> Multilingual symptom parsing (5 languages)</li>
+                <li class="flex gap-2"><span class="text-emerald-400">✓</span> Risk stratification: LOW / MEDIUM / HIGH / CRITICAL</li>
+                <li class="flex gap-2"><span class="text-emerald-400">✓</span> Intent classification: pharmacy, transport, grocery, welfare</li>
+                <li class="flex gap-2"><span class="text-emerald-400">✓</span> Situation synthesis with structured care plans</li>
+                <li class="flex gap-2"><span class="text-emerald-400">✓</span> User-configurable API key (zero vendor lock-in)</li>
+              </ul>
+            </div>
+            <div class="bg-[#1A0000] border border-red-900 p-5 rounded-3xl space-y-3">
+              <h3 class="font-black text-red-300">Safety Guardrails</h3>
+              <ul class="text-xs text-stone-400 space-y-2">
+                <li class="flex gap-2"><span class="text-red-400">⚡</span> AI NEVER replaces emergency services</li>
+                <li class="flex gap-2"><span class="text-red-400">⚡</span> Critical keywords bypass AI → direct SOS dial</li>
+                <li class="flex gap-2"><span class="text-red-400">⚡</span> Volunteers clearly scoped: no clinical decisions</li>
+                <li class="flex gap-2"><span class="text-red-400">⚡</span> All AI responses include medical disclaimer</li>
+              </ul>
+            </div>
+          </div>
+          <div class="bg-[#13201E] border border-stone-800 p-5 rounded-3xl space-y-4">
+            <h3 class="font-black text-white">Tech Stack</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">Frontend</span>
+                <span class="text-white font-bold">React + TypeScript + Vite</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">UI System</span>
+                <span class="text-white font-bold">Tailwind CSS (Dark Mode)</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">AI Engine</span>
+                <span class="text-white font-bold">Google Gemini 2.5 Flash</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">Maps</span>
+                <span class="text-white font-bold">Leaflet + OpenStreetMap</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">Backend</span>
+                <span class="text-white font-bold">Supabase (PostgreSQL + RLS)</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">Distribution</span>
+                <span class="text-white font-bold">PWA + Android APK (Capacitor)</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-stone-400">Voice</span>
+                <span class="text-white font-bold">Web Speech API (en-IN)</span>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-800">
+              <p class="text-[11px] text-emerald-400 font-bold">✓ 2065 modules · 1.35s build · 7/7 tests passing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 6: VOLUNTEER + SOS ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 bg-[#0B1413]" id="slide-6">
+      <div class="max-w-3xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-black uppercase tracking-widest text-amber-400">Community + Emergency</span>
+          <h2 class="text-4xl font-black text-white">Neighbors as First Responders,<br/>Technology as the Backbone</h2>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="col-span-2 bg-[#0D3B33] border border-emerald-800 p-6 rounded-3xl space-y-4">
+            <h3 class="font-black text-emerald-300 text-lg">Volunteer Network</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-black/20 p-3 rounded-2xl">
+                <p class="text-2xl font-black text-white">8 km</p>
+                <p class="text-xs text-stone-400">configurable service radius per volunteer</p>
+              </div>
+              <div class="bg-black/20 p-3 rounded-2xl">
+                <p class="text-2xl font-black text-white">100pt</p>
+                <p class="text-xs text-stone-400">AI match scoring (proximity + skill + rating)</p>
+              </div>
+              <div class="bg-black/20 p-3 rounded-2xl">
+                <p class="text-2xl font-black text-white">Maps</p>
+                <p class="text-xs text-stone-400">Live Leaflet map view of all nearby requests</p>
+              </div>
+              <div class="bg-black/20 p-3 rounded-2xl">
+                <p class="text-2xl font-black text-white">Verified</p>
+                <p class="text-xs text-stone-400">Community-endorsed identity before onboarding</p>
+              </div>
+            </div>
+            <p class="text-xs text-stone-400 leading-relaxed">Tasks are strictly scoped — medicine pickup, transport, companionship. Volunteers are <em>not</em> healthcare providers. Gemini AI generates a Safety Guardrail reminder on every active mission.</p>
+          </div>
+          <div class="bg-red-950/50 border border-red-700 p-6 rounded-3xl space-y-4 flex flex-col">
+            <h3 class="font-black text-red-300 text-lg">SOS System</h3>
+            <div class="space-y-3 flex-1">
+              <div class="bg-black/20 p-3 rounded-xl">
+                <p class="text-xs text-red-200 font-bold">One-tap Dial</p>
+                <p class="text-[11px] text-stone-400 mt-0.5">Directly calls rescue number 9539141210</p>
+              </div>
+              <div class="bg-black/20 p-3 rounded-xl">
+                <p class="text-xs text-red-200 font-bold">GPS Location</p>
+                <p class="text-[11px] text-stone-400 mt-0.5">Geolocation shared with responders</p>
+              </div>
+              <div class="bg-black/20 p-3 rounded-xl">
+                <p class="text-xs text-red-200 font-bold">Emergency Contacts</p>
+                <p class="text-[11px] text-stone-400 mt-0.5">WhatsApp alert to pre-set family numbers</p>
+              </div>
+            </div>
+            <div class="w-full h-12 bg-red-600 rounded-2xl flex items-center justify-center font-black text-white text-sm">
+              🚨 SOS RESCUE
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 7: IMPACT ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 bg-[#0B1413]" id="slide-7">
+      <div class="max-w-3xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Impact & Traction</span>
+          <h2 class="text-4xl font-black text-white">Built for Scale,<br/>Designed for Dignity</h2>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="bg-[#0D3B33] border border-emerald-800 p-5 rounded-3xl text-center space-y-2">
+            <div class="text-4xl font-black gradient-text">5</div>
+            <p class="text-xs text-stone-300 font-bold">Indian languages supported at launch</p>
+          </div>
+          <div class="bg-[#0D3B33] border border-emerald-800 p-5 rounded-3xl text-center space-y-2">
+            <div class="text-4xl font-black gradient-text">4</div>
+            <p class="text-xs text-stone-300 font-bold">core health pillars in a single unified app</p>
+          </div>
+          <div class="bg-[#0D3B33] border border-emerald-800 p-5 rounded-3xl text-center space-y-2">
+            <div class="text-4xl font-black gradient-text">&lt;5s</div>
+            <p class="text-xs text-stone-300 font-bold">AI triage response time per case</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-[#13201E] border border-stone-800 p-5 rounded-3xl space-y-3">
+            <h3 class="font-black text-white">Who It Helps</h3>
+            <ul class="text-xs text-stone-400 space-y-1.5">
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>Elderly & chronically ill rural citizens</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>ASHA workers and frontline health staff</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>Families of patients living far from facilities</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>Community volunteers wanting to contribute</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>PHC doctors managing case overflow</li>
+            </ul>
+          </div>
+          <div class="bg-[#13201E] border border-stone-800 p-5 rounded-3xl space-y-3">
+            <h3 class="font-black text-white">Scalability</h3>
+            <ul class="text-xs text-stone-400 space-y-1.5">
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>PWA + Android APK — offline-capable</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>Supabase backend scales to millions of rows</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>Any district in India can be onboarded</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>User-supplied Gemini API keys — zero hosting cost</li>
+              <li class="flex gap-2"><span class="text-emerald-400">·</span>Modular: pluggable for govt ABDM integration</li>
+            </ul>
+          </div>
+        </div>
+        <div class="bg-gradient-to-r from-[#005448] to-[#0D6B5D] p-5 rounded-3xl text-center">
+          <p class="text-sm font-bold text-emerald-100 leading-relaxed">
+            Pilot target: <strong class="text-white">Kanjirappally block, Kottayam district, Kerala</strong><br/>
+            Population: 220,000 · 4 PHCs · 12 sub-centers · 180 ASHA workers
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== SLIDE 8: CTA ======================== -->
+    <div class="slide flex-col items-center justify-center min-h-screen px-8 py-12 text-center bg-gradient-to-br from-[#005448] via-[#0A433A] to-[#0B1413]" id="slide-8">
+      <div class="max-w-2xl mx-auto space-y-8">
+        <div class="space-y-4">
+          <div class="text-6xl">🌿</div>
+          <h2 class="text-5xl font-black leading-tight">
+            No Rural Citizen<br/>Should Face Illness<br/><span class="gradient-text">Alone.</span>
+          </h2>
+          <p class="text-lg text-emerald-100 font-medium leading-relaxed">
+            AroggyaGram isn't just an app — it's a pledge that technology<br/>can bridge India's most persistent health equity gap.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-4 text-sm">
+          <div class="bg-white/10 backdrop-blur p-4 rounded-2xl">
+            <p class="font-black text-white">🏆 The Ask</p>
+            <p class="text-emerald-200 text-xs mt-1">Seed partnership with NHM Kerala for district-level pilot deployment</p>
+          </div>
+          <div class="bg-white/10 backdrop-blur p-4 rounded-2xl">
+            <p class="font-black text-white">🔬 Next Steps</p>
+            <p class="text-emerald-200 text-xs mt-1">ASHA worker beta group, Supabase production backend, offline PWA caching</p>
+          </div>
+          <div class="bg-white/10 backdrop-blur p-4 rounded-2xl">
+            <p class="font-black text-white">📲 Try Now</p>
+            <p class="text-emerald-200 text-xs mt-1">Live APK available · GitHub: jvstin47/AroggyaGram-3</p>
+          </div>
+        </div>
+        <div class="pt-4 space-y-2">
+          <p class="text-3xl font-black text-white">AroggyaGram</p>
+          <p class="text-emerald-300 font-medium text-sm">Because every second counts. Especially 40 km from the nearest hospital.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end #deck -->
+
+  <!-- Navigation Bar -->
+  
+</body>
+</html>

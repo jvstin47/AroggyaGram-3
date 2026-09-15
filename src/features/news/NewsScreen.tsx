@@ -60,20 +60,20 @@ export const NewsScreen: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6">
+    <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
       {/* Header */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => navigate('/home')}
-          className="p-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
+          className="p-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition-colors"
           aria-label="Back"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] tracking-tight">Community Health News</h1>
-          <p className="text-xs text-stone-500 font-medium">Government advisories & rural health bulletins</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">Community Health News</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Government advisories & rural health bulletins</p>
         </div>
       </div>
 
@@ -95,9 +95,9 @@ export const NewsScreen: React.FC = () => {
         {HEALTH_NEWS.map((item) => (
           <article
             key={item.id}
-            className="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden hover:border-[#005448] transition-colors"
+            className="bg-white dark:bg-[#14211F] rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm overflow-hidden hover:border-[#005448] dark:hover:border-emerald-600 transition-colors"
           >
-            <div className="relative h-44 w-full bg-stone-100 overflow-hidden">
+            <div className="relative h-44 w-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
               <img
                 src={item.imageUrl}
                 alt={item.title}
@@ -110,7 +110,7 @@ export const NewsScreen: React.FC = () => {
             </div>
 
             <div className="p-5 space-y-2.5">
-              <div className="flex items-center justify-between text-xs text-stone-400 font-medium">
+              <div className="flex items-center justify-between text-xs text-stone-400 dark:text-stone-500 font-medium">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />
                   {item.date}
@@ -118,19 +118,19 @@ export const NewsScreen: React.FC = () => {
                 <span>{item.readTime}</span>
               </div>
 
-              <h3 className="text-base font-black text-stone-900 leading-snug">
+              <h3 className="text-base font-black text-stone-900 dark:text-white leading-snug">
                 {item.title}
               </h3>
 
-              <p className="text-xs text-stone-600 leading-relaxed">
+              <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
                 {item.summary}
               </p>
 
-              <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
-                <span className="font-semibold text-stone-700 truncate max-w-[70%]">
+              <div className="pt-2 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-[11px] text-stone-500">
+                <span className="font-semibold text-stone-700 dark:text-stone-300 truncate max-w-[70%]">
                   {item.authority}
                 </span>
-                <span className="text-[#005448] font-bold">Read More →</span>
+                <span className="text-[#005448] dark:text-emerald-400 font-bold">Read More →</span>
               </div>
             </div>
           </article>

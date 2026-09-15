@@ -6,20 +6,20 @@ export const AboutScreen: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6">
+    <div className="pb-36 px-4 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] max-w-lg mx-auto space-y-6 text-stone-900 dark:text-stone-100 transition-colors">
       {/* Header */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => navigate('/home')}
-          className="p-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
+          className="p-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition-colors"
           aria-label="Back"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-[#121E1C] tracking-tight">About AroggyaGram</h1>
-          <p className="text-xs text-stone-500 font-medium">Community Rural Health & Assistance Mission</p>
+          <h1 className="text-2xl font-black text-[#121E1C] dark:text-white tracking-tight">About AroggyaGram</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">Community Rural Health & Assistance Mission</p>
         </div>
       </div>
 
@@ -38,36 +38,36 @@ export const AboutScreen: React.FC = () => {
 
       {/* Core Principles */}
       <div className="space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 px-1">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 px-1">
           Our Guiding Architecture
         </h3>
 
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm space-y-2">
-          <div className="flex items-center gap-2.5 text-[#005448] font-bold text-sm">
+        <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+          <div className="flex items-center gap-2.5 text-[#005448] dark:text-emerald-400 font-bold text-sm">
             <Bot className="w-5 h-5" />
             <span>Intelligent AI Symptom Guidance</span>
           </div>
-          <p className="text-xs text-stone-600 leading-relaxed">
+          <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
             Powered by Google Gemini 2.5 Flash, providing preliminary risk classifications in native languages (Malayalam, Hindi, Tamil, Bengali, English) without replacing registered medical practitioners.
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm space-y-2">
-          <div className="flex items-center gap-2.5 text-[#D62828] font-bold text-sm">
+        <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+          <div className="flex items-center gap-2.5 text-[#D62828] dark:text-red-400 font-bold text-sm">
             <AlertOctagon className="w-5 h-5" />
             <span>Deterministic Emergency Safety</span>
           </div>
-          <p className="text-xs text-stone-600 leading-relaxed">
+          <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
             Critical conditions and keywords (such as falls, chest pains, and trauma) immediately trigger emergency SOS channels, strictly preventing volunteer assistance from ever substituting an ambulance.
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm space-y-2">
-          <div className="flex items-center gap-2.5 text-[#2E7A5B] font-bold text-sm">
+        <div className="bg-white dark:bg-[#14211F] p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+          <div className="flex items-center gap-2.5 text-[#2E7A5B] dark:text-emerald-400 font-bold text-sm">
             <Users className="w-5 h-5" />
             <span>Verified Local Volunteerism</span>
           </div>
-          <p className="text-xs text-stone-600 leading-relaxed">
+          <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
             Neighbors assist neighbors with prescription pickups, clinic transport, and welfare checks while strictly shielding sensitive private clinical records.
           </p>
         </div>
@@ -75,7 +75,7 @@ export const AboutScreen: React.FC = () => {
 
       {/* Version & Build info */}
       <div className="text-center pt-4 text-xs text-stone-400 space-y-1">
-        <p className="font-bold text-stone-600">AroggyaGram v3.0.0 (Unified Release)</p>
+        <p className="font-bold text-stone-600 dark:text-stone-300">AroggyaGram v3.0.0 (Unified Release)</p>
         <p>Engineered for rural connectivity & native Android devices</p>
       </div>
     </div>
