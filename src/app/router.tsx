@@ -12,6 +12,9 @@ import { ProfileScreen } from '@/features/profile/ProfileScreen';
 import { LoginScreen } from '@/features/auth/LoginScreen';
 import { NewsScreen } from '@/features/news/NewsScreen';
 import { AboutScreen } from '@/features/about/AboutScreen';
+import { CareCaseListScreen } from '@/features/care-cases/CareCaseListScreen';
+import { CareCaseDetailScreen } from '@/features/care-cases/CareCaseDetailScreen';
+import { ResponseSimulator } from '@/features/simulator/ResponseSimulator';
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +32,18 @@ export const router = createBrowserRouter([
       {
         path: 'home',
         element: <HomeScreen />
+      },
+      {
+        path: 'care-cases',
+        element: <CareCaseListScreen />
+      },
+      {
+        path: 'care-cases/:id',
+        element: <CareCaseDetailScreen />
+      },
+      {
+        path: 'simulator',
+        element: <ResponseSimulator />
       },
       {
         path: 'news',

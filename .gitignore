@@ -22,3 +22,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables
+.env
+.env*.local
+
+# Android build outputs
+android/.gradle
+android/build
+android/app/build
+android/captures
+*.apk
+*.aab
+
+# OS
+.DS_Store
+Thumbs.db

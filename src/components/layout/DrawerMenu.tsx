@@ -12,7 +12,10 @@ import {
   HeartHandshake,
   Bot,
   Pill,
-  Hospital
+  Hospital,
+  Activity,
+  Sliders,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -76,7 +79,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
         {/* Navigation Items */}
         <div className="p-4 space-y-1 flex-1">
           <div className="text-[11px] font-bold uppercase tracking-wider text-stone-400 px-3 py-2">
-            Main Features
+            Intelligent Health Network
           </div>
 
           <button
@@ -91,6 +94,28 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           </button>
 
           <button
+            onClick={() => handleNavigate('/care-cases')}
+            className="w-full flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-stone-100 text-stone-800 font-semibold text-sm transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <Activity className="w-5 h-5 text-[#2E7A5B]" />
+              <span>Care Network Cases</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-stone-400" />
+          </button>
+
+          <button
+            onClick={() => handleNavigate('/simulator')}
+            className="w-full flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-stone-100 text-stone-800 font-semibold text-sm transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <Sliders className="w-5 h-5 text-indigo-600" />
+              <span>Response Simulator</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-stone-400" />
+          </button>
+
+          <button
             onClick={() => handleNavigate('/ask-aroggya')}
             className="w-full flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-stone-100 text-stone-800 font-semibold text-sm transition-colors text-left"
           >
@@ -100,6 +125,10 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
+
+          <div className="text-[11px] font-bold uppercase tracking-wider text-stone-400 px-3 pt-4 pb-2">
+            Care & Resources
+          </div>
 
           <button
             onClick={() => handleNavigate('/medications')}
@@ -122,10 +151,6 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
-
-          <div className="text-[11px] font-bold uppercase tracking-wider text-stone-400 px-3 pt-4 pb-2">
-            Information & Community
-          </div>
 
           <button
             onClick={() => handleNavigate('/news')}
@@ -159,7 +184,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center gap-3">
               <User className="w-5 h-5 text-stone-700" />
-              <span>Profile & Languages</span>
+              <span>Profile & Settings</span>
             </div>
             <ChevronRight className="w-4 h-4 text-stone-400" />
           </button>
