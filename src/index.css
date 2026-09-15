@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #FBFAF6;
+    --foreground: #121E1C;
+    --primary: #005448;
+    --primary-hover: #004239;
+    --primary-light: #E0F2EE;
+    --secondary: #2E7A5B;
+    --accent: #E68A00;
+    --danger: #D62828;
+    --card: #FFFFFF;
+    --border: #E8E6DF;
+    --muted: #64748B;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* High contrast mode */
+  .high-contrast {
+    --background: #FFFFFF;
+    --foreground: #000000;
+    --border: #000000;
+    --muted: #111827;
+  }
+
+  /* Font scaling for accessibility */
+  .text-size-large {
+    font-size: 1.15rem;
+  }
+
+  .text-size-xlarge {
+    font-size: 1.3rem;
+  }
+}
+
+/* Ensure Leaflet z-index stays below top app bars / modals */
+.leaflet-pane {
+  z-index: 10 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 20 !important;
+}
