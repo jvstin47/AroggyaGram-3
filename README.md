@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="public/assets/logo.jpg" alt="AroggyaGram Logo" width="160" style="border-radius: 50%; box-shadow: 0 4px 24px rgba(0,84,72,0.18); margin-bottom: 12px;"/>
+
 # 🌿 AroggyaGram 3
 ### Intelligent Community Health-Response Network
 
@@ -23,7 +25,7 @@
   <a href="#-core-vision--paradigm-shift">Core Vision</a> •
   <a href="#-the-care-case-lifecycle">Care Case Architecture</a> •
   <a href="#-key-capabilities">Key Capabilities</a> •
-  <a href="#-response-simulator">Response Simulator</a> •
+  <a href="#-pitch-deck--presentation">Pitch Deck (PPTX & PDF)</a> •
   <a href="#-getting-started">Getting Started</a>
 </p>
 
