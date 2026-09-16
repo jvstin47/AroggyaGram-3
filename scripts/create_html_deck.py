@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+import os
+import subprocess
+
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -385,3 +388,28 @@
 
 </body>
 </html>
+"""
+
+with open("deck_print.html", "w") as f:
+    f.write(html_content)
+
+print("deck_print.html generated successfully.")
+
+# Export to PDF using Headless Chrome
+chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+if os.path.exists(chrome_path):
+    pdf_out = os.path.abspath("AroggyaGram_Pitch_Deck.pdf")
+    html_url = "file://" + os.path.abspath("deck_print.html")
+    cmd = [
+        chrome_path,
+        "--headless",
+        "--disable-gpu",
+        "--no-pdf-header-footer",
+        f"--print-to-pdf={pdf_out}",
+        html_url
+    ]
+    res = subprocess.run(cmd, capture_output=True, text=True)
+    if res.returncode == 0:
+        print(f"PDF successfully generated at: {pdf_out}")
+    else:
+        print("Chrome error:", res.stderr)

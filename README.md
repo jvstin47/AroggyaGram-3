@@ -16,8 +16,8 @@
 
 <br/>
 
-<a href="https://github.com/jvstin47/AroggyaGram-3/releases/download/v1.0.0/AroggyaGram-v1.0.0-stable.apk">
-  <img src="https://img.shields.io/badge/⬇️_DOWNLOAD_STABLE_ANDROID_APK-v1.0.0_(4.1_MB)-005448?style=for-the-badge&logo=android&logoColor=white" height="42" alt="Download Stable APK"/>
+<a href="https://github.com/jvstin47/AroggyaGram-3/raw/main/AroggyaGram-v1.0.0-stable.apk">
+  <img src="https://img.shields.io/badge/⬇️_DOWNLOAD_STABLE_ANDROID_APK-Latest_v1.0.0-005448?style=for-the-badge&logo=android&logoColor=white" height="42" alt="Download Stable APK"/>
 </a>
 
 <p align="center">
@@ -37,7 +37,7 @@
 
 You can download and test the compiled native Android APK directly on any Android phone (Android 8.0+ / API 26 to Android 15):
 
-* **Direct APK Download**: [**`AroggyaGram-v1.0.0-stable.apk`**](https://github.com/jvstin47/AroggyaGram-3/releases/download/v1.0.0/AroggyaGram-v1.0.0-stable.apk) *(~4.1 MB)*
+* **Direct Repository Download (Immediate)**: [**`AroggyaGram-v1.0.0-stable.apk`**](https://github.com/jvstin47/AroggyaGram-3/raw/main/AroggyaGram-v1.0.0-stable.apk)
 * **GitHub Release Page**: [View Release v1.0.0](https://github.com/jvstin47/AroggyaGram-3/releases/tag/v1.0.0)
 
 ### Installation via ADB (Fastest for Developers)
@@ -223,6 +223,15 @@ npx vitest run
 Test Files  2 passed (2)
 Tests       7 passed (7)
 ```
+
+---
+
+## 📊 Pitch Deck & Presentation
+
+A cohesive 8-slide pitch deck designed in the signature warm-cream and deep-teal aesthetic of AroggyaGram is available directly in the repository:
+
+* 📄 [**`AroggyaGram_Pitch_Deck.pdf`**](AroggyaGram_Pitch_Deck.pdf) — Ready for quick viewing, printing, or projection.
+* 📽️ [**`AroggyaGram_Pitch_Deck.pptx`**](AroggyaGram_Pitch_Deck.pptx) — Fully editable Microsoft PowerPoint presentation with native vector styling and app theme tokens.
 
 ---
 

@@ -40,7 +40,7 @@ export const LOCAL_HEALTH_NEWS: NewsItem[] = [
     date: 'September 10, 2026',
     authority: 'Community Health Mission',
     readTime: '2 min read',
-    imageUrl: 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=800&q=80'
+    imageUrl: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'n-4',
@@ -53,6 +53,13 @@ export const LOCAL_HEALTH_NEWS: NewsItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80'
   }
 ];
+
+export const normalizeNewsImageUrl = (url?: string): string => {
+  if (!url || url.includes('photo-1548839140') || url.includes('photo-1581244277943')) {
+    return 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80';
+  }
+  return url;
+};
 
 export class NewsService {
   public static async getHealthNews(): Promise<NewsItem[]> {
@@ -72,13 +79,16 @@ export class NewsService {
             date: item.date,
             authority: item.authority,
             readTime: item.read_time || item.readTime || '2 min read',
-            imageUrl: item.image_url || item.imageUrl || 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80'
+            imageUrl: normalizeNewsImageUrl(item.image_url || item.imageUrl)
           }));
         }
       } catch (err) {
         console.warn('Supabase news fetch fallback to local:', err);
       }
     }
-    return LOCAL_HEALTH_NEWS;
+    return LOCAL_HEALTH_NEWS.map(item => ({
+      ...item,
+      imageUrl: normalizeNewsImageUrl(item.imageUrl)
+    }));
   }
 }

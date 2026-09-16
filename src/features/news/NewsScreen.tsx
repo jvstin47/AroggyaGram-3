@@ -68,6 +68,13 @@ export const NewsScreen: React.FC = () => {
               <img
                 src={item.imageUrl}
                 alt={item.title}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  const fallback = 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80';
+                  if (target.src !== fallback) {
+                    target.src = fallback;
+                  }
+                }}
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 loading="lazy"
               />

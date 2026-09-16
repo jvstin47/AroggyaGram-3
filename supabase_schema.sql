@@ -94,7 +94,7 @@ VALUES
         'September 10, 2026',
         'Community Health Mission',
         '2 min read',
-        'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80'
     ),
     (
         'n-4',
