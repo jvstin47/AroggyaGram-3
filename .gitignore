@@ -33,7 +33,7 @@ android/build
 android/app/build
 android/captures
 *.apk
-!AroggyaGram-v1.0.0-stable.apk
+!AroggyaGram-*.apk
 *.aab
 
 # OS
