@@ -92,6 +92,20 @@ export interface Translations {
   facilities_clinics: string;
   facilities_pharmacies: string;
   facilities_er_24: string;
+  facilities_search_placeholder: string;
+  facilities_ambulance: string;
+  facilities_icu: string;
+  facilities_beds: string;
+  facilities_view_details: string;
+  facilities_close_details: string;
+  facilities_specialties: string;
+  facilities_schemes: string;
+  facilities_duty_doctor: string;
+  facilities_blood_bank: string;
+  facilities_lab: string;
+  facilities_pharmacy: string;
+  facilities_hours: string;
+  facilities_no_results: string;
 
   // Ask Aroggya Screen
   ask_title: string;
@@ -360,6 +374,20 @@ export const TRANSLATIONS: Record<SupportedLanguage, Translations> = {
     facilities_clinics: 'Clinics & PHC',
     facilities_pharmacies: 'Pharmacies',
     facilities_er_24: '24/7 ER',
+    facilities_search_placeholder: 'Search by hospital name, specialty, or scheme (e.g., KASP, ICU)...',
+    facilities_ambulance: 'Ambulance',
+    facilities_icu: 'ICU Beds',
+    facilities_beds: 'Total Beds',
+    facilities_view_details: 'Clinical Details',
+    facilities_close_details: 'Close Details',
+    facilities_specialties: 'Specialties & Key Services',
+    facilities_schemes: 'Accepted Health Schemes',
+    facilities_duty_doctor: 'Duty Doctor Available',
+    facilities_blood_bank: 'Blood Bank',
+    facilities_lab: 'Diagnostic Lab',
+    facilities_pharmacy: '24/7 Pharmacy',
+    facilities_hours: 'Operating Hours',
+    facilities_no_results: 'No facilities found matching your search',
 
     // Ask Aroggya
     ask_title: 'Ask Aroggya',
@@ -627,6 +655,20 @@ export const TRANSLATIONS: Record<SupportedLanguage, Translations> = {
     facilities_clinics: 'ക്ലിനിക്കുകൾ & PHC',
     facilities_pharmacies: 'ഫാർമസികൾ',
     facilities_er_24: '24/7 അടിയന്തരം',
+    facilities_search_placeholder: 'ആശുപത്രി, സ്പെഷ്യാലിറ്റി, അല്ലെങ്കിൽ സ്കീം (ഉദാ: KASP, ICU) തിരയുക...',
+    facilities_ambulance: 'ആംബുലൻസ്',
+    facilities_icu: 'ഐസിയു ബെഡ്ഡുകൾ',
+    facilities_beds: 'ആകെ ബെഡ്ഡുകൾ',
+    facilities_view_details: 'വിശദാംശങ്ങൾ',
+    facilities_close_details: 'അടയ്ക്കുക',
+    facilities_specialties: 'സ്പെഷ്യാലിറ്റികളും സേവനങ്ങളും',
+    facilities_schemes: 'അംഗീകൃത ആരോഗ്യ പദ്ധതികൾ',
+    facilities_duty_doctor: 'ഡ്യൂട്ടി ഡോക്ടർ ലഭ്യമാണ്',
+    facilities_blood_bank: 'ബ്ലഡ് ബാങ്ക്',
+    facilities_lab: 'ഡയഗ്നോസ്റ്റിക് ലാബ്',
+    facilities_pharmacy: 'ഫാർമസി',
+    facilities_hours: 'പ്രവർത്തന സമയം',
+    facilities_no_results: 'സ്ഥാപനങ്ങൾ ഒന്നും കണ്ടെത്തിയില്ല',
 
     // Ask Aroggya
     ask_title: 'ആസ്ക് ആരോഗ്യ',
@@ -894,6 +936,20 @@ export const TRANSLATIONS: Record<SupportedLanguage, Translations> = {
     facilities_clinics: 'क्लीनिक और PHC',
     facilities_pharmacies: 'फार्मेसी',
     facilities_er_24: '24/7 आपातकालीन',
+    facilities_search_placeholder: 'अस्पताल, विशेषज्ञता, या योजना (उदा. KASP, ICU) खोजें...',
+    facilities_ambulance: 'एम्बुलेंस',
+    facilities_icu: 'आईसीयू बेड',
+    facilities_beds: 'कुल बेड',
+    facilities_view_details: 'विवरण देखें',
+    facilities_close_details: 'बंद करें',
+    facilities_specialties: 'विशेषज्ञताएं और सेवाएं',
+    facilities_schemes: 'स्वीकृत स्वास्थ्य योजनाएं',
+    facilities_duty_doctor: 'ड्यूटी डॉक्टर उपलब्ध',
+    facilities_blood_bank: 'ब्लड बैंक',
+    facilities_lab: 'डायग्नोस्टिक लैब',
+    facilities_pharmacy: 'फार्मेसी',
+    facilities_hours: 'कार्य के घंटे',
+    facilities_no_results: 'कोई सुविधा नहीं मिली',
 
     // Ask Aroggya
     ask_title: 'आस्क आरोग्य',

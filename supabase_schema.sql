@@ -12,12 +12,46 @@ CREATE TABLE IF NOT EXISTS public.facilities (
     phone TEXT NOT NULL,
     has_emergency BOOLEAN DEFAULT false,
     distance_km DOUBLE PRECISION DEFAULT 0.0,
+    facility_level TEXT,
+    operating_hours TEXT,
+    specialties TEXT[],
+    schemes_accepted TEXT[],
+    has_ambulance BOOLEAN DEFAULT false,
+    ambulance_phone TEXT,
+    has_icu BOOLEAN DEFAULT false,
+    icu_beds INTEGER DEFAULT 0,
+    total_beds INTEGER DEFAULT 0,
+    has_blood_bank BOOLEAN DEFAULT false,
+    has_diagnostic_lab BOOLEAN DEFAULT false,
+    has_pharmacy BOOLEAN DEFAULT false,
+    duty_doctor_available BOOLEAN DEFAULT false,
+    rating NUMERIC(2,1) DEFAULT 4.0,
+    description TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
+-- Ensure backwards compatibility if table was created previously with fewer columns
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS facility_level TEXT;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS operating_hours TEXT;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS specialties TEXT[];
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS schemes_accepted TEXT[];
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS has_ambulance BOOLEAN DEFAULT false;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS ambulance_phone TEXT;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS has_icu BOOLEAN DEFAULT false;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS icu_beds INTEGER DEFAULT 0;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS total_beds INTEGER DEFAULT 0;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS has_blood_bank BOOLEAN DEFAULT false;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS has_diagnostic_lab BOOLEAN DEFAULT false;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS has_pharmacy BOOLEAN DEFAULT false;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS duty_doctor_available BOOLEAN DEFAULT false;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS rating NUMERIC(2,1) DEFAULT 4.0;
+ALTER TABLE public.facilities ADD COLUMN IF NOT EXISTS description TEXT;
+
 -- Enable RLS
 ALTER TABLE public.facilities ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow public read access on facilities" ON public.facilities;
 CREATE POLICY "Allow public read access on facilities" ON public.facilities FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow authenticated full access on facilities" ON public.facilities;
 CREATE POLICY "Allow authenticated full access on facilities" ON public.facilities FOR ALL USING (true);
 
 -- 2. Public Health & Community News Table
@@ -35,24 +69,174 @@ CREATE TABLE IF NOT EXISTS public.news (
 
 -- Enable RLS
 ALTER TABLE public.news ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow public read access on news" ON public.news;
 CREATE POLICY "Allow public read access on news" ON public.news FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow authenticated full access on news" ON public.news;
 CREATE POLICY "Allow authenticated full access on news" ON public.news FOR ALL USING (true);
 
--- 3. Seed Healthcare Facilities (Focused on Kanjirappally & nearby taluks)
-INSERT INTO public.facilities (id, name, type, address, latitude, longitude, phone, has_emergency, distance_km)
+-- 3. Seed Comprehensive Healthcare Facilities (Focused on Kanjirappally & nearby taluks)
+INSERT INTO public.facilities (
+    id, name, type, address, latitude, longitude, phone, has_emergency, distance_km,
+    facility_level, operating_hours, specialties, schemes_accepted, has_ambulance, ambulance_phone,
+    has_icu, icu_beds, total_beds, has_blood_bank, has_diagnostic_lab, has_pharmacy, duty_doctor_available, rating, description
+)
 VALUES
-    ('fac-phc-koovappally', 'Primary Health Centre (PHC) Koovappally', 'clinic', 'Near Panchayat Office, Koovappally, Kanjirappally', 9.5310, 76.8205, '+91 4828 251 210', false, 1.2),
-    ('fac-neethi-koovappally', 'Neethi Co-op Medical Store & Pharmacy', 'pharmacy', 'Koovappally Junction, Kanjirappally - Erumely Road', 9.5320, 76.8190, '+91 4828 252 440', false, 1.3),
-    ('fac-mary-queens', 'Mary Queens Mission Hospital', 'hospital', 'Palampra P.O., Kanjirappally, Kottayam 686518', 9.5485, 76.8042, '+91 4828 201 300', true, 4.5),
-    ('fac-jan-aushadhi', 'Pradhan Mantri Jan Aushadhi Kendra', 'pharmacy', 'Private Bus Stand Complex, Kanjirappally Town', 9.5568, 76.7880, '+91 4828 205 890', false, 6.2),
-    ('fac-taluk-hospital', 'Government Taluk Hospital Kanjirappally', 'hospital', 'Near NH 183, Kanjirappally, Kottayam 686507', 9.5580, 76.7865, '+91 4828 202 345', true, 6.8),
-    ('fac-phc-chirakkadavu', 'Primary Health Centre (PHC) Chirakkadavu', 'clinic', 'Near Ponkunnam, Chirakkadavu, Kanjirappally', 9.5650, 76.7610, '+91 4828 221 410', false, 7.5),
-    ('fac-st-marys', 'St. Mary''s Hospital Podimattom', 'hospital', 'Podimattom, Parathode, Kottayam 686512', 9.5620, 76.8450, '+91 4828 232 240', false, 8.2),
-    ('fac-chc-mundakkayam', 'Community Health Centre (CHC) Mundakkayam', 'clinic', 'Near Mini Civil Station, Mundakkayam, Kottayam', 9.5372, 76.8850, '+91 4828 272 233', true, 14.1),
-    ('fac-mar-sleeva', 'Mar Sleeva Medicity Palai', 'hospital', 'Cherpunkal, Palai, Kottayam 686584', 9.6880, 76.6340, '+91 4822 269 500', true, 32.4),
-    ('fac-caritas', 'Caritas Hospital & Institute of Health Sciences', 'hospital', 'Thellakom P.O., Kottayam 686630', 9.6410, 76.5400, '+91 481 279 0025', true, 38.2),
-    ('fac-bharat', 'Bharat Hospital', 'hospital', 'Near Railway Station, Nagampadam, Kottayam 686001', 9.5890, 76.5260, '+91 481 256 5451', true, 39.5),
-    ('fac-mch-kottayam', 'Government Medical College Hospital (MCH) Kottayam', 'hospital', 'Medical College P.O., Gandhinagar, Kottayam 686008', 9.6640, 76.5290, '+91 481 259 7279', true, 41.0)
+    (
+        'fac-phc-koovappally',
+        'Primary Health Centre (PHC) Koovappally',
+        'clinic',
+        'Near Panchayat Office, Koovappally, Kanjirappally 686518',
+        9.5310, 76.8205, '+91 4828 251 210', false, 1.2,
+        'Primary Health Centre (Arogya Keralam)',
+        '9:00 AM - 4:00 PM (OPD)',
+        ARRAY['General Medicine', 'Maternal & Child Care', 'Immunization', 'Preventive Health', 'NCD Screening'],
+        ARRAY['Arogya Keralam (NHM)', 'Free Government OP Medicine'],
+        false, NULL, false, 0, 6, false, true, true, true, 4.2,
+        'Government primary healthcare facility serving Koovappally panchayat. Provides basic laboratory tests, mother-child care, routine immunization, and free essential medicines.'
+    ),
+    (
+        'fac-neethi-koovappally',
+        'Neethi Co-op Medical Store & Pharmacy',
+        'pharmacy',
+        'Koovappally Junction, Kanjirappally - Erumely Road',
+        9.5320, 76.8190, '+91 4828 252 440', false, 1.3,
+        'Subsidized Cooperative Pharmacy',
+        '8:00 AM - 9:30 PM (Daily)',
+        ARRAY['Subsidized Prescription Drugs', 'Surgical Supplies', 'Insulin & Diabetic Care', 'First Aid'],
+        ARRAY['Kerala State Cooperative Subsidies', 'Karunya Benevolent Discounts'],
+        false, NULL, false, 0, 0, false, false, true, false, 4.4,
+        'Kerala Co-operative Department subsidized pharmacy providing quality generic and branded formulations at 15-40% below MRP to local residents.'
+    ),
+    (
+        'fac-mary-queens',
+        'Mary Queens Mission Hospital',
+        'hospital',
+        'Palampra P.O., Kanjirappally, Kottayam 686518',
+        9.5485, 76.8042, '+91 4828 201 300', true, 4.5,
+        'Multi-Specialty Mission Hospital',
+        '24/7 (Emergency & IPD)',
+        ARRAY['24/7 Emergency & Trauma', 'Cardiology', 'Orthopaedics', 'Obstetrics & Gynaecology', 'General Surgery', 'Pediatrics', 'Nephrology & Dialysis'],
+        ARRAY['KASP (Karunya)', 'Ayushman Bharat PM-JAY', 'MEDISEP', 'Cashless Insurance / TPA'],
+        true, '+91 4828 201 333', true, 22, 250, true, true, true, true, 4.6,
+        'Premier multi-specialty Catholic mission hospital in Kanjirappally equipped with 24/7 emergency casualty, advanced ICU, hemodialysis unit, digital radiology, and 24-hour pharmacy.'
+    ),
+    (
+        'fac-jan-aushadhi',
+        'Pradhan Mantri Jan Aushadhi Kendra',
+        'pharmacy',
+        'Private Bus Stand Complex, Kanjirappally Town 686507',
+        9.5568, 76.7880, '+91 4828 205 890', false, 6.2,
+        'Central Government Generic Medicine Store',
+        '9:00 AM - 8:30 PM (Mon-Sat)',
+        ARRAY['Generic Essential Medicines (50-90% Discount)', 'Hypertension & Cardiac Refills', 'Diabetic Formulations', 'Surgical Disposables'],
+        ARRAY['PMBJP (Pradhan Mantri Bhartiya Janaushadhi Pariyojana)'],
+        false, NULL, false, 0, 0, false, false, true, false, 4.7,
+        'Official PMBJP pharmacy offering certified top-grade generic drugs at up to 90% savings for chronic cardiac, diabetic, and hypertensive patients.'
+    ),
+    (
+        'fac-taluk-hospital',
+        'Government Taluk Hospital Kanjirappally',
+        'hospital',
+        'Near NH 183, Kanjirappally, Kottayam 686507',
+        9.5580, 76.7865, '+91 4828 202 345', true, 6.8,
+        'Sub-District Taluk Government Hospital',
+        '24/7 (Casualty & Inpatient)',
+        ARRAY['24/7 Casualty & Trauma', 'General Medicine', 'Pediatrics', 'Obstetrics & Gynaecology', 'Orthopaedics', 'Ophthalmology', 'Dental Surgery'],
+        ARRAY['KASP (Karunya)', 'Ayushman Bharat PM-JAY', 'Karunya Benevolent Fund', 'MEDISEP'],
+        true, '+91 4828 202 108', true, 12, 160, true, true, true, true, 4.1,
+        'Central government hospital for Kanjirappally taluk. Houses 24/7 government emergency casualty, maternity ward, major OT, blood storage center, digital X-ray, and dialysis wing.'
+    ),
+    (
+        'fac-phc-chirakkadavu',
+        'Primary Health Centre (PHC) Chirakkadavu',
+        'clinic',
+        'Near Ponkunnam, Chirakkadavu, Kanjirappally 686506',
+        9.5650, 76.7610, '+91 4828 221 410', false, 7.5,
+        'Family Health Centre (Arogya Keralam FHC)',
+        '9:00 AM - 6:00 PM',
+        ARRAY['Family Medicine', 'Geriatric Clinic', 'Palliative Home Care', 'Pediatric Immunization', 'Telemedicine'],
+        ARRAY['National Health Mission (NHM)', 'Arogya Keralam Free OP'],
+        false, NULL, false, 0, 10, false, true, true, true, 4.3,
+        'Modernized Family Health Centre under Aardram Mission with extended outpatient hours, palliative home-care outreach, automated laboratory, and community wellness programs.'
+    ),
+    (
+        'fac-st-marys',
+        'St. Mary''s Hospital Podimattom',
+        'hospital',
+        'Podimattom, Parathode, Kottayam 686512',
+        9.5620, 76.8450, '+91 4828 232 240', true, 8.2,
+        'General Community Hospital',
+        '24/7 (Emergency & IPD)',
+        ARRAY['General Medicine', 'General Surgery', 'Obstetrics & Gynaecology', 'Pediatrics', 'ENT'],
+        ARRAY['KASP', 'Private Medical Insurance'],
+        true, '+91 4828 232 299', true, 8, 100, false, true, true, true, 4.3,
+        'Serving Parathode and plantation communities with inpatient wards, surgical theater, obstetric care, 24-hour emergency response, and ultrasound imaging.'
+    ),
+    (
+        'fac-chc-mundakkayam',
+        'Community Health Centre (CHC) Mundakkayam',
+        'clinic',
+        'Near Mini Civil Station, Mundakkayam, Kottayam 686513',
+        9.5372, 76.8850, '+91 4828 272 233', true, 14.1,
+        'Community Health Centre (Block CHC)',
+        '24/7 (Emergency & Delivery Suite)',
+        ARRAY['24/7 Casualty', 'Emergency Maternity Care', 'Pediatrics', 'General Medicine', 'Public Health Outreach'],
+        ARRAY['KASP', 'Ayushman Bharat PM-JAY', 'Free Government Diagnostics'],
+        true, '+91 4828 272 108', false, 0, 40, false, true, true, true, 4.0,
+        'Block-level public hospital providing emergency stabilization, safe birthing center, inpatient treatment, and ambulance referral services along the Kottayam-Kumily highway.'
+    ),
+    (
+        'fac-mar-sleeva',
+        'Mar Sleeva Medicity Palai',
+        'hospital',
+        'Cherpunkal, Palai, Kottayam 686584',
+        9.6880, 76.6340, '+91 4822 269 500', true, 32.4,
+        'Quaternary Care Academic Medical Center',
+        '24/7 (Emergency, Trauma & Critical Care)',
+        ARRAY['Interventional Cardiology', 'Cardiothoracic Surgery', 'Neurology & Neurosurgery', 'Medical & Surgical Oncology', 'Organ Transplant', 'Level 1 Trauma Care'],
+        ARRAY['KASP (Karunya)', 'Ayushman Bharat PM-JAY', 'MEDISEP', 'CGHS', 'All Major Insurance / TPAs'],
+        true, '+91 4822 269 777', true, 120, 750, true, true, true, true, 4.8,
+        'Premier NABH-accredited tertiary care university medical center. Features cath labs, ECMO support, modular surgical suites, advanced stroke center, and round-the-clock mobile ICU fleet.'
+    ),
+    (
+        'fac-caritas',
+        'Caritas Hospital & Institute of Health Sciences',
+        'hospital',
+        'Thellakom P.O., Kottayam 686630',
+        9.6410, 76.5400, '+91 481 279 0025', true, 38.2,
+        'Tertiary Care Multi-Specialty & Oncology Center',
+        '24/7 (Emergency & Comprehensive Care)',
+        ARRAY['Comprehensive Cancer Institute', 'Cardiology & CTVS', 'Gastroenterology', 'Renal Sciences', 'Neonatology (NICU Level III)', 'Emergency & Critical Care'],
+        ARRAY['KASP', 'Ayushman Bharat PM-JAY', 'MEDISEP', 'ESI', 'Cashless TPA'],
+        true, '+91 481 279 0033', true, 90, 650, true, true, true, true, 4.7,
+        'Pioneering healthcare institution in Central Travancore known for comprehensive oncology, advanced cardiac interventions, dedicated neuro-critical ICU, and robotic surgery.'
+    ),
+    (
+        'fac-bharat',
+        'Bharat Hospital',
+        'hospital',
+        'Near Railway Station, Nagampadam, Kottayam 686001',
+        9.5890, 76.5260, '+91 481 256 5451', true, 39.5,
+        'Multi-Specialty Private Hospital',
+        '24/7 (Casualty & Inpatient)',
+        ARRAY['General Surgery', 'Orthopaedics & Joint Replacement', 'Cardiology', 'ENT', 'Urology', 'Dialysis'],
+        ARRAY['KASP', 'MEDISEP', 'Private Health Insurance'],
+        true, '+91 481 256 5455', true, 18, 150, false, true, true, true, 4.3,
+        'Conveniently situated next to Kottayam railway station, offering fast trauma response, joint replacement surgeries, intensive care, and multi-specialty outpatient clinics.'
+    ),
+    (
+        'fac-mch-kottayam',
+        'Government Medical College Hospital (MCH) Kottayam',
+        'hospital',
+        'Medical College P.O., Gandhinagar, Kottayam 686008',
+        9.6640, 76.5290, '+91 481 259 7279', true, 41.0,
+        'Apex Quaternary Government Teaching Hospital',
+        '24/7 (Emergency, Trauma & Specialized IPD)',
+        ARRAY['Apex Level Trauma Center', 'Cardiology & Cardiothoracic', 'Neurology & Neurosurgery', 'Nephrology & Renal Transplant', 'Burn ICU', 'Pediatric Intensive Care', 'Comprehensive Oncology'],
+        ARRAY['KASP (Karunya 100% Free)', 'Ayushman Bharat PM-JAY', 'Government Employee Schemes', 'Free Statewide BPL Coverage'],
+        true, '+91 481 259 7288', true, 150, 1400, true, true, true, true, 4.5,
+        'The central apex referral hospital and government medical college for Central Kerala. Provides state-of-the-art super-specialty surgery, organ transplantation, comprehensive 24/7 emergency care, and free life-saving healthcare.'
+    )
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,
     type = EXCLUDED.type,
@@ -61,7 +245,22 @@ ON CONFLICT (id) DO UPDATE SET
     longitude = EXCLUDED.longitude,
     phone = EXCLUDED.phone,
     has_emergency = EXCLUDED.has_emergency,
-    distance_km = EXCLUDED.distance_km;
+    distance_km = EXCLUDED.distance_km,
+    facility_level = EXCLUDED.facility_level,
+    operating_hours = EXCLUDED.operating_hours,
+    specialties = EXCLUDED.specialties,
+    schemes_accepted = EXCLUDED.schemes_accepted,
+    has_ambulance = EXCLUDED.has_ambulance,
+    ambulance_phone = EXCLUDED.ambulance_phone,
+    has_icu = EXCLUDED.has_icu,
+    icu_beds = EXCLUDED.icu_beds,
+    total_beds = EXCLUDED.total_beds,
+    has_blood_bank = EXCLUDED.has_blood_bank,
+    has_diagnostic_lab = EXCLUDED.has_diagnostic_lab,
+    has_pharmacy = EXCLUDED.has_pharmacy,
+    duty_doctor_available = EXCLUDED.duty_doctor_available,
+    rating = EXCLUDED.rating,
+    description = EXCLUDED.description;
 
 -- 4. Seed Health News Bulletins
 INSERT INTO public.news (id, title, category, summary, date, authority, read_time, image_url)

@@ -133,4 +133,21 @@ export interface HealthcareFacility {
   phone: string;
   has_emergency: boolean;
   distance_km?: number;
+  
+  // Relevant hospital & clinical facility details
+  facility_level?: string;
+  operating_hours?: string;
+  specialties?: string[];
+  schemes_accepted?: string[];
+  has_ambulance?: boolean;
+  ambulance_phone?: string;
+  has_icu?: boolean;
+  icu_beds?: number;
+  total_beds?: number;
+  has_blood_bank?: boolean;
+  has_diagnostic_lab?: boolean;
+  has_pharmacy?: boolean;
+  duty_doctor_available?: boolean;
+  rating?: number;
+  description?: string;
 }
