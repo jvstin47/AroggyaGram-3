@@ -87,7 +87,7 @@ export const ApiKeySettingsScreen: React.FC = () => {
         </button>
 
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-emerald-500" />
           <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
             AI Engine Config
           </span>
@@ -97,7 +97,7 @@ export const ApiKeySettingsScreen: React.FC = () => {
       {/* Hero Banner */}
       <div className="bg-gradient-to-br from-[#005448] to-[#0A433A] dark:from-[#093830] dark:to-[#04241F] text-white p-5 rounded-3xl shadow-xl shadow-[#005448]/25 space-y-3 border border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+          <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
             <Key className="w-6 h-6 text-emerald-300" />
           </div>
           <div>

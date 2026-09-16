@@ -209,7 +209,7 @@ export const MedicationsScreen: React.FC = () => {
 
       {/* Structured Add Medication Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-white dark:bg-[#14211F] text-stone-900 dark:text-stone-100 rounded-3xl p-5 w-full max-w-md max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl border border-stone-200 dark:border-stone-800">
             <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-800 pb-3">
               <h3 className="text-lg font-black text-stone-900 dark:text-white">{t.meds_add_title}</h3>
@@ -403,7 +403,7 @@ export const MedicationsScreen: React.FC = () => {
 
       {/* In-App Delete Confirmation Modal */}
       {medicineToDelete && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-white dark:bg-[#14211F] text-stone-900 dark:text-stone-100 rounded-3xl p-6 w-full max-w-sm space-y-4 shadow-2xl border border-stone-200 dark:border-stone-800">
             <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto">
               <Trash2 className="w-6 h-6" />

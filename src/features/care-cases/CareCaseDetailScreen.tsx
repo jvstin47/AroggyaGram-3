@@ -108,7 +108,7 @@ export const CareCaseDetailScreen: React.FC = () => {
       case 'ASSIGNED':
         return <span className="bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 px-2.5 py-0.5 rounded-full text-xs font-bold">RESPONDER ASSIGNED</span>;
       case 'IN_PROGRESS':
-        return <span className="bg-emerald-100 dark:bg-emerald-950 text-[#005448] dark:text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />IN PROGRESS</span>;
+        return <span className="bg-emerald-100 dark:bg-emerald-950 text-[#005448] dark:text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500" />IN PROGRESS</span>;
       case 'COMPLETED':
         return <span className="bg-green-100 dark:bg-green-950 text-green-800 dark:text-green-300 px-2.5 py-0.5 rounded-full text-xs font-bold">COMPLETED</span>;
       case 'FOLLOW_UP':
@@ -116,7 +116,7 @@ export const CareCaseDetailScreen: React.FC = () => {
       case 'RESOLVED':
         return <span className="bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />RESOLVED & CLOSED</span>;
       case 'ESCALATED':
-        return <span className="bg-red-600 text-white px-2.5 py-0.5 rounded-full text-xs font-bold animate-bounce">108 EMERGENCY DISPATCH</span>;
+        return <span className="bg-red-600 text-white px-2.5 py-0.5 rounded-full text-xs font-black tracking-wide">108 EMERGENCY DISPATCH</span>;
       default:
         return <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 px-2.5 py-0.5 rounded-full text-xs font-bold">{status}</span>;
     }

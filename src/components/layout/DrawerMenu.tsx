@@ -55,7 +55,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-black/60 transition-opacity"
       />
 
       {/* Drawer content */}
@@ -63,7 +63,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ isOpen, onClose }) => {
         {/* Drawer Header */}
         <div className="bg-gradient-to-br from-[#005448] to-[#0D6B5D] text-white p-6 pt-[calc(2rem+env(safe-area-inset-top,0px))] space-y-3">
           <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center font-black text-xl text-white">
+            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center font-black text-xl text-white">
               {profile?.full_name?.charAt(0) || user?.fullName?.charAt(0) || 'U'}
             </div>
             <button

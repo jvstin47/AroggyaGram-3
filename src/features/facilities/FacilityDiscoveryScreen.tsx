@@ -383,7 +383,7 @@ export const FacilityDiscoveryScreen: React.FC = () => {
                     href={`tel:${fac.ambulance_phone}`}
                     className="w-full py-2 bg-red-50 hover:bg-red-100 dark:bg-red-950/50 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-colors"
                   >
-                    <Ambulance className="w-4 h-4 text-red-600 dark:text-red-400 animate-pulse" />
+                    <Ambulance className="w-4 h-4 text-red-600 dark:text-red-400" />
                     <span>Call Ambulance Hotline: {fac.ambulance_phone}</span>
                   </a>
                 )}

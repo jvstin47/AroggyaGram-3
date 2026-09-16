@@ -325,7 +325,7 @@ export const AskAroggyaScreen: React.FC = () => {
 
       {/* Pinned Bottom Input Bar - Floating Elevated Card Above BottomNav */}
       <div className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] left-0 right-0 max-w-lg mx-auto px-3 z-30 pointer-events-auto">
-        <div className="bg-white dark:bg-[#14211F] p-2 rounded-3xl border border-stone-200 dark:border-stone-700 shadow-xl dark:shadow-2xl backdrop-blur-md">
+        <div className="bg-white dark:bg-[#14211F] p-2 rounded-3xl border border-stone-200 dark:border-stone-700 shadow-xl dark:shadow-2xl">
           <form
             onSubmit={(e) => {
               e.preventDefault();

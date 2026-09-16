@@ -96,3 +96,14 @@
 .leaflet-bottom {
   z-index: 20 !important;
 }
+
+/* GPU compositor and containment performance optimizations */
+.optimize-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 120px;
+}

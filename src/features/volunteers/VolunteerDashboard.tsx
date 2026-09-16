@@ -104,7 +104,7 @@ export const VolunteerDashboard: React.FC = () => {
           <div>
             <div className="flex items-center gap-1.5">
               <span className="text-sm font-black text-stone-900 dark:text-white">{t.volunteer_verified}</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
             </div>
             <p className="text-xs text-stone-500">
               Kanjirappally Ward #4 · {MOCK_VOLUNTEER_PROFILE.completed_tasks} {t.volunteer_tasks_completed}

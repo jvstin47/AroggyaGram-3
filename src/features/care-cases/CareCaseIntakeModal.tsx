@@ -121,7 +121,7 @@ export const CareCaseIntakeModal: React.FC<CareCaseIntakeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 p-0 sm:p-4 animate-in fade-in duration-200">
       <div className="w-full max-w-xl max-h-[92vh] flex flex-col bg-white dark:bg-[#14211F] text-stone-900 dark:text-stone-100 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden border border-stone-100 dark:border-[#223733] transition-colors">
         
         {/* Header */}

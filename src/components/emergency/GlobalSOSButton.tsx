@@ -66,11 +66,11 @@ export const GlobalSOSButton: React.FC = () => {
 
       {/* Full-Screen Emergency Modal overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-[#8F1616]/95 backdrop-blur-md text-white flex flex-col justify-between p-6 overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-[#8F1616] text-white flex flex-col justify-between p-6 overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-white/20 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white text-[#D62828] rounded-full flex items-center justify-center shadow-lg animate-bounce">
+              <div className="w-12 h-12 bg-white text-[#D62828] rounded-full flex items-center justify-center shadow-lg">
                 <AlertOctagon className="w-7 h-7" />
               </div>
               <div>

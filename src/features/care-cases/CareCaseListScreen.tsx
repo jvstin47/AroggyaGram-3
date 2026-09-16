@@ -45,7 +45,7 @@ export const CareCaseListScreen: React.FC = () => {
       case 'RESOLVED':
         return <span className="bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-[10px] font-black uppercase px-2 py-0.5 rounded-full">RESOLVED</span>;
       case 'ESCALATED':
-        return <span className="bg-red-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse">EMERGENCY</span>;
+        return <span className="bg-red-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full tracking-wide">EMERGENCY</span>;
       default:
         return <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-[10px] font-black uppercase px-2 py-0.5 rounded-full">{status}</span>;
     }

@@ -78,7 +78,7 @@ export const NewsScreen: React.FC = () => {
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 loading="lazy"
               />
-              <span className="absolute top-3 left-3 text-[11px] font-bold text-[#005448] bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-xs">
+              <span className="absolute top-3 left-3 text-[11px] font-bold text-[#005448] dark:text-emerald-300 bg-white dark:bg-stone-900 px-3 py-1 rounded-full shadow-xs border border-stone-200 dark:border-stone-800">
                 {item.category}
               </span>
             </div>
