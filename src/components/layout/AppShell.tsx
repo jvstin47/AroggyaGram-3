@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
 import { BottomNav } from './BottomNav';
@@ -9,13 +9,19 @@ export const AppShell: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Use a ref to always have the latest location without re-registering native listeners on every route
+  const currentPathRef = useRef(location.pathname);
+  currentPathRef.current = location.pathname;
+
   useEffect(() => {
-    let removeListener: (() => void) | null = null;
+    let activeHandle: { remove: () => Promise<void> } | null = null;
+    let isDisposed = false;
 
     try {
       CapApp.addListener('backButton', () => {
+        const path = currentPathRef.current;
         // If already at Home hub, allow exiting the app
-        if (location.pathname === '/home' || location.pathname === '/') {
+        if (path === '/home' || path === '/') {
           CapApp.exitApp();
         } else {
           // Go back to previous screen or fallback to home
@@ -26,16 +32,23 @@ export const AppShell: React.FC = () => {
           }
         }
       }).then((handle) => {
-        removeListener = () => handle.remove();
+        if (isDisposed) {
+          handle.remove();
+        } else {
+          activeHandle = handle;
+        }
       });
     } catch {
       // Browser fallback - ignore if Capacitor not running
     }
 
     return () => {
-      if (removeListener) removeListener();
+      isDisposed = true;
+      if (activeHandle) {
+        activeHandle.remove();
+      }
     };
-  }, [location.pathname, navigate]);
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-[#FBFAF6] dark:bg-[#0B1413] text-[#121E1C] dark:text-[#EBF2F0] flex flex-col font-sans selection:bg-[#E0F2EE] dark:selection:bg-[#132E27] transition-colors duration-200">

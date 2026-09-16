@@ -13,7 +13,7 @@ export const TopHeader: React.FC = () => {
 
   return (
     <>
-      <header className="px-4 pt-[calc(1.2rem+env(safe-area-inset-top,0px))] pb-3 border-b border-stone-200/80 dark:border-stone-800 bg-[#FBFAF6]/90 dark:bg-[#0B1413]/90 backdrop-blur-md sticky top-0 z-20 transition-colors">
+      <header className="px-4 pt-[calc(1.2rem+env(safe-area-inset-top,0px))] pb-3 border-b border-stone-200/80 dark:border-stone-800 bg-[#FBFAF6] dark:bg-[#0B1413] sticky top-0 z-20 transition-colors">
         <div className="max-w-lg mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button

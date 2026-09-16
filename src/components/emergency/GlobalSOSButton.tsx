@@ -60,7 +60,7 @@ export const GlobalSOSButton: React.FC = () => {
         aria-label="Emergency SOS - Alert Caregivers and Call Ambulance"
         className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))] right-5 z-40 flex items-center justify-center gap-2 bg-[#D62828] hover:bg-[#B51E1E] text-white px-5 py-3.5 rounded-full shadow-[0_6px_20px_rgba(214,40,40,0.45)] border-2 border-white dark:border-red-400 transition-all active:scale-95 font-bold text-base tracking-wide select-none"
       >
-        <AlertOctagon className="w-6 h-6 animate-pulse" />
+        <AlertOctagon className="w-6 h-6" />
         <span>SOS</span>
       </button>
 

@@ -13,7 +13,7 @@ export const BottomNav: React.FC = () => {
   const isVolunteer = user?.role === 'volunteer';
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-[#14211F]/95 backdrop-blur-md border-t border-[#E8E6DF] dark:border-[#223733] pt-1.5 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] px-2 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-none transition-colors">
+    <nav className="fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-[#14211F] border-t border-[#E8E6DF] dark:border-[#223733] pt-1.5 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] px-2 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-none transition-colors">
       <div className="max-w-md mx-auto flex items-center justify-between gap-1">
         {!isVolunteer ? (
           <>
