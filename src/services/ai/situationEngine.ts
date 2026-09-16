@@ -122,8 +122,9 @@ Extract and return ONLY a JSON object with this exact schema:
   "isEmergencyOverride": false
 }`;
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${this.getApiKey()}`,
+    const model = AIKeyService.getModel();
+    let response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${this.getApiKey()}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -133,6 +134,20 @@ Extract and return ONLY a JSON object with this exact schema:
         })
       }
     );
+
+    if (response.status === 404 && model !== 'gemini-2.5-flash') {
+      response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${this.getApiKey()}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: 'application/json' }
+          })
+        }
+      );
+    }
 
     if (!response.ok) throw new Error(`Gemini HTTP ${response.status}`);
     const data = await response.json();

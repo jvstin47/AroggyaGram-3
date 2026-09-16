@@ -12,9 +12,11 @@ import {
   Loader2,
   Trash2,
   Sparkles,
-  Info
+  Info,
+  Cpu,
+  Zap
 } from 'lucide-react';
-import { AIKeyService } from '@/services/ai/aiKey.service';
+import { AIKeyService, type GeminiModelMode } from '@/services/ai/aiKey.service';
 
 export const ApiKeySettingsScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -25,11 +27,21 @@ export const ApiKeySettingsScreen: React.FC = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [currentMasked, setCurrentMasked] = useState(AIKeyService.getMaskedKey());
   const [hasCustomKey, setHasCustomKey] = useState(AIKeyService.hasCustomKey());
+  const [modelMode, setModelMode] = useState<GeminiModelMode>(AIKeyService.getModel());
+  const [modelChangeSuccess, setModelChangeSuccess] = useState(false);
 
   useEffect(() => {
     setCurrentMasked(AIKeyService.getMaskedKey());
     setHasCustomKey(AIKeyService.hasCustomKey());
+    setModelMode(AIKeyService.getModel());
   }, []);
+
+  const handleSelectModel = (mode: GeminiModelMode) => {
+    AIKeyService.setModel(mode);
+    setModelMode(mode);
+    setModelChangeSuccess(true);
+    setTimeout(() => setModelChangeSuccess(false), 2500);
+  };
 
   const handleSave = async () => {
     const trimmed = apiKeyInput.trim();
@@ -147,6 +159,99 @@ export const ApiKeySettingsScreen: React.FC = () => {
             </button>
           )}
         </div>
+      </div>
+
+      {/* Model Mode Switcher */}
+      <div className="bg-white dark:bg-[#14211F] border border-stone-200 dark:border-[#223733] p-4 rounded-2xl shadow-sm space-y-3.5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-[#005448] dark:text-emerald-400" />
+            <span className="text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300">
+              Gemini AI Model Mode
+            </span>
+          </div>
+          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#E0F2EE] dark:bg-emerald-950 text-[#005448] dark:text-emerald-300">
+            {modelMode === 'gemini-3.6-flash' ? '3.6 Flash Active' : '2.5 Flash Active'}
+          </span>
+        </div>
+
+        <p className="text-[11px] text-stone-500 dark:text-stone-400">
+          Select the Gemini model variant used for symptoms intake, clinical screening, and home care recommendations.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+          {/* 2.5 Flash Option */}
+          <button
+            type="button"
+            onClick={() => handleSelectModel('gemini-2.5-flash')}
+            className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer relative flex flex-col justify-between ${
+              modelMode === 'gemini-2.5-flash'
+                ? 'border-[#005448] dark:border-emerald-500 bg-[#F2FAF8] dark:bg-[#0E2622] ring-2 ring-[#005448]/20 dark:ring-emerald-500/20 shadow-sm'
+                : 'border-stone-200 dark:border-[#223733] bg-stone-50/70 dark:bg-[#0E1A18] hover:border-stone-300 dark:hover:border-stone-700'
+            }`}
+          >
+            <div>
+              <div className="flex items-center justify-between gap-1">
+                <div className="flex items-center gap-1.5">
+                  <Zap className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span className="text-xs font-black text-stone-900 dark:text-white">2.5 Flash</span>
+                </div>
+                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-[#005448] dark:text-emerald-300">
+                  Recommended
+                </span>
+              </div>
+              <p className="text-[11px] text-stone-600 dark:text-stone-400 mt-1.5 leading-relaxed font-normal">
+                Standard production tier. Optimized for sub-second response, reliable emergency triage, and high efficiency.
+              </p>
+            </div>
+            {modelMode === 'gemini-2.5-flash' && (
+              <div className="flex items-center gap-1 mt-2.5 text-[11px] font-bold text-[#005448] dark:text-emerald-400">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Active Mode</span>
+              </div>
+            )}
+          </button>
+
+          {/* 3.6 Flash Option */}
+          <button
+            type="button"
+            onClick={() => handleSelectModel('gemini-3.6-flash')}
+            className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer relative flex flex-col justify-between ${
+              modelMode === 'gemini-3.6-flash'
+                ? 'border-[#005448] dark:border-emerald-500 bg-[#F2FAF8] dark:bg-[#0E2622] ring-2 ring-[#005448]/20 dark:ring-emerald-500/20 shadow-sm'
+                : 'border-stone-200 dark:border-[#223733] bg-stone-50/70 dark:bg-[#0E1A18] hover:border-stone-300 dark:hover:border-stone-700'
+            }`}
+          >
+            <div>
+              <div className="flex items-center justify-between gap-1">
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                  <span className="text-xs font-black text-stone-900 dark:text-white">3.6 Flash</span>
+                </div>
+                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300">
+                  Next-Gen
+                </span>
+              </div>
+              <p className="text-[11px] text-stone-600 dark:text-stone-400 mt-1.5 leading-relaxed font-normal">
+                Experimental next-gen tier. Deeper contextual reasoning with automated resilient fallback to 2.5 Flash.
+              </p>
+            </div>
+            {modelMode === 'gemini-3.6-flash' && (
+              <div className="flex items-center gap-1 mt-2.5 text-[11px] font-bold text-[#005448] dark:text-emerald-400">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Active Mode</span>
+              </div>
+            )}
+          </button>
+        </div>
+
+        {/* Model mode switch notification */}
+        {modelChangeSuccess && (
+          <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-150">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span>Switched to {modelMode === 'gemini-3.6-flash' ? 'Gemini 3.6 Flash' : 'Gemini 2.5 Flash'} successfully!</span>
+          </div>
+        )}
       </div>
 
       {/* Input New / Change Key Form */}

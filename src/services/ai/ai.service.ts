@@ -87,8 +87,9 @@ Respond ONLY with valid JSON in this exact structure without markdown backticks:
   "language": "${language}"
 }`;
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      const model = AIKeyService.getModel();
+      let response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -98,6 +99,21 @@ Respond ONLY with valid JSON in this exact structure without markdown backticks:
           })
         }
       );
+
+      // Graceful fallback to 2.5-flash if experimental 3.6-flash is not found (404)
+      if (response.status === 404 && model !== 'gemini-2.5-flash') {
+        response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: 'application/json' }
+            })
+          }
+        );
+      }
 
       if (!response.ok) throw new Error(`Gemini API error: ${response.status}`);
       const data = await response.json();
@@ -206,8 +222,9 @@ Respond ONLY with valid JSON in this exact structure without markdown backticks:
     try {
       const prompt = `Translate the following medical/health instruction accurately from ${sourceLang} to ${targetLang}. Preserve medical precision, dosage, and emergency context. Output ONLY the translated text.\n\n"${text}"`;
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      const model = AIKeyService.getModel();
+      let response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -216,6 +233,19 @@ Respond ONLY with valid JSON in this exact structure without markdown backticks:
           })
         }
       );
+
+      if (response.status === 404 && model !== 'gemini-2.5-flash') {
+        response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }]
+            })
+          }
+        );
+      }
 
       if (!response.ok) throw new Error('Translation failed');
       const data = await response.json();

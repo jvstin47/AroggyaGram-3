@@ -4,8 +4,42 @@
  */
 
 const STORAGE_KEY = 'aroggya_gemini_api_key';
+const MODEL_STORAGE_KEY = 'aroggya_gemini_model_mode';
+
+export type GeminiModelMode = 'gemini-2.5-flash' | 'gemini-3.6-flash';
 
 export class AIKeyService {
+  /**
+   * Get currently selected Gemini model mode.
+   * Defaults to 'gemini-2.5-flash'.
+   */
+  public static getModel(): GeminiModelMode {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const saved = localStorage.getItem(MODEL_STORAGE_KEY);
+      if (saved === 'gemini-3.6-flash' || saved === 'gemini-2.5-flash') {
+        return saved;
+      }
+    }
+    return 'gemini-2.5-flash';
+  }
+
+  /**
+   * Set user preferred Gemini model mode ('gemini-2.5-flash' or 'gemini-3.6-flash').
+   */
+  public static setModel(model: GeminiModelMode): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(MODEL_STORAGE_KEY, model);
+    }
+  }
+
+  /**
+   * Get human readable display label for a model mode.
+   */
+  public static getModelDisplayName(model?: GeminiModelMode): string {
+    const m = model || this.getModel();
+    return m === 'gemini-3.6-flash' ? 'Gemini 3.6 Flash' : 'Gemini 2.5 Flash';
+  }
+
   /**
    * Get the active API key (User custom key has priority over env variable).
    */
@@ -77,9 +111,11 @@ export class AIKeyService {
       return { valid: false, message: 'No API key provided.' };
     }
 
+    const model = this.getModel();
+
     try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+      let res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -90,8 +126,23 @@ export class AIKeyService {
         }
       );
 
+      // If the selected model (e.g. 3.6-flash) is not found, fallback to 2.5-flash for key validity check
+      if (res.status === 404 && model !== 'gemini-2.5-flash') {
+        res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: 'Ping' }] }],
+              generationConfig: { maxOutputTokens: 5 }
+            })
+          }
+        );
+      }
+
       if (res.ok) {
-        return { valid: true, message: 'API key successfully verified with Google Gemini!' };
+        return { valid: true, message: `API key verified with ${this.getModelDisplayName(model)}!` };
       } else {
         const errorData = await res.json().catch(() => ({}));
         const errMsg = errorData?.error?.message || `HTTP ${res.status}: ${res.statusText}`;
